@@ -1,15 +1,21 @@
 import React from "react"
 import Document, { Head, Main, NextScript } from "next/document"
 import { ServerStyleSheets } from "@material-ui/core/styles"
-import theme from "../src/theme"
+import defaultTheme from "../src/themes/defaultTheme"
+// @ts-ignore
+import { resetServerContext } from "react-beautiful-dnd"
 
 export default class MyDocument extends Document {
   render() {
     return (
       <html lang="en">
         <Head>
+          <title>Bunadmin</title>
           {/* PWA primary color */}
-          <meta name="theme-color" content={theme.palette.primary.main} />
+          <meta
+            name="theme-color"
+            content={defaultTheme.palette.primary.main}
+          />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
@@ -53,7 +59,10 @@ MyDocument.getInitialProps = async ctx => {
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: App => props => sheets.collect(<App {...props} />)
+      enhanceApp: App => props => {
+        resetServerContext()
+        return sheets.collect(<App {...props} />)
+      }
     })
 
   const initialProps = await Document.getInitialProps(ctx)
