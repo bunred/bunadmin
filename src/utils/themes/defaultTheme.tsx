@@ -74,6 +74,13 @@ const defaultTheme = createMuiTheme({
         // eva icon
         ".eva-hover": {
           display: "inherit"
+        },
+        // MuiTable icon
+        ".MuiTable-root .MuiIconButton-root": {
+          color: iconColor
+        },
+        ".MuiTable-root .MuiIconButton-root.Mui-disabled": {
+          opacity: 0.5
         }
       }
     }

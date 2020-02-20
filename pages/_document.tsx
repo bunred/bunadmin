@@ -1,7 +1,7 @@
 import React from "react"
 import Document, { Head, Main, NextScript } from "next/document"
 import { ServerStyleSheets } from "@material-ui/core/styles"
-import defaultTheme from "../src/themes/defaultTheme"
+import defaultTheme from "../src/utils/themes/defaultTheme"
 // @ts-ignore
 import { resetServerContext } from "react-beautiful-dnd"
 
