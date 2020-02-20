@@ -1,10 +1,12 @@
 declare module "react-eva-icons" {
+  export type EvaSize = "small"|"medium"|"large"|"xlarge"
 
-  interface MyComponentProps {
+
+  export interface EvaIconProps {
     name: string;
-    size: "small"|"medium"|"large"|"xlarge";
+    size: EvaSize;
     fill?: string;
   }
 
-  export default function EvaIcon(props: MyComponentProps): Element<MyComponentProps>
+  export default function EvaIcon(props: EvaIconProps): Element<EvaIconProps>
 }
