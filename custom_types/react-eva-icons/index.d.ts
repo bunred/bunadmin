@@ -8,5 +8,5 @@ declare module "react-eva-icons" {
     fill?: string;
   }
 
-  export default function EvaIcon(props: EvaIconProps): Element<EvaIconProps>
+  export default function EvaIcon(props: EvaIconProps): React.ReactElement<EvaIconProps>
 }
