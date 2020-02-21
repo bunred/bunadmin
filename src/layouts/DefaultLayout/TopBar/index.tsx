@@ -6,6 +6,9 @@ import Typography from "@material-ui/core/Typography"
 import React from "react"
 import { useTheme } from "@material-ui/core/styles"
 import { topBarStyles } from "./styles"
+import UserMenu from "./TopBarRightMenu/UserMenu"
+import SettingMenu from "./TopBarRightMenu/SettingMenu"
+import Link from "../../../components/Link"
 
 const useStyles = topBarStyles
 
@@ -25,23 +28,32 @@ export default function TopBar(props: TopBarProps) {
       position="fixed"
       className={classes.appBar}
     >
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          onClick={menuClick}
-          className={classes.menuButton}
-        >
-          <EvaIcon
-            name="menu-2-outline"
-            size="xlarge"
-            fill={theme.bunadmin.iconColor}
-          />
-        </IconButton>
-        <Typography variant="h6" noWrap>
-          BunAdmin
-        </Typography>
+      <Toolbar className={classes.toolbar}>
+        <div className={classes.leftBlock}>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={menuClick}
+            className={classes.menuButton}
+          >
+            <EvaIcon
+              name="menu-2-outline"
+              size="xlarge"
+              fill={theme.bunadmin.iconColor}
+            />
+          </IconButton>
+          <Link href="/">
+            <Typography variant="h6" noWrap>
+              BunAdmin
+            </Typography>
+          </Link>
+        </div>
+
+        <div className={classes.rightBlock}>
+          <UserMenu />
+          <SettingMenu />
+        </div>
       </Toolbar>
     </AppBar>
   )

@@ -9,6 +9,19 @@ export const topBarStyles = makeStyles((theme: Theme) => {
     },
     menuButton: {
       marginRight: theme.spacing(2)
+    },
+    toolbar: {
+      [theme.breakpoints.up("sm")]: {
+        justifyContent: "space-between"
+      }
+    },
+    leftBlock: {
+      display: "flex",
+      alignItems: "center"
+    },
+    rightBlock: {
+      display: "flex",
+      alignItems: "center"
     }
   })
 })
