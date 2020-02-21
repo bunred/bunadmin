@@ -4,17 +4,24 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "latest",
+    "@material-ui/icons": "^4.9.1",
     "clsx": "latest",
+    "material-table": "^1.57.2",
     "next": "latest",
+    "pouchdb-adapter-http": "^7.2.1",
+    "pouchdb-adapter-idb": "^7.2.1",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "react-eva-icons": "0.0.8",
+    "rxdb": "^8.7.5",
+    "rxjs": "^6.5.4"
   },
   "scripts": {
     "dev": "next -p 1911",
     "build": "next build",
-    "fix": "prettier --write  --no-semi src/* pages/* test/*",
+    "fix": "prettier --write  --no-semi src/** pages/** test/**",
     "start": "next start -p 1912",
-    "test": "prettier --check --no-semi src/* pages/* test/* && jest",
+    "test": "prettier --check --no-semi src/** pages/** test/** && jest",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
   },
   "devDependencies": {
