@@ -6,7 +6,7 @@ import Select from "@material-ui/core/Select"
 import { EditComponentProps } from "material-table"
 import { LeftMenuType } from "../../types"
 import { useStyles } from "./styles"
-import rxQuery from "../../../../../utils/local_database/rxQuery"
+import rxDb from "../../../../../utils/local_database/rxConnect"
 
 interface ParentSelectProps extends EditComponentProps<LeftMenuType> {}
 
@@ -17,11 +17,17 @@ export default function ParentSelect({ rowData, onChange }: ParentSelectProps) {
 
   React.useEffect(() => {
     ;(async () => {
-      await rxQuery({
-        collection: "left_menu",
-        sort: { name: "desc" },
-        callback: data => setData(data)
-      })
+      const db = await rxDb()
+
+      const query = db["left_menu"]
+        .find()
+        .where("name")
+        .ne(rowData.name)
+        .where("parent") // limiting 2 level of the menu
+        .eq("")
+        .sort({ name: "asc" })
+      const data = await query.exec()
+      setData(data)
     })()
   }, [])
 

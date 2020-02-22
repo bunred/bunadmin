@@ -9,7 +9,8 @@ export const leftMenuColumns: Column<LeftMenuType>[] = [
   {
     title: "Parent",
     field: "parent",
+    initialEditValue: "",
     editComponent: editComponentController
   },
-  { title: "Rank", field: "rank", type: "numeric", initialEditValue: 0 }
+  { title: "Rank", field: "rank", type: "numeric", initialEditValue: "0" }
 ]
