@@ -1,4 +1,5 @@
-import React from "react"
+import React, { RefObject, useEffect, useRef } from "react"
+
 import Head from "next/head"
 import DefaultLayout from "../../layouts/DefaultLayout"
 import MaterialTable from "material-table"
@@ -8,6 +9,7 @@ import { CommonTableProps } from "./models/types"
 import { LeftMenuType } from "../../modules/local_data/left_menu/types"
 import rxDb from "../../utils/local_database/rxConnect"
 import EvaIcon from "react-eva-icons"
+import { addTdController } from "./controllers/add_td_controller"
 
 function HeadComp() {
   return (
@@ -35,8 +37,24 @@ export default function CommonTable({
     const theme = useTheme()
     rxDb()
 
+    const myRef = useRef() as RefObject<HTMLDivElement>
+
+    useEffect(() => {
+      if (myRef.current) {
+        const boxNode = myRef.current.parentNode
+
+        if (!boxNode) return
+        const addNode = boxNode.querySelector(
+          "[class^='MTableToolbar-actions'] button[title='Add']"
+        )
+
+        if (!addNode) return
+        addNode.addEventListener("click", () => addTdController({ myRef }))
+      }
+    }, [myRef.current])
+
     return (
-      <>
+      <div ref={myRef}>
         <HeadComp />
         <MaterialTable
           {...props}
@@ -69,6 +87,7 @@ export default function CommonTable({
           // options
           options={
             options || {
+              addRowPosition: "first",
               draggable: true,
               selection: true
             }
@@ -85,7 +104,7 @@ export default function CommonTable({
             }
           ]}
         />
-      </>
+      </div>
     )
   }
 
