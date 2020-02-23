@@ -1,20 +1,18 @@
-import React, { RefObject, useEffect, useRef } from "react"
+import React, { RefObject, useEffect, useRef, useState } from "react"
 
 import Head from "next/head"
-import DefaultLayout from "../../layouts/DefaultLayout"
 import MaterialTable from "material-table"
 import { useTheme } from "@material-ui/core/styles"
 import tableIcons from "./models/tableIcons"
 import { CommonTableProps } from "./models/types"
-import { LeftMenuType } from "../../modules/local_data/left_menu/types"
-import rxDb from "../../utils/local_database/rxConnect"
-import EvaIcon from "react-eva-icons"
 import { addTdController } from "./controllers/add_td_controller"
+import { CommonTableDefaultProps as DefaultProps } from "./models/defaultProps"
+import rxSubscribe from "../../utils/local_database/rxSubscribe"
 
-function HeadComp() {
+export function CommonTableHead({ title }: { title?: string }) {
   return (
     <Head>
-      <title>Data List - BunAdmin</title>
+      <title>{title || "List"} - BunAdmin</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <link
         rel="stylesheet"
@@ -28,85 +26,75 @@ function HeadComp() {
   )
 }
 
-export default function CommonTable({
-  ...props
-}: CommonTableProps<LeftMenuType>) {
-  const { title, style, columns, data, editable, options } = props
+export default function CommonTable({ ...props }: CommonTableProps<any>) {
+  const {
+    collection,
+    sort,
+    listTitle,
+    style,
+    columns,
+    editable,
+    options,
+    actions
+  } = props
+  const theme = useTheme()
+  const [listData, setListData] = useState([])
+  const [selectedRow, setSelectedRow] = useState()
+  const tableRef = useRef() as RefObject<HTMLDivElement>
 
-  function CommonTableContainer() {
-    const theme = useTheme()
-    rxDb()
+  useEffect(() => {
+    ;(async () => {
+      await rxSubscribe({
+        collection: collection,
+        sort: sort,
+        callback: data => {
+          setListData(data)
+          // create <td /> when click add/create button
+          addTdController({ tableRef })
+        }
+      })
+    })()
+  }, [])
 
-    const myRef = useRef() as RefObject<HTMLDivElement>
+  const onRowClick = (_evt: any, selectedRow: any) =>
+    setSelectedRow(selectedRow)
 
-    useEffect(() => {
-      if (myRef.current) {
-        const boxNode = myRef.current.parentNode
+  const rowStyle = (rowData: { tableData: { id: any } }) => ({
+    backgroundColor:
+      selectedRow && selectedRow.tableData.id === rowData.tableData.id
+        ? "rgba(51, 102, 255, 0.04)"
+        : "#FFF"
+  })
 
-        if (!boxNode) return
-        const addNode = boxNode.querySelector(
-          "[class^='MTableToolbar-actions'] button[title='Add']"
-        )
+  const mtbRef = React.createRef()
 
-        if (!addNode) return
-        addNode.addEventListener("click", () => addTdController({ myRef }))
-      }
-    }, [myRef.current])
-
-    return (
-      <div ref={myRef}>
-        <HeadComp />
-        <MaterialTable
-          {...props}
-          style={style || { boxShadow: "none" }}
-          title={title}
-          columns={columns}
-          data={data}
-          // editable
-          editable={editable || {}}
-          // localization props
-          localization={{
-            pagination: {
-              labelDisplayedRows: "{from}-{to} of {count}"
-            },
-            toolbar: {
-              nRowsSelected: "{0} row(s) selected"
-            },
-            header: {
-              actions: "Actions"
-            },
-            body: {
-              emptyDataSourceMessage: "No records to display",
-              filterRow: {
-                filterTooltip: "Filter"
-              }
-            }
-          }}
-          // icons
-          icons={tableIcons({ theme })}
-          // options
-          options={
-            options || {
-              addRowPosition: "first",
-              draggable: true,
-              selection: true
-            }
-          }
-          // actions
-          actions={[
-            {
-              tooltip: "Remove All Selected Users",
-              icon: () => (
-                <EvaIcon name="trash-2-outline" size="large" fill="gray" />
-              ),
-              onClick: (_evt, _data) =>
-                alert("Bulk delete rows not supported yet.")
-            }
-          ]}
-        />
-      </div>
-    )
-  }
-
-  return <DefaultLayout container={<CommonTableContainer />} />
+  return (
+    <div ref={tableRef}>
+      <CommonTableHead title={listTitle} />
+      <MaterialTable
+        {...props}
+        tableRef={mtbRef}
+        style={style || DefaultProps.style}
+        title={listTitle}
+        columns={columns}
+        data={listData}
+        // editable
+        editable={editable || {}}
+        // localization props
+        localization={DefaultProps.localization}
+        // icons
+        icons={tableIcons({ theme })}
+        // on row click
+        onRowClick={onRowClick}
+        // options
+        options={
+          options
+            ? { ...DefaultProps.options, rowStyle, ...options }
+            : { ...DefaultProps.options, rowStyle }
+        }
+        // actions
+        actions={actions || DefaultProps.actions}
+      />
+    </div>
+  )
 }
