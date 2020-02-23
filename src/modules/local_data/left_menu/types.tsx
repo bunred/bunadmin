@@ -1,4 +1,4 @@
-export interface LeftMenuType {
+export interface Type {
   name: string
   slug?: string
   parent: string

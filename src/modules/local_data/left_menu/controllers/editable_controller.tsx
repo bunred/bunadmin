@@ -1,7 +1,13 @@
-import { EditableDataType } from "../../../../components/CommonTable/models/editable"
 import rxDb from "../../../../utils/local_database/rxConnect"
+import { EditableDataType } from "../../../../components/CommonTable/models/editable"
+import { Type } from "../types"
+import { Collection } from "../collections"
+import { Primary } from "../schema"
 
-export function editableController(): EditableDataType<any> {
+export function editableController(): EditableDataType<Type> {
+  const collection = Collection.name
+  const primary = Primary
+
   return {
     // isEditable: rowData => rowData.not_editable === true, // only name(a) rows would be editable
     // isDeletable: rowData => rowData.not_deletable === true, // only name(a) rows would be deletable
@@ -10,22 +16,22 @@ export function editableController(): EditableDataType<any> {
         try {
           const db = await rxDb()
 
-          await db.left_menu.insert(newData)
+          await db[collection].insert(newData)
         } catch (e) {
           console.error(e)
         }
 
         resolve()
       }),
-    onRowUpdate: (newData, oldData) =>
+    onRowUpdate: newData =>
       new Promise(async resolve => {
         try {
           const db = await rxDb()
 
-          const query = db.left_menu
+          const query = db[collection]
             .findOne()
-            .where("name")
-            .eq(oldData.name)
+            .where(primary)
+            .eq(newData[primary])
 
           await query.update({
             $set: newData
@@ -41,10 +47,10 @@ export function editableController(): EditableDataType<any> {
         try {
           const db = await rxDb()
 
-          const query = db.left_menu
+          const query = db[collection]
             .findOne()
-            .where("name")
-            .eq(oldData.name)
+            .where(primary)
+            .eq(oldData[primary])
 
           await query.remove()
         } catch (e) {

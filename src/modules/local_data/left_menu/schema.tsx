@@ -1,10 +1,12 @@
+export const Primary = "name"
+
 export const Schema = {
   title: "Local Left Menu",
   description: "left menus",
   version: 0,
   type: "object",
   properties: {
-    name: {
+    [Primary]: {
       type: "string",
       primary: true
     },

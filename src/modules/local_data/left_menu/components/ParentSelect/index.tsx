@@ -4,16 +4,16 @@ import MenuItem from "@material-ui/core/MenuItem"
 import FormControl from "@material-ui/core/FormControl"
 import Select from "@material-ui/core/Select"
 import { EditComponentProps } from "material-table"
-import { LeftMenuType } from "../../types"
+import { Type } from "../../types"
 import { useStyles } from "./styles"
 import rxDb from "../../../../../utils/local_database/rxConnect"
 
-interface ParentSelectProps extends EditComponentProps<LeftMenuType> {}
+interface ParentSelectProps extends EditComponentProps<Type> {}
 
 export default function ParentSelect({ rowData, onChange }: ParentSelectProps) {
   const classes = useStyles()
   const [option, setOption] = React.useState(rowData.parent)
-  const [data, setData]: [LeftMenuType[], (data: any) => void] = useState([])
+  const [data, setData]: [Type[], (data: any) => void] = useState([])
 
   React.useEffect(() => {
     ;(async () => {
