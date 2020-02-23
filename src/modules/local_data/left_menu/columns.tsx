@@ -2,7 +2,7 @@ import { Column } from "material-table"
 import { LeftMenuType } from "./types"
 import editComponentController from "./controllers/edit_component_controller"
 
-export const leftMenuColumns: Column<LeftMenuType>[] = [
+export const Columns: Column<LeftMenuType>[] = [
   { title: "Name", field: "name" },
   { title: "Label", field: "label" },
   { title: "Slug", field: "slug" },

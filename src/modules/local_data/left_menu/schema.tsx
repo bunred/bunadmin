@@ -1,5 +1,5 @@
-export const leftMenuSchema = {
-  title: "left menu schema",
+export const Schema = {
+  title: "Local Left Menu",
   description: "left menus",
   version: 0,
   type: "object",

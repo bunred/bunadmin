@@ -1,6 +1,6 @@
-import { leftMenuSchema } from "./schema"
+import { Schema } from "./schema"
 
-export const leftMenCollection = {
+export const Collection = {
   name: "left_menu",
-  schema: leftMenuSchema
+  schema: Schema
 }
