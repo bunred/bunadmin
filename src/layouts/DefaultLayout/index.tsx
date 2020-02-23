@@ -12,16 +12,12 @@ import TopBar from "./TopBar"
 const useStyles = defaultLayoutStyles
 
 interface ResponsiveDrawerProps {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  container?: any
+  children?: any
 }
 
 // ResponsiveDrawer
 export default function DefaultLayout(props: ResponsiveDrawerProps) {
-  const { container } = props
+  const { children } = props
   const classes = useStyles()
   const theme = useTheme()
   const [open, setOpen] = React.useState(true)
@@ -62,7 +58,7 @@ export default function DefaultLayout(props: ResponsiveDrawerProps) {
       </nav>
       <main className={classes.content}>
         <Box boxShadow={1} className={classes.contentBox}>
-          {container}
+          {children}
         </Box>
       </main>
     </div>
