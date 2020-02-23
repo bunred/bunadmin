@@ -9,6 +9,7 @@ import { topBarStyles } from "./styles"
 import UserMenu from "./TopBarRightMenu/UserMenu"
 import SettingMenu from "./TopBarRightMenu/SettingMenu"
 import Link from "../../../components/Link"
+import NoticeMenu from "./TopBarRightMenu/NoticeMenu"
 
 const useStyles = topBarStyles
 
@@ -51,6 +52,7 @@ export default function TopBar(props: TopBarProps) {
         </div>
 
         <div className={classes.rightBlock}>
+          <NoticeMenu />
           <UserMenu />
           <SettingMenu />
         </div>

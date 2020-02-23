@@ -1,10 +1,12 @@
 import React from "react"
 import IconButton from "@material-ui/core/IconButton"
-import AccountCircle from "@material-ui/icons/AccountCircle"
 import MenuItem from "@material-ui/core/MenuItem"
 import Menu from "@material-ui/core/Menu"
+import EvaIcon from "react-eva-icons"
+import { useTheme } from "@material-ui/core/styles"
 
 export default function UserMenu() {
+  const theme = useTheme()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -26,7 +28,11 @@ export default function UserMenu() {
         onClick={handleMenu}
         color="inherit"
       >
-        <AccountCircle />
+        <EvaIcon
+          name="person-outline"
+          size="large"
+          fill={theme.bunadmin.iconColor}
+        />
       </IconButton>
       <Menu
         id="menu-appbar"

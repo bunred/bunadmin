@@ -1,10 +1,16 @@
 import React from "react"
+
+import { useRouter } from "next/router"
 import IconButton from "@material-ui/core/IconButton"
-import Settings from "@material-ui/icons/Settings"
 import MenuItem from "@material-ui/core/MenuItem"
 import Menu from "@material-ui/core/Menu"
+import EvaIcon from "react-eva-icons"
+import { useTheme } from "@material-ui/core/styles"
+import { LocalDataRoute } from "../../../../utils/routes"
 
 export default function SettingMenu() {
+  const theme = useTheme()
+  const router = useRouter()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -12,8 +18,10 @@ export default function SettingMenu() {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleClose = () => {
+  const handleClose = ({ route }: { route: string }) => {
     setAnchorEl(null)
+    if (!route) return
+    router.push(route).then(_r => {})
   }
 
   return (
@@ -26,7 +34,11 @@ export default function SettingMenu() {
         onClick={handleMenu}
         color="inherit"
       >
-        <Settings />
+        <EvaIcon
+          name="settings-outline"
+          size="large"
+          fill={theme.bunadmin.iconColor}
+        />
       </IconButton>
       <Menu
         id="menu-appbar"
@@ -43,8 +55,17 @@ export default function SettingMenu() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Local Data</MenuItem>
-        <MenuItem onClick={handleClose}>Theme Setting</MenuItem>
+        <MenuItem
+          onClick={() => handleClose({ route: LocalDataRoute.leftMenu })}
+        >
+          Local Menu
+        </MenuItem>
+        <MenuItem onClick={() => handleClose({ route: LocalDataRoute.notice })}>
+          Local Notice
+        </MenuItem>
+        <MenuItem onClick={() => handleClose({ route: "/" })}>
+          Theme Setting
+        </MenuItem>
       </Menu>
     </div>
   )
