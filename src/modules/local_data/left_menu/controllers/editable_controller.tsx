@@ -3,6 +3,7 @@ import { EditableDataType } from "../../../../components/CommonTable/models/edit
 import { Type } from "../types"
 import { Collection } from "../collections"
 import { Primary } from "../schema"
+import bNotice from "../../notice/controllers/notice"
 
 export function editableController(): EditableDataType<Type> {
   const collection = Collection.name
@@ -17,8 +18,19 @@ export function editableController(): EditableDataType<Type> {
           const db = await rxDb()
 
           await db[collection].insert(newData)
+
+          // show notice
+          await bNotice({ title: `Created successful` })
         } catch (e) {
           console.error(e)
+          // console.log(e.parameters.errors.toString())
+
+          // show notice
+          await bNotice({
+            title: `Created failed`,
+            severity: "error",
+            content: e.toString()
+          })
         }
 
         resolve()
@@ -36,8 +48,18 @@ export function editableController(): EditableDataType<Type> {
           await query.update({
             $set: newData
           })
+
+          // show notice
+          await bNotice({ title: `Updated successful` })
         } catch (e) {
           console.error(e)
+
+          // show notice
+          await bNotice({
+            title: `Updated failed`,
+            severity: "error",
+            content: e.toString()
+          })
         }
 
         resolve()
@@ -53,8 +75,18 @@ export function editableController(): EditableDataType<Type> {
             .eq(oldData[primary])
 
           await query.remove()
+
+          // show notice
+          await bNotice({ title: `Deleted successful` })
         } catch (e) {
           console.error(e)
+
+          // show notice
+          await bNotice({
+            title: `Deleted failed`,
+            severity: "error",
+            content: e.toString()
+          })
         }
 
         resolve()
