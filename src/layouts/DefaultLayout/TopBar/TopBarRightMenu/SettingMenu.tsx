@@ -60,9 +60,6 @@ export default function SettingMenu() {
         >
           Local Menu
         </MenuItem>
-        <MenuItem onClick={() => handleClose({ route: LocalDataRoute.notice })}>
-          Local Notice
-        </MenuItem>
         <MenuItem onClick={() => handleClose({ route: "/" })}>
           Theme Setting
         </MenuItem>

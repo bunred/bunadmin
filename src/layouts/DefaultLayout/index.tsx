@@ -1,6 +1,5 @@
 import React from "react"
 import clsx from "clsx"
-import CssBaseline from "@material-ui/core/CssBaseline"
 import Drawer from "@material-ui/core/Drawer"
 import Box from "@material-ui/core/Box"
 import { useTheme } from "@material-ui/core/styles"
@@ -29,7 +28,6 @@ export default function DefaultLayout(props: ResponsiveDrawerProps) {
   return (
     <div className={classes.root}>
       <DefaultHead />
-      <CssBaseline />
       <TopBar menuClick={handleDrawerToggle} />
       <nav aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}

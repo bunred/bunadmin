@@ -3,13 +3,13 @@ import IconButton from "@material-ui/core/IconButton"
 import { useRouter } from "next/router"
 import EvaIcon from "react-eva-icons"
 import { useTheme } from "@material-ui/core/styles"
-import { UserRoute } from "../../../../utils/routes"
+import { LocalDataRoute } from "../../../../utils/routes"
 
 export default function NoticeMenu() {
   const theme = useTheme()
   const router = useRouter()
   const handleMenu = (_event: React.MouseEvent<HTMLElement>) => {
-    router.push(UserRoute.notice).then(_r => {})
+    router.push(LocalDataRoute.notice).then(_r => {})
   }
 
   return (
