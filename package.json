@@ -5,16 +5,19 @@
   "dependencies": {
     "@material-ui/core": "latest",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.43",
     "clsx": "latest",
     "material-table": "^1.57.2",
     "next": "latest",
+    "notistack": "^0.9.8",
     "pouchdb-adapter-http": "^7.2.1",
     "pouchdb-adapter-idb": "^7.2.1",
     "react": "latest",
     "react-dom": "latest",
     "react-eva-icons": "0.0.8",
     "rxdb": "^8.7.5",
-    "rxjs": "^6.5.4"
+    "rxjs": "^6.5.4",
+    "shortid": "^2.2.15"
   },
   "scripts": {
     "dev": "next -p 1911",
