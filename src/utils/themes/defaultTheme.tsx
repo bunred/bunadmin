@@ -4,6 +4,7 @@ import red from "@material-ui/core/colors/red"
 const iconColor = "#8f9bb3"
 const contentBg = "#EDF1F7"
 const contentBoxBg = "#FFF"
+const jsonViewBg = "rgba(143, 155, 179, 0.3)"
 
 declare module "@material-ui/core/styles/createMuiTheme" {
   interface Theme {
@@ -12,6 +13,7 @@ declare module "@material-ui/core/styles/createMuiTheme" {
       iconColor: string
       contentBg: string
       contentBoxBg: string
+      jsonViewBg: string
     }
   }
   // allow configuration using `createMuiTheme`
@@ -20,6 +22,7 @@ declare module "@material-ui/core/styles/createMuiTheme" {
       iconColor?: string
       contentBg?: string
       contentBoxBg?: string
+      jsonViewBg?: string
     }
   }
 }
@@ -29,7 +32,8 @@ const defaultTheme = createMuiTheme({
   bunadmin: {
     iconColor,
     contentBg,
-    contentBoxBg
+    contentBoxBg,
+    jsonViewBg
   },
   palette: {
     primary: {
