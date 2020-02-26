@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useState } from "react"
+import RxDB from "rxdb"
 
 import { useRouter } from "next/router"
 import IconButton from "@material-ui/core/IconButton"
@@ -7,12 +8,18 @@ import Menu from "@material-ui/core/Menu"
 import EvaIcon from "react-eva-icons"
 import { useTheme } from "@material-ui/core/styles"
 import { LocalDataRoute } from "../../../../utils/routes"
+import ConfirmDialog from "../../../../components/CommonDialog/ConfirmDialog"
 
 export default function SettingMenu() {
   const theme = useTheme()
   const router = useRouter()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
+  const [modalState, setModalState] = useState({
+    open: 0,
+    title: "",
+    msg: ""
+  })
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -22,6 +29,15 @@ export default function SettingMenu() {
     setAnchorEl(null)
     if (!route) return
     router.push(route).then(_r => {})
+  }
+
+  const handleClearDb = () => {
+    setAnchorEl(null)
+    setModalState({
+      title: "Delete Local Database",
+      open: modalState.open + 1,
+      msg: "Do want to delete the local database?"
+    })
   }
 
   return (
@@ -58,12 +74,32 @@ export default function SettingMenu() {
         <MenuItem
           onClick={() => handleClose({ route: LocalDataRoute.leftMenu })}
         >
-          Local Menu
+          Menu Setting
+        </MenuItem>
+        <MenuItem onClick={() => handleClose({ route: LocalDataRoute.schema })}>
+          Schema Manager
+        </MenuItem>
+        <MenuItem
+          onClick={() => handleClose({ route: LocalDataRoute.migration })}
+        >
+          Data Migration
         </MenuItem>
         <MenuItem onClick={() => handleClose({ route: "/" })}>
           Theme Setting
         </MenuItem>
+        <MenuItem onClick={() => handleClearDb()}>
+          Reset Local Database
+        </MenuItem>
       </Menu>
+      {/* ConfirmDialog */}
+      <ConfirmDialog
+        openModal={modalState.open}
+        title={modalState.title}
+        msg={modalState.msg}
+        doFunc={() => {
+          RxDB.removeDatabase("bunadmin", "idb").then(_r => location.reload())
+        }}
+      />
     </div>
   )
 }
