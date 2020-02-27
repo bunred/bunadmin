@@ -1,6 +1,6 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 
-import CommonTable from "../../../components/CommonTable"
+import { CommonTableHead } from "../../../components/CommonTable"
 import DefaultLayout from "../../../layouts/DefaultLayout"
 
 import { Collection } from "./collections"
@@ -9,19 +9,45 @@ import { Columns } from "./columns"
 
 import { editableController } from "./controllers/editable_controller"
 import { CommonTableDefaultProps as DefaultProps } from "../../../components/CommonTable/models/defaultProps"
+import rxSubscribe from "../../../utils/local_database/rxSubscribe"
+import MaterialTable from "material-table"
+import tableIcons from "../../../components/CommonTable/models/tableIcons"
+import { useTheme } from "@material-ui/core/styles"
 
 export default function LocalLeftMenuContainer() {
+  const theme = useTheme()
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    ;(async () => {
+      await rxSubscribe({
+        collection: Collection.name,
+        sort: { name: "desc" },
+        callback: data => setData(data)
+      })
+    })()
+  }, [])
+
   return (
     <DefaultLayout>
-      <CommonTable
-        collection={Collection.name}
-        data={[]}
+      <CommonTableHead title={Schema.title} />
+      <MaterialTable
+        title={Schema.title}
         columns={Columns}
-        listTitle={Schema.title}
         editable={editableController()}
-        parentChildData={(row, rows) => rows.find(a => a.name === row.parent)}
+        data={data}
+        // style
+        style={DefaultProps.style}
+        // localization props
+        localization={DefaultProps.localization}
+        // icons
+        icons={tableIcons({ theme })}
+        // options
         options={{ ...DefaultProps.options, selection: false }}
+        // actions
         actions={[]}
+        // parentChildData
+        parentChildData={(row, rows) => rows.find(a => a.name === row.parent)}
       />
     </DefaultLayout>
   )
