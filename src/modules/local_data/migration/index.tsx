@@ -70,7 +70,7 @@ export default function MigrationContainer() {
                 db[collection]
                   .dump()
                   .then((json: any) =>
-                    fsDownload(json, collection, "text/plain")
+                    fsDownload(json, collection, "application/json")
                   )
               }
             },

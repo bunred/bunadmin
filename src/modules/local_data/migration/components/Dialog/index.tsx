@@ -39,7 +39,7 @@ export default function MigrationDialogs({
           switch (selData.mode) {
             case "Export DB":
               db.dump().then((json: any) =>
-                fsDownload(json, "bunadmin.txt", "text/plain")
+                fsDownload(json, "bunadmin.json", "application/json")
               )
               break
             case "Import DB":
@@ -54,7 +54,7 @@ export default function MigrationDialogs({
       <UploadConfirmDialog
         title={uploadModal.title}
         msg={uploadModal.msg}
-        accept="text/*"
+        accept="application/json"
         openModal={uploadModal.open}
         onChange={async e => {
           try {
