@@ -1,3 +1,5 @@
+export const DynamicRoute = "/[group]/[name]"
+
 const userPrefix = "/user"
 
 export const UserRoute = {
@@ -6,11 +8,11 @@ export const UserRoute = {
   profile: `${userPrefix}/profile`
 }
 
-const localDataPrefix = "/local-data"
+export const CoreGroupName = "core"
 
 export const LocalDataRoute = {
-  leftMenu: `${localDataPrefix}/left-menu`,
-  notice: `${localDataPrefix}/notice`,
-  schema: `${localDataPrefix}/schema`,
-  migration: `${localDataPrefix}/migration`
+  leftMenu: `/${CoreGroupName}/left-menu`,
+  notice: `/${CoreGroupName}/notice`,
+  schema: `/${CoreGroupName}/schema`,
+  migration: `/${CoreGroupName}/migration`
 }
