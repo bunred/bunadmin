@@ -20,7 +20,7 @@ export const settingMenus = ({ theme }: Param) =>
       route: LocalDataRoute.leftMenu,
       icon: (
         <EvaIcon
-          name="menu-outline"
+          name="link-outline"
           size="large"
           fill={theme.bunadmin.iconColor}
         />
