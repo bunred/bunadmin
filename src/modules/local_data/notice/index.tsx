@@ -1,4 +1,4 @@
-import React, { RefObject, useRef, useState } from "react"
+import React, { useState } from "react"
 
 import MaterialTable from "material-table"
 import { useTheme } from "@material-ui/core/styles"
@@ -6,7 +6,6 @@ import { CommonTableDefaultProps as DefaultProps } from "../../../components/Com
 
 import { CommonTableHead } from "../../../components/CommonTable"
 import tableIcons from "../../../components/CommonTable/models/tableIcons"
-import DefaultLayout from "../../../layouts/DefaultLayout"
 import rxSubscribe from "../../../utils/local_database/rxSubscribe"
 import { Columns } from "./columns"
 import { Schema } from "./schema"
@@ -18,7 +17,6 @@ import rxDb from "../../../utils/local_database/rxConnect"
 export default function LocalNoticeContainer() {
   const theme = useTheme()
   const [data, setData] = useState([])
-  const myRef = useRef() as RefObject<HTMLDivElement>
   const [selData, setSelData] = useState()
   const [modalState, setModalState] = useState({
     open: 0,
@@ -37,8 +35,8 @@ export default function LocalNoticeContainer() {
   }, [])
 
   return (
-    <div ref={myRef}>
-      <DefaultLayout>
+    <>
+      <>
         <CommonTableHead title={Schema.title} />
         <MaterialTable
           title={Schema.title}
@@ -85,7 +83,7 @@ export default function LocalNoticeContainer() {
             )
           }}
         />
-      </DefaultLayout>
+      </>
       {/* ConfirmDialog */}
       <ConfirmDialog
         openModal={modalState.open}
@@ -112,6 +110,6 @@ export default function LocalNoticeContainer() {
           }
         }}
       />
-    </div>
+    </>
   )
 }

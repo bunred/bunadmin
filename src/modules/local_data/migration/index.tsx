@@ -1,4 +1,4 @@
-import React, { RefObject, useRef, useState } from "react"
+import React, { useState } from "react"
 
 import MaterialTable, { MTableToolbar } from "material-table"
 import { useTheme } from "@material-ui/core/styles"
@@ -6,7 +6,6 @@ import { CommonTableDefaultProps as DefaultProps } from "../../../components/Com
 
 import { CommonTableHead } from "../../../components/CommonTable"
 import tableIcons from "../../../components/CommonTable/models/tableIcons"
-import DefaultLayout from "../../../layouts/DefaultLayout"
 import { Columns } from "./columns"
 import { Schema } from "./schema"
 import { Data } from "./data"
@@ -24,7 +23,6 @@ import MigrationDialogs from "./components/Dialog"
 export default function MigrationContainer() {
   const theme = useTheme()
   const color: string = theme.bunadmin.iconColor
-  const myRef = useRef() as RefObject<HTMLDivElement>
   const [selData, setSelData] = useState({
     name: "schema",
     mode: "Export"
@@ -41,8 +39,8 @@ export default function MigrationContainer() {
   })
 
   return (
-    <div ref={myRef}>
-      <DefaultLayout>
+    <>
+      <>
         <CommonTableHead title={Schema.title} />
         <MaterialTable
           title={Schema.title}
@@ -152,46 +150,51 @@ export default function MigrationContainer() {
             )
           }}
           // detailPanel
-          detailPanel={rowData => {
-            if (!rowData.columns) {
-              return (
-                <div
-                  style={{
-                    color: "white",
-                    backgroundColor: theme.bunadmin.iconColor,
-                    padding: "10px 30px"
-                  }}
-                >
-                  {rowData.columns || "COLUMNS IS EMPTY"}
-                </div>
-              )
-            } else {
-              const json = rowData.columns || {}
-              return (
-                <JSONInput
-                  viewOnly
-                  theme="light_mitsuketa_tribute"
-                  placeholder={json}
-                  locale={locale}
-                  style={{
-                    outerBox: { width: "100%" },
-                    container: { width: "100%", fontSize: 14 }
-                  }}
-                  colors={{
-                    background: theme.bunadmin.jsonViewBg,
-                    default: theme.palette.primary.light
-                  }}
-                />
-              )
-            }
-          }}
+          detailPanel={[
+            {
+              icon: "code",
+              render: rowData => {
+                if (!rowData.columns) {
+                  return (
+                    <div
+                      style={{
+                        color: "white",
+                        backgroundColor: theme.bunadmin.iconColor,
+                        padding: "10px 30px"
+                      }}
+                    >
+                      {rowData.columns || "COLUMNS IS EMPTY"}
+                    </div>
+                  )
+                } else {
+                  const json = rowData.columns || {}
+                  return (
+                    <JSONInput
+                      viewOnly
+                      theme="light_mitsuketa_tribute"
+                      placeholder={json}
+                      locale={locale}
+                      style={{
+                        outerBox: { width: "100%" },
+                        container: { width: "100%", fontSize: 14 }
+                      }}
+                      colors={{
+                        background: theme.bunadmin.jsonViewBg,
+                        default: theme.palette.primary.light
+                      }}
+                    />
+                  )
+                } // check columns
+              } // render
+            } // item
+          ]}
         />
-      </DefaultLayout>
+      </>
       <MigrationDialogs
         selData={selData}
         modalState={modalState}
         uploadModal={uploadModal}
       />
-    </div>
+    </>
   )
 }
