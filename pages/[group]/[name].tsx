@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import CommonSchema from "../../src/components/CommonSchema"
 import DefaultLayout from "../../src/layouts/DefaultLayout"
 import {useRouter} from "next/router"
-import CorePages from "../../src/components"
+import CorePages from "../../src/components/CorePages"
 
 interface Interface {
   group: string
