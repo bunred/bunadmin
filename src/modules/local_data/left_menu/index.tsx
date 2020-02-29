@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 
 import { CommonTableHead } from "../../../components/CommonTable"
-import DefaultLayout from "../../../layouts/DefaultLayout"
 
 import { Collection } from "./collections"
 import { Schema } from "./schema"
@@ -29,7 +28,7 @@ export default function LocalLeftMenuContainer() {
   }, [])
 
   return (
-    <DefaultLayout>
+    <>
       <CommonTableHead title={Schema.title} />
       <MaterialTable
         title={Schema.title}
@@ -49,6 +48,6 @@ export default function LocalLeftMenuContainer() {
         // parentChildData
         parentChildData={(row, rows) => rows.find(a => a.name === row.parent)}
       />
-    </DefaultLayout>
+    </>
   )
 }

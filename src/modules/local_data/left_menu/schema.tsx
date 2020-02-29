@@ -1,4 +1,4 @@
-export const Primary = "name"
+export const Primary = "id"
 
 export const Schema = {
   title: "Local Left Menu",
@@ -10,10 +10,20 @@ export const Schema = {
       type: "string",
       primary: true
     },
+    name: {
+      type: "string",
+      index: true
+    },
     label: {
       type: "string"
     },
     slug: {
+      type: "string"
+    },
+    icon: {
+      type: "string"
+    },
+    icon_type: {
       type: "string"
     },
     rank: {
@@ -26,5 +36,5 @@ export const Schema = {
       type: "string" // ref-values must always be string (primary of foreign RxDocument)
     }
   },
-  required: ["slug"]
+  required: ["name", "slug"]
 }

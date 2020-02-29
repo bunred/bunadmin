@@ -16,8 +16,9 @@ export function editableController(): EditableDataType<Type> {
       new Promise(async resolve => {
         try {
           const db = await rxDb()
+          const parent = newData.parent || ""
 
-          await db[collection].insert(newData)
+          await db[collection].insert({ ...newData, parent })
 
           // show notice
           await bNotice({ title: `Created successful` })
