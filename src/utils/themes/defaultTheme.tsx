@@ -40,7 +40,7 @@ const defaultTheme = createMuiTheme({
       main: "#36f"
     },
     secondary: {
-      main: "#19857b"
+      main: "#00d68f"
     },
     error: {
       main: red.A400
@@ -50,15 +50,19 @@ const defaultTheme = createMuiTheme({
     }
   },
   typography: {
+    fontFamily:
+      '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',
     body1: {
-      fontSize: ".8125rem"
+      fontSize: ".8125rem",
+      fontWeight: 600
     }
   },
   overrides: {
     // component name
     MuiListItemIcon: {
       root: {
-        color: iconColor
+        color: iconColor,
+        minWidth: 35
       }
     },
     MuiCssBaseline: {
@@ -85,7 +89,30 @@ const defaultTheme = createMuiTheme({
         },
         ".MuiTable-root .MuiIconButton-root.Mui-disabled": {
           opacity: 0.5
-        }
+        },
+        // left menu
+        "[class*=drawerClose] nav .MuiListItem-root .MuiListItemText-root span": {
+          height: 0,
+          display: "inline-block",
+          overflow: "hidden"
+        }, // root
+        "[class*=drawerClose] nav .MuiCollapse-container .MuiListItem-root .MuiListItemText-root span": {
+          overflow: "visible",
+          whiteSpace: "nowrap",
+          transform: "translateX(0)",
+          transition: "1s",
+          minWidth: 50
+        }, // text only
+        "[class*=drawerClose] nav .MuiCollapse-container .MuiListItem-root .MuiListItemText-root span:hover": {
+          transform: "translateX(calc(50px - 100%))"
+        }, // text only
+        "[class*=drawerClose] nav .MuiCollapse-container .MuiListItem-root": {
+          paddingLeft: 20,
+          transition: "padding-left 0.5s ease"
+        }, // child
+        "[class*=drawerClose] nav .MuiCollapse-container .MuiListItem-root .MuiListItemIcon-root+.MuiListItemText-root span": {
+          overflow: "hidden"
+        } // text with icon
       }
     }
   }
