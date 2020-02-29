@@ -1,41 +1,34 @@
-import List from "@material-ui/core/List"
-import ListItem from "@material-ui/core/ListItem"
-import ListItemIcon from "@material-ui/core/ListItemIcon"
-import InboxIcon from "@material-ui/icons/MoveToInbox"
-import MailIcon from "@material-ui/icons/Mail"
-import ListItemText from "@material-ui/core/ListItemText"
-import Divider from "@material-ui/core/Divider"
-import React from "react"
-import NestedList from "./NestedMenu"
+import React, { useEffect, useState } from "react"
 
-const LeftMenu = () => (
-  <div>
-    <List>
-      {["Product", "Product Order", "Send email", "Drafts"].map(
-        (text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        )
-      )}
-    </List>
-    <Divider />
-    <List>
-      {["All mail", "Trash", "Spam"].map((text, index) => (
-        <ListItem button key={text}>
-          <ListItemIcon>
-            {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-          </ListItemIcon>
-          <ListItemText primary={text} />
-        </ListItem>
-      ))}
-    </List>
-    <Divider />
-    <NestedList />
-  </div>
-)
+import Divider from "@material-ui/core/Divider"
+import NestedList from "./NestedMenu"
+import SettingMenu from "./SettingMenu"
+import rxSubscribe from "../../../utils/local_database/rxSubscribe"
+import { Collection } from "../../../modules/local_data/left_menu/collections"
+import { Type } from "../../../modules/local_data/left_menu/types"
+
+const LeftMenu = () => {
+  const [data, setData] = useState([] as Type[])
+
+  useEffect(() => {
+    ;(async () => {
+      await rxSubscribe({
+        collection: Collection.name,
+        sort: { rank: "desc" },
+        callback: data => {
+          setData(data)
+        }
+      })
+    })()
+  }, [])
+
+  return (
+    <>
+      <NestedList data={data} />
+      <Divider />
+      <SettingMenu />
+    </>
+  )
+}
 
 export default LeftMenu
