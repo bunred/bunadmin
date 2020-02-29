@@ -7,12 +7,15 @@ import MenuItem from "@material-ui/core/MenuItem"
 import Menu from "@material-ui/core/Menu"
 import EvaIcon from "react-eva-icons"
 import { useTheme } from "@material-ui/core/styles"
-import { LocalDataRoute } from "../../../../utils/routes"
 import ConfirmDialog from "../../../../components/CommonDialog/ConfirmDialog"
+import Divider from "@material-ui/core/Divider"
+import { settingMenus } from "../../../../utils/config/settingMenus"
+import { DynamicRoute } from "../../../../utils/routes"
 
 export default function SettingMenu() {
   const theme = useTheme()
   const router = useRouter()
+  const { group: qGroup, name: qName } = router.query
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const [modalState, setModalState] = useState({
@@ -28,7 +31,7 @@ export default function SettingMenu() {
   const handleClose = ({ route }: { route: string }) => {
     setAnchorEl(null)
     if (!route) return
-    router.push(route).then(_r => {})
+    router.push(DynamicRoute, route).then(_r => {})
   }
 
   const handleClearDb = () => {
@@ -71,22 +74,17 @@ export default function SettingMenu() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem
-          onClick={() => handleClose({ route: LocalDataRoute.leftMenu })}
-        >
-          Menu Setting
-        </MenuItem>
-        <MenuItem onClick={() => handleClose({ route: LocalDataRoute.schema })}>
-          Schema Manager
-        </MenuItem>
-        <MenuItem
-          onClick={() => handleClose({ route: LocalDataRoute.migration })}
-        >
-          Data Migration
-        </MenuItem>
-        <MenuItem onClick={() => handleClose({ route: "/" })}>
-          Theme Setting
-        </MenuItem>
+        {settingMenus({ theme }).map((item, index) => (
+          <MenuItem
+            key={index}
+            selected={item.route === `/${qGroup}/${qName}`}
+            onClick={() => handleClose({ route: item.route })}
+          >
+            {item.name}
+          </MenuItem>
+        ))}
+        {/* ClearDb */}
+        <Divider />
         <MenuItem onClick={() => handleClearDb()}>
           Reset Local Database
         </MenuItem>
