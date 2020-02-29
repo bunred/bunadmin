@@ -4,6 +4,7 @@ import { Type } from "../types"
 import { Collection } from "../collections"
 import { Primary } from "../schema"
 import bNotice from "../../notice/controllers/notice"
+import { CoreGroupName } from "../../../../utils/routes"
 
 export function editableController(): EditableDataType<Type> {
   const collection = Collection.name
@@ -13,11 +14,30 @@ export function editableController(): EditableDataType<Type> {
   const created_at = { created_at: Date.now() }
   const updated_at = { updated_at: Date.now() }
 
+  async function checkGroup(group: string) {
+    if (group === CoreGroupName) {
+      // show notice
+      await bNotice({
+        title: `Created failed`,
+        severity: "error",
+        content: "Group name can't be `core`"
+      })
+      return true
+    } else {
+      return false
+    }
+  }
+
   return {
     // isEditable: rowData => rowData.not_editable === true, // only name(a) rows would be editable
     // isDeletable: rowData => rowData.not_deletable === true, // only name(a) rows would be deletable
     onRowAdd: newData =>
       new Promise(async resolve => {
+        // check group
+        if (await checkGroup(newData.group)) {
+          return resolve()
+        }
+
         try {
           const db = await rxDb()
 
@@ -45,6 +65,11 @@ export function editableController(): EditableDataType<Type> {
       }),
     onRowUpdate: newData =>
       new Promise(async resolve => {
+        // check group
+        if (await checkGroup(newData.group)) {
+          return resolve()
+        }
+
         try {
           const db = await rxDb()
 

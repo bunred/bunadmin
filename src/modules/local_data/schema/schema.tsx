@@ -18,10 +18,16 @@ export const Schema = {
       type: "number",
       index: true
     },
+    team: {
+      type: "string"
+    },
     group: {
       type: "string"
     },
     name: {
+      type: "string"
+    },
+    label: {
       type: "string"
     },
     columns: {
@@ -47,5 +53,5 @@ export const Schema = {
       // } // items
     } // columns
   },
-  required: ["group", "name"]
+  required: ["team", "group", "name", "columns"]
 }

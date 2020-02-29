@@ -2,7 +2,9 @@ export interface Type {
   id: string
   created_at: number
   updated_at: number
+  team: string
   group: string
   name: string
-  columns: string | null // Column<any>[] (JsonStr)
+  label?: string
+  columns: string // Column<any>[] (JsonStr)
 }

@@ -16,6 +16,7 @@ import locale from "react-json-editor-ajrm/locale/en"
 
 import { DialogTitle } from "./DialogTitle"
 import { useTheme } from "@material-ui/core/styles"
+import jsonViewStyles from "../../../../../utils/styles/jsonViewStyles"
 
 const DynamicReactJson = dynamic(import("react-json-view"), { ssr: false })
 
@@ -67,12 +68,7 @@ export default function EditColumns(props: EditComponentProps<Type>) {
               onAdd={handleJson}
               onEdit={handleJson}
               onDelete={handleJson}
-              style={{
-                backgroundColor: "rgba(143, 155, 179, 0.3)",
-                padding: "10px 30px",
-                fontSize: 14,
-                fontFamily: "auto"
-              }}
+              style={jsonViewStyles({ theme })}
             />
           )}
           {mode === "code" && (

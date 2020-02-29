@@ -1,4 +1,4 @@
-import React, { RefObject, useRef, useState } from "react"
+import React, { useState } from "react"
 
 import MaterialTable from "material-table"
 import { useTheme } from "@material-ui/core/styles"
@@ -6,7 +6,6 @@ import { CommonTableDefaultProps as DefaultProps } from "../../../components/Com
 
 import { CommonTableHead } from "../../../components/CommonTable"
 import tableIcons from "../../../components/CommonTable/models/tableIcons"
-import DefaultLayout from "../../../layouts/DefaultLayout"
 import rxSubscribe from "../../../utils/local_database/rxSubscribe"
 import { Columns } from "./columns"
 import { Schema } from "./schema"
@@ -15,12 +14,12 @@ import { Collection } from "./collections"
 import ConfirmDialog from "../../../components/CommonDialog/ConfirmDialog"
 import rxDb from "../../../utils/local_database/rxConnect"
 import dynamic from "next/dynamic"
+import jsonViewStyles from "../../../utils/styles/jsonViewStyles"
 const DynamicReactJson = dynamic(import("react-json-view"), { ssr: false })
 
 export default function SchemaManagerContainer() {
   const theme = useTheme()
   const [data, setData] = useState([])
-  const myRef = useRef() as RefObject<HTMLDivElement>
   const [selData, setSelData] = useState()
   const [modalState, setModalState] = useState({
     open: 0,
@@ -32,15 +31,15 @@ export default function SchemaManagerContainer() {
     ;(async () => {
       await rxSubscribe({
         collection: Collection.name,
-        sort: { created_at: "desc" },
+        sort: { id: "asc" },
         callback: data => setData(data)
       })
     })()
   }, [])
 
   return (
-    <div ref={myRef}>
-      <DefaultLayout>
+    <>
+      <>
         <CommonTableHead title={Schema.title} />
         <MaterialTable
           title={Schema.title}
@@ -54,7 +53,7 @@ export default function SchemaManagerContainer() {
           // icons
           icons={tableIcons({ theme })}
           // options
-          options={{ ...DefaultProps.options, filtering: true }}
+          options={{ ...DefaultProps.options, filtering: true, grouping: true }}
           // actions
           actions={[
             {
@@ -73,41 +72,41 @@ export default function SchemaManagerContainer() {
             }
           ]}
           // detailPanel
-          detailPanel={rowData => {
-            if (!rowData.columns) {
-              return (
-                <div
-                  style={{
-                    color: "white",
-                    backgroundColor: theme.bunadmin.iconColor,
-                    padding: "10px 30px"
-                  }}
-                >
-                  {rowData.columns || "COLUMNS IS EMPTY"}
-                </div>
-              )
-            } else {
-              const str = rowData.columns || ""
-              return (
-                <DynamicReactJson
-                  src={JSON.parse(str)}
-                  theme="summerfruit:inverted"
-                  iconStyle="circle"
-                  collapseStringsAfterLength={20}
-                  displayObjectSize={true}
-                  displayDataTypes={true}
-                  style={{
-                    backgroundColor: "rgba(143, 155, 179, 0.3)",
-                    padding: "10px 30px",
-                    fontSize: 14,
-                    fontFamily: "auto"
-                  }}
-                />
-              )
-            }
-          }}
+          detailPanel={[
+            {
+              icon: "code",
+              render: rowData => {
+                if (!rowData.columns) {
+                  return (
+                    <div
+                      style={{
+                        color: "white",
+                        backgroundColor: theme.bunadmin.iconColor,
+                        padding: "10px 30px"
+                      }}
+                    >
+                      {rowData.columns || "COLUMNS IS EMPTY"}
+                    </div>
+                  )
+                } else {
+                  const str = rowData.columns || ""
+                  return (
+                    <DynamicReactJson
+                      src={JSON.parse(str)}
+                      theme="summerfruit:inverted"
+                      iconStyle="circle"
+                      collapseStringsAfterLength={20}
+                      displayObjectSize={false}
+                      displayDataTypes={false}
+                      style={jsonViewStyles({ theme })}
+                    />
+                  )
+                } // check columns
+              } // render
+            } // item
+          ]}
         />
-      </DefaultLayout>
+      </>
       {/* ConfirmDialog */}
       <ConfirmDialog
         openModal={modalState.open}
@@ -134,6 +133,6 @@ export default function SchemaManagerContainer() {
           }
         }}
       />
-    </div>
+    </>
   )
 }
