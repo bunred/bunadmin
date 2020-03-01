@@ -3,6 +3,7 @@ import CommonSchema from "../../src/components/CommonSchema"
 import DefaultLayout from "../../src/layouts/DefaultLayout"
 import {useRouter} from "next/router"
 import CorePages from "../../src/components/CorePages"
+import SignInContainer from "../../src/components/User/SignIn"
 
 interface Interface {
   group: string
@@ -21,13 +22,25 @@ const ModulePage = () => {
 
   if (!ready) return null
 
+  let render
+
+  switch (group) {
+    case "core":
+      render = <CorePages/>
+      break
+    case "user":
+      switch (name) {
+        case "sign-in":
+          return <SignInContainer />
+      }
+      break
+    default:
+      render = <CommonSchema />
+  }
+
   return (
     <DefaultLayout>
-      {
-        group === "core"
-          ? <CorePages/>
-          : <CommonSchema />
-      }
+      {render}
     </DefaultLayout>
   )
 }
