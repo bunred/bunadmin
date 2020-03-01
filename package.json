@@ -7,6 +7,8 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.43",
     "clsx": "latest",
+    "formik": "^2.1.4",
+    "formik-material-ui": "^2.0.0-beta.1",
     "material-table": "^1.57.2",
     "next": "latest",
     "notistack": "^0.9.8",
@@ -19,7 +21,8 @@
     "react-json-view": "^1.19.1",
     "rxdb": "^8.7.5",
     "rxjs": "^6.5.4",
-    "shortid": "^2.2.15"
+    "shortid": "^2.2.15",
+    "umi-request": "^1.2.19"
   },
   "scripts": {
     "dev": "next -p 1911",
