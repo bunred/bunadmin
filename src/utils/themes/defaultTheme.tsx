@@ -65,6 +65,14 @@ const defaultTheme = createMuiTheme({
         minWidth: 35
       }
     },
+    MuiButton: {
+      containedPrimary: {
+        "&:hover": {
+          backgroundColor: "#598bff"
+        }
+      }
+    },
+    // cssBaseLine
     MuiCssBaseline: {
       "@global": {
         // scrollbar start
