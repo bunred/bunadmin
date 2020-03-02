@@ -9,6 +9,8 @@ import { CommonTableDefaultProps as DefaultProps } from "../CommonTable/models/d
 import tableIcons from "../CommonTable/models/tableIcons"
 import { Type } from "../../modules/local_data/schema/types"
 import { useTheme } from "@material-ui/core/styles"
+import { Skeleton } from "@material-ui/lab"
+import { Box } from "@material-ui/core"
 
 interface Interface {
   group: string
@@ -25,11 +27,9 @@ export default function CommonSchema() {
   const { group, name } = (router.query as unknown) as Interface
   const [ready, setReady] = useState(false)
 
-  const [state, setState] = useState({
-    schema: null
-  })
+  const [state, setState] = useState({})
 
-  const { schema } = (state as unknown) as StateSchemaType
+  const { schema } = state as StateSchemaType
 
   const schemaCollection = Collection.name
 
@@ -45,13 +45,21 @@ export default function CommonSchema() {
         .eq(name)
         .exec()
         .then((doc: any) => {
+          if (!doc) return
           setState({ schema: doc })
           setReady(true)
         })
     })()
   }, [name])
 
-  if (!ready) return null
+  if (!ready)
+    return (
+      <Box p={3}>
+        <Skeleton width={100} />
+        <Skeleton />
+        <Skeleton />
+      </Box>
+    )
 
   return (
     <>

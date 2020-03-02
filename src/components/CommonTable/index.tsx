@@ -39,7 +39,7 @@ export default function CommonTable({ ...props }: CommonTableProps<any>) {
   } = props
   const theme = useTheme()
   const [listData, setListData] = useState([])
-  const [selectedRow, setSelectedRow] = useState()
+  const [selectedRow, setSelectedRow] = useState({ tableData: { id: null } })
   const tableRef = useRef() as RefObject<HTMLDivElement>
 
   useEffect(() => {

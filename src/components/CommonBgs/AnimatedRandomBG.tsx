@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { ReactElement, useEffect, useState } from "react"
 import Head from "next/head"
 
 function genSpan(len: number) {
@@ -9,7 +9,12 @@ function genSpan(len: number) {
   return indents
 }
 
-const bgs = [
+interface BgsType {
+  css: string
+  html: ReactElement
+}
+
+const bgs: BgsType[] = [
   {
     css: "/assets/css/blurBg.css",
     html: <div className="blurBg">{genSpan(20)}</div>
@@ -25,10 +30,11 @@ const bgs = [
 ]
 
 function AnimatedRandomBG() {
-  const [bg, setBg] = useState()
+  const [bg, setBg] = useState(bgs[0])
 
   useEffect(() => {
-    const bg = bgs[parseInt(String(Math.random() * bgs.length))]
+    const randomNum = Math.floor(Math.random() * bgs.length)
+    const bg = bgs[randomNum]
     setBg(bg)
   }, [])
 
@@ -36,9 +42,9 @@ function AnimatedRandomBG() {
     <>
       <Head>
         <title>Login</title>
-        {bg && <link rel="stylesheet" href={bg.css} />}
+        {<link rel="stylesheet" href={bg.css} />}
       </Head>
-      {bg && bg.html}
+      {bg.html}
     </>
   )
 }
