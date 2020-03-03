@@ -6,7 +6,8 @@ export const defaultLayoutStyles = makeStyles((theme: Theme) => {
   const drawerTop = theme.spacing(8)
   return createStyles({
     root: {
-      display: "flex"
+      display: "flex",
+      height: "-webkit-fill-available"
     },
     drawer: {
       whiteSpace: "nowrap",

@@ -7,6 +7,7 @@ import { defaultLayoutStyles } from "./styles"
 import DefaultHead from "../../components/DefaultHead"
 import LeftMenu from "./LeftMenu"
 import TopBar from "./TopBar"
+import { Fade } from "@material-ui/core"
 
 const useStyles = defaultLayoutStyles
 
@@ -55,9 +56,11 @@ export default function DefaultLayout(props: ResponsiveDrawerProps) {
         </Drawer>
       </nav>
       <main className={classes.content}>
-        <Box boxShadow={1} className={classes.contentBox}>
-          {children}
-        </Box>
+        <Fade in>
+          <Box boxShadow={1} className={classes.contentBox}>
+            {children}
+          </Box>
+        </Fade>
       </main>
     </div>
   )
