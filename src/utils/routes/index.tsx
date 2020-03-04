@@ -3,7 +3,7 @@ export const DynamicRoute = "/[group]/[name]"
 const userPrefix = "/user"
 
 export const UserRoute = {
-  login: `${userPrefix}/login`,
+  signIn: `${userPrefix}/sign-in`,
   register: `${userPrefix}/register`,
   profile: `${userPrefix}/profile`
 }
@@ -14,5 +14,6 @@ export const LocalDataRoute = {
   leftMenu: `/${CoreGroupName}/left-menu`,
   notice: `/${CoreGroupName}/notice`,
   schema: `/${CoreGroupName}/schema`,
-  migration: `/${CoreGroupName}/migration`
+  migration: `/${CoreGroupName}/migration`,
+  auth: `/${CoreGroupName}/auth`
 }
