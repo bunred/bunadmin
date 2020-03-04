@@ -5,6 +5,7 @@ const iconColor = "#8f9bb3"
 const contentBg = "#EDF1F7"
 const contentBoxBg = "#FFF"
 const jsonViewBg = "rgba(143, 155, 179, 0.3)"
+const bodyBg = contentBg
 
 declare module "@material-ui/core/styles/createMuiTheme" {
   interface Theme {
@@ -46,7 +47,7 @@ const defaultTheme = createMuiTheme({
       main: red.A400
     },
     background: {
-      default: "#fff"
+      default: bodyBg
     }
   },
   typography: {
@@ -75,6 +76,8 @@ const defaultTheme = createMuiTheme({
     // cssBaseLine
     MuiCssBaseline: {
       "@global": {
+        // body
+        background: bodyBg,
         // scrollbar start
         "*::-webkit-scrollbar": {
           width: ".4rem"
