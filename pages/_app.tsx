@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { AppProps } from "next/app"
 import Head from "next/head"
 import { ThemeProvider } from "@material-ui/core/styles"
@@ -7,14 +7,20 @@ import defaultTheme from "../src/utils/themes/defaultTheme"
 import CommonSnackbar from "../src/components/CommonSnackbar"
 import { SnackbarProvider } from "notistack"
 import SnackMessage from "../src/components/CommonSnackbar/Message"
+import rxInitData from "../src/utils/local_database/rxInitData"
 
 const App = ({ Component, pageProps }: AppProps) => {
-  React.useEffect(() => {
-    const jssStyles = document.querySelector("#jss-server-side")
-    if (jssStyles) {
-      // @ts-ignore
-      jssStyles.parentElement.removeChild(jssStyles)
-    }
+  useEffect(() => {
+    ;(async () => {
+      // Init Data
+      await rxInitData()
+
+      const jssStyles = document.querySelector("#jss-server-side")
+      if (jssStyles) {
+        // @ts-ignore
+        jssStyles.parentElement.removeChild(jssStyles)
+      }
+    })()
   }, [])
 
   return (
