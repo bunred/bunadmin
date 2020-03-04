@@ -15,12 +15,13 @@ import ConfirmDialog from "../../../components/CommonDialog/ConfirmDialog"
 import rxDb from "../../../utils/local_database/rxConnect"
 import dynamic from "next/dynamic"
 import jsonViewStyles from "../../../utils/styles/jsonViewStyles"
+import { Type } from "./types"
 const DynamicReactJson = dynamic(import("react-json-view"), { ssr: false })
 
 export default function SchemaManagerContainer() {
   const theme = useTheme()
   const [data, setData] = useState([])
-  const [selData, setSelData] = useState()
+  const [selData, setSelData] = useState<Type[]>()
   const [modalState, setModalState] = useState({
     open: 0,
     title: "",
@@ -60,7 +61,7 @@ export default function SchemaManagerContainer() {
               tooltip: "Remove All Selected Schemas",
               icon: "delete",
               onClick: (_evt, data) => {
-                // @ts-ignore
+                data = data as Type[]
                 const msg = "Do you want to delete " + data.length + " rows ?"
                 setModalState({
                   title: "Bulk delete",
@@ -114,7 +115,7 @@ export default function SchemaManagerContainer() {
         msg={modalState.msg}
         doFunc={() => {
           // bulk delete
-          if (selData.length > 0) {
+          if (selData && selData.length > 0) {
             // @ts-ignore
             selData.map(async item => {
               try {

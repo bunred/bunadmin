@@ -13,11 +13,12 @@ import { editableController } from "./controllers/editable_controller"
 import { Collection } from "./collections"
 import ConfirmDialog from "../../../components/CommonDialog/ConfirmDialog"
 import rxDb from "../../../utils/local_database/rxConnect"
+import { Type } from "./types"
 
 export default function LocalNoticeContainer() {
   const theme = useTheme()
   const [data, setData] = useState([])
-  const [selData, setSelData] = useState()
+  const [selData, setSelData] = useState<Type[]>()
   const [modalState, setModalState] = useState({
     open: 0,
     title: "",
@@ -57,7 +58,7 @@ export default function LocalNoticeContainer() {
               tooltip: "Remove All Selected Notices",
               icon: "delete",
               onClick: (_evt, data) => {
-                // @ts-ignore
+                data = data as Type[]
                 const msg = "Do you want to delete " + data.length + " rows ?"
                 setModalState({
                   title: "Bulk delete",
@@ -91,8 +92,7 @@ export default function LocalNoticeContainer() {
         msg={modalState.msg}
         doFunc={() => {
           // bulk delete
-          if (selData.length > 0) {
-            // @ts-ignore
+          if (selData && selData.length > 0) {
             selData.map(async item => {
               try {
                 const db = await rxDb()
