@@ -3,40 +3,44 @@ import { Box, Button, Typography } from "@material-ui/core"
 import DefaultLayout from "../../layouts/DefaultLayout"
 import errorMessages from "./models/errorMessages"
 import { ErrorMsg, ErrorProps } from "./models/types"
+import { useRouter } from "next/router"
 
-function CommonError({
-  statusCode,
-  hasLayout
-}: {
+interface Props {
   statusCode: number
   hasLayout: boolean
-}) {
+  message?: string
+  redirect?: string
+}
+
+function CommonError({ statusCode, hasLayout, message, redirect }: Props) {
+  const router = useRouter()
+
   const msg = (msg: ErrorMsg) => {
     return (
       <Box p={2} fontWeight="fontWeightLight">
         <Typography variant="h5" color="initial" display="inline">
           {msg.title}
-        </Typography>{" "}
-        -{" "}
+          {" - "}
+        </Typography>
         <Typography variant="h5" color="error" display="inline">
           <small>Error {statusCode}</small>
         </Typography>
         <Box p={1} />
-        {msg.message}
+        {message || msg.message}
         <Box p={1} />
         <Button
           size="small"
           variant="contained"
           color="primary"
           disableElevation
+          onClick={() => router.push(redirect || "/")}
         >
-          Take Me Home
+          {redirect ? "Redirect" : "Take Me Home"}
         </Button>
       </Box>
     )
   }
 
-  console.log(hasLayout)
   if (!hasLayout)
     return (
       <Box p={3}>
