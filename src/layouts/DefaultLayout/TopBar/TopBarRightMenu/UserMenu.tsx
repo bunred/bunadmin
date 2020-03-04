@@ -1,20 +1,49 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import IconButton from "@material-ui/core/IconButton"
 import MenuItem from "@material-ui/core/MenuItem"
 import Menu from "@material-ui/core/Menu"
 import EvaIcon from "react-eva-icons"
 import { useTheme } from "@material-ui/core/styles"
-import { Collection } from "../../../../modules/local_data/auth/collections"
+import { Collection } from "../../../../modules/local_data/setting/collections"
 import rxDb from "../../../../utils/local_database/rxConnect"
 import Divider from "@material-ui/core/Divider"
-import { DynamicRoute, LocalDataRoute } from "../../../../utils/routes"
+import {
+  DynamicRoute,
+  LocalDataRoute,
+  UserRoute
+} from "../../../../utils/routes"
 import { useRouter } from "next/router"
+import rxSubscribe from "../../../../utils/local_database/rxSubscribe"
+import { Primary } from "../../../../modules/local_data/auth/schema"
+
+interface State {
+  username: string | "Guest"
+}
 
 export default function UserMenu() {
   const theme = useTheme()
   const router = useRouter()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
+  const [state, setState] = useState<State>({
+    username: "Guest"
+  })
+
+  useEffect(() => {
+    ;(async () => {
+      await rxSubscribe({
+        collection: Collection.name,
+        where: { name: Primary },
+        callback: data =>
+          data &&
+          data[0] &&
+          setState({
+            ...state,
+            username: data[0]["value"]
+          })
+      })
+    })()
+  }, [])
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -27,16 +56,15 @@ export default function UserMenu() {
   }
 
   const handleLogout = async () => {
-    // query user from local store
+    // update username in setting
     const collection = Collection.name
     const db = await rxDb()
 
-    const localUser = await db[collection]
-      .findOne()
-      .sort({ updated_at: "desc" })
-      .exec()
-    // remove local user
-    await localUser.remove()
+    await db[collection].upsert({
+      name: Primary,
+      value: undefined,
+      updated_at: Date.now()
+    })
 
     handleClose({})
     location.reload()
@@ -73,9 +101,17 @@ export default function UserMenu() {
         open={open}
         onClose={() => handleClose({})}
       >
-        <MenuItem onClick={() => handleClose({})}>My Profile</MenuItem>
+        <MenuItem disabled>{`Signed as ${state.username.substr(
+          0,
+          20
+        )}`}</MenuItem>
+        <MenuItem onClick={() => handleClose({})}>Profile</MenuItem>
+        <Divider />
         <MenuItem onClick={() => handleClose({ route: LocalDataRoute.auth })}>
-          Switch User
+          Switch account
+        </MenuItem>
+        <MenuItem onClick={() => handleClose({ route: UserRoute.signIn })}>
+          Add another account
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
