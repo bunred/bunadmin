@@ -1,7 +1,9 @@
 {
-  "name": "nextjs-with-typescript",
-  "version": "4.0.0",
+  "name": "bunadmin",
   "private": true,
+  "workspaces": [
+    "plugins/*"
+  ],
   "dependencies": {
     "@material-ui/core": "latest",
     "@material-ui/icons": "^4.9.1",
@@ -9,6 +11,7 @@
     "clsx": "latest",
     "formik": "^2.1.4",
     "formik-material-ui": "^2.0.0-beta.1",
+    "lerna": "^3.20.2",
     "material-table": "^1.57.2",
     "next": "latest",
     "notistack": "^0.9.8",
@@ -25,6 +28,7 @@
     "umi-request": "^1.2.19"
   },
   "scripts": {
+    "setup": "yarn && yarn build",
     "dev": "next -p 1911",
     "build": "next build",
     "fix": "prettier --write  --no-semi src/** pages/** test/**",
