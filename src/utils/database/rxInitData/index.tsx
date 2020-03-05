@@ -1,5 +1,5 @@
 import rxDb from "../rxConnect"
-import { Collection as Setting } from "../../../modules/local_data/setting/collections"
+import { Collection as Setting } from "@/core/setting/collections"
 import initSetting from "./initSetting"
 
 export default async function rxNewDocuments() {
@@ -8,10 +8,13 @@ export default async function rxNewDocuments() {
   const is_init = await setting.findOne({ name: { $eq: "init_status" } }).exec()
 
   if (is_init) {
-    // !!!JUST FOR DEBUG (init every time )
+    /**
+     * !!!DEBUG ONLY
+     * Initialize data every refresh
+     */
     // await setting.remove()
 
-    return console.log("InitData: existed")
+    return console.log("DatabaseService: initialization data already exists")
   } else {
     await initSetting()
 
@@ -21,6 +24,6 @@ export default async function rxNewDocuments() {
       value: "done"
     })
 
-    return console.log("InitData: successful")
+    return console.log("DatabaseService: data initialized successfully")
   }
 }

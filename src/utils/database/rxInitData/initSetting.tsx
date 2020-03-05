@@ -1,6 +1,6 @@
-import { Collection as Setting } from "../../../modules/local_data/setting/collections"
+import { Collection as Setting } from "@/core/setting/collections"
 import rxDb from "../rxConnect"
-import { Primary } from "../../../modules/local_data/auth/schema"
+import { Primary } from "@/core/auth/schema"
 
 async function initSetting() {
   const db = await rxDb()

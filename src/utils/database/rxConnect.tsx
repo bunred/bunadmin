@@ -16,7 +16,7 @@ const _create = async () => {
     queryChangeDetection: false, // <- queryChangeDetection (optional, default: false)
     ignoreDuplicate: true
   })
-  console.log("DatabaseService: created database", db)
+  console.log("DatabaseService: created database")
 
   // show flash icon in title
   db.waitForLeadership().then(() => {
@@ -26,7 +26,7 @@ const _create = async () => {
 
   // create collections
   await Promise.all(rxCollections.map(collObj => db.collection(collObj)))
-  console.log("DatabaseService: create collections", rxCollections)
+  console.log("DatabaseService: create collections")
 
   return db
 }
