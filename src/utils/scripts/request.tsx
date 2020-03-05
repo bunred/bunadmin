@@ -39,19 +39,11 @@ const errorHandler = (error: { response: Response }): ErrorResponse => {
     const errorText = codeMessage[response.status] || response.statusText
     const { status, url } = response
 
-    // notification.error({
-    //   message: `请求错误 ${status}: ${url}`,
-    //   description: errorText
-    // })
     console.error({
       message: `请求错误 ${status}: ${url}`,
       description: errorText
     })
   } else if (!response) {
-    // notification.error({
-    //   description: "您的网络发生异常，无法连接服务器",
-    //   message: "网络异常"
-    // })
     const errorMsg = {
       description: "您的网络发生异常，无法连接服务器",
       message: "网络异常"
@@ -69,7 +61,7 @@ const request = extend({
   errorHandler, // 默认错误处理
   credentials: "same-origin", // 默认请求是否带上cookie
   prefix: bunadminConfig.userUrl,
-  timeout: 60,
+  timeout: 10000, // ms
   redirect: "follow",
   headers: {
     "Content-Type": "application/json"
