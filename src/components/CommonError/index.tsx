@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, Button, Typography } from "@material-ui/core"
-import DefaultLayout from "../../layouts/DefaultLayout"
+import DefaultLayout from "@/layouts/DefaultLayout"
 import errorMessages from "./models/errorMessages"
 import { ErrorMsg, ErrorProps } from "./models/types"
 import { useRouter } from "next/router"

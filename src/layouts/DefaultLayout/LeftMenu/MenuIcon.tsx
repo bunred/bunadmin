@@ -1,9 +1,6 @@
 import React from "react"
 
-import {
-  MenuIcon as MenuIconName,
-  MenuIconType
-} from "../../../modules/local_data/left_menu/types"
+import { MenuIcon as MenuIconName, MenuIconType } from "@/core/menu/types"
 import EvaIcon from "react-eva-icons"
 import {
   createStyles,

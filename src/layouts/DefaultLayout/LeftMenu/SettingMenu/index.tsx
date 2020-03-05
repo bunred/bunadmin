@@ -13,9 +13,9 @@ import Collapse from "@material-ui/core/Collapse"
 import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
 import EvaIcon from "react-eva-icons"
-import { settingMenus } from "../../../../utils/config/settingMenus"
+import { settingMenus } from "@/utils/config/settingMenus"
 import { useRouter } from "next/router"
-import { DynamicRoute } from "../../../../utils/routes"
+import { DynamicRoute } from "@/utils/routes"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

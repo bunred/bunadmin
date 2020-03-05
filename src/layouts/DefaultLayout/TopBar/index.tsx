@@ -8,7 +8,7 @@ import { useTheme } from "@material-ui/core/styles"
 import { topBarStyles } from "./styles"
 import UserMenu from "./TopBarRightMenu/UserMenu"
 import SettingMenu from "./TopBarRightMenu/SettingMenu"
-import Link from "../../../components/Link"
+import Link from "@/components/Link"
 import NoticeMenu from "./TopBarRightMenu/NoticeMenu"
 
 const useStyles = topBarStyles

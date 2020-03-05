@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react"
 import Divider from "@material-ui/core/Divider"
 import NestedList from "./NestedMenu"
 import SettingMenu from "./SettingMenu"
-import rxSubscribe from "../../../utils/local_database/rxSubscribe"
-import { Collection } from "../../../modules/local_data/left_menu/collections"
-import { Type } from "../../../modules/local_data/left_menu/types"
+import rxSubscribe from "@/utils/database/rxSubscribe"
+import { Collection } from "@/core/menu/collections"
+import { Type } from "@/core/menu/types"
 
 const LeftMenu = () => {
   const [data, setData] = useState([] as Type[])

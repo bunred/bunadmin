@@ -1,13 +1,13 @@
 import { Values } from "../types"
-import userSignInService from "../../../../services/user/signInService"
-import bNotice from "../../../../modules/local_data/notice/controllers/notice"
+import userSignInService from "@/services/user/signInService"
 
-import rxDb from "../../../../utils/local_database/rxConnect"
-import { Collection as Setting } from "../../../../modules/local_data/setting/collections"
-import { Collection as Auth } from "../../../../modules/local_data/auth/collections"
-import { Primary } from "../../../../modules/local_data/auth/schema"
-import { DynamicRoute } from "../../../../utils/routes"
+import rxDb from "@/utils/database/rxConnect"
+import { Collection as Setting } from "@/core/setting/collections"
+import { Collection as Auth } from "@/core/auth/collections"
+import { Primary } from "@/core/auth/schema"
+import { DynamicRoute } from "@/utils/routes"
 import { NextRouter } from "next/router"
+import { notice } from "@/core"
 
 interface Props {
   values: Values
@@ -40,7 +40,7 @@ const submitController = async ({ values, setSubmitting, router }: Props) => {
       updated_at: Date.now()
     })
     // show notice
-    await bNotice({ title: `Sign in successful` })
+    await notice({ title: `Sign in successful` })
     // push to origin url
     const { asPath } = router
     const pathArr = asPath.split("?redirect=")
@@ -57,7 +57,7 @@ const submitController = async ({ values, setSubmitting, router }: Props) => {
     }
   } else {
     // show notice
-    await bNotice({
+    await notice({
       title: `Sign in failed`,
       severity: "error",
       content: JSON.stringify(res)

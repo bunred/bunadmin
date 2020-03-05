@@ -5,9 +5,9 @@ import MaterialTable from "material-table"
 import { useTheme } from "@material-ui/core/styles"
 import tableIcons from "./models/tableIcons"
 import { CommonTableProps } from "./models/types"
-import { addTdController } from "./controllers/add_td_controller"
+import { addTdController } from "./controllers/addTdController"
 import { CommonTableDefaultProps as DefaultProps } from "./models/defaultProps"
-import rxSubscribe from "../../utils/local_database/rxSubscribe"
+import rxSubscribe from "@/utils/database/rxSubscribe"
 
 export function CommonTableHead({ title }: { title?: string }) {
   return (

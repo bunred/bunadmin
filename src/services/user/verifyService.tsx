@@ -1,8 +1,8 @@
-import request from "../../utils/scripts/request"
-import rxDb from "../../utils/local_database/rxConnect"
-import { Collection as Auth } from "../../modules/local_data/auth/collections"
-import { Collection as Setting } from "../../modules/local_data/setting/collections"
-import { Primary } from "../../modules/local_data/auth/schema"
+import request from "@/utils/scripts/request"
+import rxDb from "@/utils/database/rxConnect"
+import { Collection as Auth } from "@/core/auth/collections"
+import { Collection as Setting } from "@/core/setting/collections"
+import { Primary } from "@/core/auth/schema"
 
 async function verifyService(): Promise<any> {
   const authStore = Auth.name

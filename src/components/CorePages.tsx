@@ -1,11 +1,11 @@
 import React from "react"
 import { useRouter } from "next/router"
-import LocalLeftMenuContainer from "../modules/local_data/left_menu"
-import MigrationContainer from "../modules/local_data/migration"
-import LocalNoticeContainer from "../modules/local_data/notice"
-import SchemaManagerContainer from "../modules/local_data/schema"
-import AuthInfoContainer from "../modules/local_data/auth"
-import BunadminSettingContainer from "../modules/local_data/setting"
+import LocalLeftMenuContainer from "@/core/menu"
+import MigrationContainer from "@/core/migration"
+import LocalNoticeContainer from "@/core/notice"
+import SchemaManagerContainer from "@/core/schema"
+import AuthInfoContainer from "@/core/auth"
+import BunadminSettingContainer from "@/core/setting"
 
 export default function CorePages() {
   const router = useRouter()

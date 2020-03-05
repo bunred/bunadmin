@@ -4,17 +4,13 @@ import MenuItem from "@material-ui/core/MenuItem"
 import Menu from "@material-ui/core/Menu"
 import EvaIcon from "react-eva-icons"
 import { useTheme } from "@material-ui/core/styles"
-import { Collection } from "../../../../modules/local_data/setting/collections"
-import rxDb from "../../../../utils/local_database/rxConnect"
+import { Collection } from "@/core/setting/collections"
+import rxDb from "@/utils/database/rxConnect"
 import Divider from "@material-ui/core/Divider"
-import {
-  DynamicRoute,
-  LocalDataRoute,
-  UserRoute
-} from "../../../../utils/routes"
+import { DynamicRoute, LocalDataRoute, UserRoute } from "@/utils/routes"
 import { useRouter } from "next/router"
-import rxSubscribe from "../../../../utils/local_database/rxSubscribe"
-import { Primary } from "../../../../modules/local_data/auth/schema"
+import rxSubscribe from "@/utils/database/rxSubscribe"
+import { Primary } from "@/core/auth/schema"
 
 interface State {
   username: string | "Guest"

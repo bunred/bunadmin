@@ -1,5 +1,5 @@
-import bunadminConfig from "../../utils/config/bunadminConfig"
-import request from "../../utils/scripts/request"
+import bunadminConfig from "@/utils/config/bunadminConfig"
+import request from "@/utils/scripts/request"
 
 export interface SignInParamsType {
   username: string

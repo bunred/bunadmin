@@ -1,6 +1,6 @@
 import React from "react"
-import rxSubscribe from "../../utils/local_database/rxSubscribe"
-import { Collection } from "../../modules/local_data/notice/collections"
+import rxSubscribe from "@/utils/database/rxSubscribe"
+import { Collection } from "@/core/notice/collections"
 import { SnackbarMessage, withSnackbar, WithSnackbarProps } from "notistack"
 
 function CommonSnackbar(props: WithSnackbarProps) {

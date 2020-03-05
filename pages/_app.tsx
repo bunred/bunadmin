@@ -7,7 +7,7 @@ import defaultTheme from "../src/utils/themes/defaultTheme"
 import CommonSnackbar from "../src/components/CommonSnackbar"
 import { SnackbarProvider } from "notistack"
 import SnackMessage from "../src/components/CommonSnackbar/Message"
-import rxInitData from "../src/utils/local_database/rxInitData"
+import rxInitData from "../src/utils/database/rxInitData"
 
 const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {

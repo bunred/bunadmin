@@ -7,10 +7,10 @@ import MenuItem from "@material-ui/core/MenuItem"
 import Menu from "@material-ui/core/Menu"
 import EvaIcon from "react-eva-icons"
 import { useTheme } from "@material-ui/core/styles"
-import ConfirmDialog from "../../../../components/CommonDialog/ConfirmDialog"
+import ConfirmDialog from "@/components/CommonDialog/ConfirmDialog"
 import Divider from "@material-ui/core/Divider"
-import { settingMenus } from "../../../../utils/config/settingMenus"
-import { DynamicRoute } from "../../../../utils/routes"
+import { settingMenus } from "@/utils/config/settingMenus"
+import { DynamicRoute } from "@/utils/routes"
 
 export default function SettingMenu() {
   const theme = useTheme()

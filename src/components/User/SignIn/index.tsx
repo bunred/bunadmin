@@ -11,14 +11,14 @@ import Typography from "@material-ui/core/Typography"
 import { Form, Formik } from "formik"
 import { TextField } from "formik-material-ui"
 import { Grow, LinearProgress } from "@material-ui/core"
-import AnimatedRandomBG from "../../CommonBgs/AnimatedRandomBG"
+import AnimatedRandomBG from "@/components/CommonBgs/AnimatedRandomBG"
 import validateController from "./controllers/validateController"
 import useStyles from "./styles"
 import submitController from "./controllers/submitController"
 import BunField from "../../Formik/BunField"
 import { Values } from "./types"
 import { useRouter } from "next/router"
-import { Primary } from "../../../modules/local_data/auth/schema"
+import { Primary } from "@/core/auth/schema"
 
 function Copyright() {
   return (

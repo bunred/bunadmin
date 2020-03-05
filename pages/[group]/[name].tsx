@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react"
-import CommonSchema from "../../src/components/CommonSchema"
-import DefaultLayout from "../../src/layouts/DefaultLayout"
+import CommonSchema from "@/components/CommonSchema"
+import DefaultLayout from "@/layouts/DefaultLayout"
 import {useRouter} from "next/router"
-import CorePages from "../../src/components/CorePages"
-import SignInContainer from "../../src/components/User/SignIn"
-import securityController from "../../src/modules/local_data/auth/controllers/securityController"
-import CubeSpinner from "../../src/components/CommonBgs/CubeSpinner"
+import CorePages from "@/components/CorePages"
+import SignInContainer from "@/components/User/SignIn"
+import securityController from "@/core/auth/controllers/securityController"
+import CubeSpinner from "@/components/CommonBgs/CubeSpinner"
 import {ParsedUrlQuery} from "querystring"
 
 const ModulePage = () => {
