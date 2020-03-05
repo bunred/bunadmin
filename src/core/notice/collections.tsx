@@ -1,6 +1,6 @@
 import { Schema } from "./schema"
 
 export const Collection = {
-  name: "schema_manager",
+  name: "bunadmin_notice",
   schema: Schema
 }
