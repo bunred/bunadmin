@@ -1,4 +1,4 @@
-import bunadminConfig from "@/utils/config/bunadminConfig"
+import { ENV } from "@/utils/config"
 import request from "@/utils/scripts/request"
 
 export interface SignInParamsType {
@@ -8,7 +8,7 @@ export interface SignInParamsType {
 
 async function userSignInService(params: SignInParamsType) {
   return request("/auth/login", {
-    prefix: bunadminConfig.userUrl,
+    prefix: ENV.AUTH_URL,
     method: "POST",
     data: params
   })
