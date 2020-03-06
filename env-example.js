@@ -1,9 +1,10 @@
 /**
  * Environment Variables
  *
- * Please rename the file name `env-example.js` as `env.js`.
+ * Please copy the file `env-example.js` to `env.js`.
  *
  * "MAIN_URL" is required, others are optional.
+ *  Please comment or delete them if you not needed.
  */
 
 module.exports = {
