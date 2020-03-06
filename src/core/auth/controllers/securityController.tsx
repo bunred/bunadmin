@@ -34,7 +34,7 @@ async function securityController({ setReady, router }: Props) {
     // const isIgnoredOrigins = asPath.indexOf(`?redirect=${asPath}`) > -1
     let toUrl = `${UserRoute.signIn}?redirect=${asPath}`
     toUrl = toUrl.replace(`?redirect=${UserRoute.signIn}`, "")
-    router.replace(DynamicRoute, toUrl).then(_r => {})
+    router.replace(DynamicRoute, toUrl).then(_r => setReady(true))
   }
 }
 
