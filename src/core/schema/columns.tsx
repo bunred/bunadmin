@@ -10,7 +10,11 @@ export const Columns: Column<Type>[] = [
   { title: "Group", field: "group", defaultGroupOrder: 1 },
   { title: "Name", field: "name", grouping: false },
   { title: "Label", field: "label", grouping: false },
-  { title: "Path", field: "path", grouping: false },
+  {
+    title: "Customized",
+    field: "customized",
+    lookup: { true: "True", false: "False" }
+  },
   {
     title: "Created At",
     field: "created_at",

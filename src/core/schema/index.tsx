@@ -90,7 +90,7 @@ export default function SchemaManagerContainer() {
                     </div>
                   )
                 } else {
-                  const arr = rowData.columns || []
+                  const arr = JSON.parse(rowData.columns) || []
                   return (
                     <DynamicReactJson
                       src={arr}

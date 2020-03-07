@@ -30,31 +30,12 @@ export const Schema = {
     label: {
       type: "string"
     },
-    path: {
-      type: "string"
+    customized: {
+      type: "boolean"
     },
     columns: {
       type: "string"
-      // items: {
-      //   type: "object"
-      // properties: {
-      //   title: {
-      //     type: "string"
-      //   },
-      //   field: {
-      //     type: ["string", "null"]
-      //   },
-      //   editable: {
-      //     type: "string",
-      //     enum: ["always", "onUpdate", "onAdd", "never"]
-      //   },
-      //   hidden: {
-      //     type: "boolean"
-      //   }
-      // },
-      // required: ["title", "field", "editable"]
-      // } // items
-    } // columns
+    }
   },
   required: ["team", "group", "name", "columns"]
 }

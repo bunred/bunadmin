@@ -44,6 +44,7 @@ export function editableController(): EditableDataType<Type> {
           await db[collection].insert({
             [primary]: nanoId,
             ...newData,
+            customized: ((newData.customized as unknown) as string) === "true",
             ...created_at
           })
 
@@ -81,6 +82,8 @@ export function editableController(): EditableDataType<Type> {
           await query.update({
             $set: {
               ...newData,
+              customized:
+                ((newData.customized as unknown) as string) === "true",
               ...updated_at
             }
           })
