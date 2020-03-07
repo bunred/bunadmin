@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import rxDb from "@/utils/database/rxConnect"
 import { Collection } from "@/core/schema/collections"
 import { CommonTableHead } from "../CommonTable"
-import MaterialTable from "material-table"
+import MaterialTable, { Column } from "material-table"
 import { editableController } from "./controllers/editableController"
 import { CommonTableDefaultProps as DefaultProps } from "../CommonTable/models/defaultProps"
 import tableIcons from "../CommonTable/models/tableIcons"
@@ -24,7 +24,7 @@ interface Interface {
 
 interface StateSchemaType {
   schema: Type
-  schemas: Type[]
+  data: Type
   notFound: boolean
 }
 
@@ -34,7 +34,7 @@ export default function CommonSchema() {
   const { group, name } = (router.query as unknown) as Interface
   const [ready, setReady] = useState(false)
   const [state, setState] = useState({})
-  const { schema, notFound } = state as StateSchemaType
+  const { schema, data, notFound } = state as StateSchemaType
   const Schema = Collection.name
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function CommonSchema() {
           columns = columnsController(columns)
           const schema = { ...current[0], columns }
 
-          setState({ schema, schemas })
+          setState({ schema, data: current[0] })
           setReady(true)
         })
     })()
@@ -87,12 +87,17 @@ export default function CommonSchema() {
       </Box>
     )
 
+  // Check customized
+  if (data.customized) {
+    return <Plugins team={data.team} group={data.group} name={data.name} />
+  }
+
   return (
     <>
       <CommonTableHead title={name} />
       <MaterialTable
         title={schema.label || name}
-        columns={schema.columns}
+        columns={(schema.columns as unknown) as Column<any>[]}
         editable={editableController()}
         // style
         style={DefaultProps.style}
@@ -103,7 +108,7 @@ export default function CommonSchema() {
         // options
         options={{ ...DefaultProps.options, filtering: true }}
         // data
-        data={dataController}
+        data={query => dataController({ query, name: data.name })}
       />
     </>
   )
