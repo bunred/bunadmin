@@ -90,10 +90,10 @@ export default function SchemaManagerContainer() {
                     </div>
                   )
                 } else {
-                  const str = rowData.columns || ""
+                  const arr = rowData.columns || []
                   return (
                     <DynamicReactJson
-                      src={JSON.parse(str)}
+                      src={arr}
                       theme="summerfruit:inverted"
                       iconStyle="circle"
                       collapseStringsAfterLength={20}

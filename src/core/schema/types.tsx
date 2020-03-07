@@ -1,3 +1,5 @@
+import { Column } from "material-table"
+
 export interface Type {
   id: string
   created_at: number
@@ -7,5 +9,5 @@ export interface Type {
   name: string
   label?: string
   path?: string
-  columns: string // Column<any>[] (JsonStr)
+  columns: Column<any>[] // Column<any>[] (JsonStr)
 }
