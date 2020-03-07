@@ -9,8 +9,8 @@ import CubeSpinner from "@/components/CommonBgs/CubeSpinner"
 import {ParsedUrlQuery} from "querystring"
 
 const ModulePage = () => {
-  const [ready, setReady] = useState(false)
   const router = useRouter()
+  const [ready, setReady] = useState(false)
   const { group, name } = router.query as ParsedUrlQuery
 
   useEffect(() => {
@@ -32,6 +32,8 @@ const ModulePage = () => {
       switch (name) {
         case "sign-in":
           return <SignInContainer />
+        default:
+          render = <CommonSchema />
       }
       break
     default:
