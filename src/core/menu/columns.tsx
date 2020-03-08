@@ -1,6 +1,7 @@
+import React from "react"
 import { Column } from "material-table"
 import { Type } from "./types"
-import editComponentController from "./controllers/editComponentController"
+import ParentSelect from "./components/ParentSelect"
 
 export const Columns: Column<Type>[] = [
   { title: "Id", field: "id", editable: "onAdd" },
@@ -17,7 +18,7 @@ export const Columns: Column<Type>[] = [
     title: "Parent",
     field: "parent",
     initialEditValue: "",
-    editComponent: editComponentController
+    editComponent: props => <ParentSelect {...props} />
   },
   { title: "Rank", field: "rank", type: "numeric", initialEditValue: "0" }
 ]
