@@ -9,13 +9,12 @@ import { CommonTableDefaultProps as DefaultProps } from "../CommonTable/models/d
 import tableIcons from "../CommonTable/models/tableIcons"
 import { Type } from "@/core/schema/types"
 import { useTheme } from "@material-ui/core/styles"
-import { Skeleton } from "@material-ui/lab"
-import { Box } from "@material-ui/core"
 import Plugins from "../Plugins"
 import CommonError from "../CommonError"
 import { LocalDataRoute } from "@/utils/routes"
 import dataController from "@/components/CommonSchema/controllers/dataController"
 import columnsController from "@/components/CommonSchema/controllers/columnsController"
+import TableSkeleton from "@/components/CommonTable/components/TableSkeleton"
 
 interface Interface {
   group: string
@@ -78,14 +77,7 @@ export default function CommonSchema() {
       </div>
     )
 
-  if (!ready)
-    return (
-      <Box p={3}>
-        <Skeleton width={100} />
-        <Skeleton />
-        <Skeleton />
-      </Box>
-    )
+  if (!ready) return <TableSkeleton />
 
   // Check customized
   if (data.customized) {

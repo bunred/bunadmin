@@ -1,5 +1,6 @@
 import React from "react"
 import dynamic from "next/dynamic"
+import TableSkeleton from "@/components/CommonTable/components/TableSkeleton"
 
 interface Props {
   team: string
@@ -12,7 +13,7 @@ function Plugins({ team, group, name }: Props) {
 
   const Plugin = dynamic({
     loader: () => import(`@plugins/${pluginPath}`),
-    loading: () => <p>Loading caused by client page transition ...</p>
+    loading: () => <TableSkeleton title={`${name} loading...`} />
   })
 
   return <Plugin />
