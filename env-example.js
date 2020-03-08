@@ -1,10 +1,9 @@
 /**
  * Environment Variables
+ * Please copy file `env-example.js` to `env.js`.
  *
- * Please copy the file `env-example.js` to `env.js`.
- *
- * "MAIN_URL" is required, others are optional.
- *  Please comment or delete them if you not needed.
+ * `MAIN_URL` is required, others are optional.
+ * Please leave it undefined if not used.
  */
 
 module.exports = {
@@ -20,7 +19,7 @@ module.exports = {
   },
   STAG: {
     MAIN_URL: "http://10.0.0.2:51800/api/v1",
-    AUTH_URL: "http://10.0.0.2:51801/api/v1",
-    SITE_URLS: "http://10.0.0.2:51802/api/v1, http://10.0.0.2:51803/api/v1",
+    AUTH_URL: undefined,
+    SITE_URLS: undefined,
   }
 }
