@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react"
+import React, { useEffect, useState } from "react"
 import CommonSchema from "@/components/CommonSchema"
 import DefaultLayout from "@/layouts/DefaultLayout"
-import {useRouter} from "next/router"
+import { useRouter } from "next/router"
 import CorePages from "@/components/CorePages"
 import SignInContainer from "@/components/User/SignIn"
 import securityController from "@/core/auth/controllers/securityController"
 import CubeSpinner from "@/components/CommonBgs/CubeSpinner"
-import {ParsedUrlQuery} from "querystring"
+import { ParsedUrlQuery } from "querystring"
 
 const ModulePage = () => {
   const router = useRouter()
@@ -15,8 +15,8 @@ const ModulePage = () => {
 
   useEffect(() => {
     ;(async () => {
-    if (!group || !name) return
-    await securityController({ setReady, router })
+      if (!group || !name) return
+      await securityController({ setReady, router })
     })()
   }, [group])
 
@@ -26,7 +26,7 @@ const ModulePage = () => {
 
   switch (group) {
     case "core":
-      render = <CorePages/>
+      render = <CorePages />
       break
     case "user":
       switch (name) {
@@ -40,11 +40,7 @@ const ModulePage = () => {
       render = <CommonSchema />
   }
 
-  return (
-    <DefaultLayout>
-      {render}
-    </DefaultLayout>
-  )
+  return <DefaultLayout>{render}</DefaultLayout>
 }
 
 export default ModulePage
