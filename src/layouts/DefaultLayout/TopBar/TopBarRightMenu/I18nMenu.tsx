@@ -9,7 +9,7 @@ import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText"
 
 export default function I18nMenu() {
-  const { t, i18n } = useTranslation()
+  const { i18n } = useTranslation()
   const theme = useTheme()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
@@ -69,7 +69,7 @@ export default function I18nMenu() {
             button
             onClick={() => handleI18n({ code: item.code })}
           >
-            <ListItemText primary={t(item.name)} />
+            <ListItemText primary={item.name} />
           </ListItem>
         ))}
       </Menu>

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
@@ -11,6 +11,11 @@ import { useRouter } from "next/router"
 import { DynamicRoute } from "@/utils/routes"
 import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
+import { useTranslation } from "react-i18next"
+import { Collection } from "@/core/schema/collections"
+import { Type as SchemaType } from "@/core/schema/types"
+import rxDb from "@/utils/database/rxConnect"
+import addResource from "@/utils/scripts/addResource"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,10 +40,31 @@ interface Props {
 }
 
 export default function NestedList({ data }: Props): any {
+  const { i18n, t } = useTranslation("plugins")
   const router = useRouter()
   const { group: qGroup, name: qName } = router.query
   const classes = useStyles()
   const [open, setOpen] = React.useState({} as { [key: string]: boolean })
+
+  useEffect(() => {
+    const Schema = Collection.name
+    ;(async () => {
+      const db = await rxDb()
+      let pathObj: any
+      db[Schema].find()
+        .exec()
+        .then((schemas: []) => {
+          schemas.map(({ team, group }: SchemaType) => {
+            if (!pathObj) pathObj = {}
+            // continue when plugin path added
+            if (!pathObj[team + group]) {
+              pathObj[team + group] = true
+              addResource({ i18n, team, group })
+            }
+          })
+        })
+    })()
+  }, [])
 
   const handleOpen = ({ name }: { name: string }) => {
     setOpen({
@@ -79,7 +105,7 @@ export default function NestedList({ data }: Props): any {
                 <ListItemIcon>
                   <MenuIcon name={name} icon={icon} icon_type={icon_type} />
                 </ListItemIcon>
-                <ListItemText primary={label} />
+                <ListItemText primary={t(label || name)} />
                 {/* Expand Icon */}
                 {data.filter(item => item.parent === name).length > 0 &&
                   (open[name] ? (
@@ -110,7 +136,7 @@ export default function NestedList({ data }: Props): any {
                           selected={slug === `/${qGroup}/${qName}`}
                           onClick={() => handleClick({ name, slug })}
                         >
-                          <ListItemText primary={label} />
+                          <ListItemText primary={t(label || name)} />
                         </ListItem>
                       )
                     })}
