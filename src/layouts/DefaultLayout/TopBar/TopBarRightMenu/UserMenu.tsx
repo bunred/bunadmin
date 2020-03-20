@@ -11,12 +11,14 @@ import { DynamicRoute, LocalDataRoute, UserRoute } from "@/utils/routes"
 import { useRouter } from "next/router"
 import rxSubscribe from "@/utils/database/rxSubscribe"
 import { Primary } from "@/core/auth/schema"
+import { Trans, useTranslation } from "react-i18next"
 
 interface State {
   username: string | "Guest"
 }
 
 export default function UserMenu() {
+  const { t } = useTranslation()
   const theme = useTheme()
   const router = useRouter()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -97,20 +99,22 @@ export default function UserMenu() {
         open={open}
         onClose={() => handleClose({})}
       >
-        <MenuItem disabled>{`Signed as ${state.username.substr(
-          0,
-          20
-        )}`}</MenuItem>
-        <MenuItem onClick={() => handleClose({})}>Profile</MenuItem>
+        <MenuItem disabled>
+          <Trans
+            i18nKey="Signed as $username"
+            values={{ name: state.username.substr(0, 20) }}
+          />
+        </MenuItem>
+        <MenuItem onClick={() => handleClose({})}>{t("Profile")}</MenuItem>
         <Divider />
         <MenuItem onClick={() => handleClose({ route: LocalDataRoute.auth })}>
-          Switch account
+          {t("Switch account")}
         </MenuItem>
         <MenuItem onClick={() => handleClose({ route: UserRoute.signIn })}>
-          Add another account
+          {t("Add another account")}
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        <MenuItem onClick={handleLogout}>{t("Logout")}</MenuItem>
       </Menu>
     </div>
   )

@@ -3,11 +3,12 @@ import { AppProps } from "next/app"
 import Head from "next/head"
 import { ThemeProvider } from "@material-ui/core/styles"
 import CssBaseline from "@material-ui/core/CssBaseline"
-import defaultTheme from "../src/utils/themes/defaultTheme"
-import CommonSnackbar from "../src/components/CommonSnackbar"
+import defaultTheme from "@/utils/themes/defaultTheme"
+import CommonSnackbar from "@/components/CommonSnackbar"
 import { SnackbarProvider } from "notistack"
-import SnackMessage from "../src/components/CommonSnackbar/Message"
-import rxInitData from "../src/utils/database/rxInitData"
+import SnackMessage from "@/components/CommonSnackbar/Message"
+import rxInitData from "@/utils/database/rxInitData"
+import "@/utils/i18n"
 
 const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {

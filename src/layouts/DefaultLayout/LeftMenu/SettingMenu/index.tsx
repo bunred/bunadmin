@@ -16,6 +16,7 @@ import EvaIcon from "react-eva-icons"
 import { settingMenus } from "@/utils/config/settingMenus"
 import { useRouter } from "next/router"
 import { DynamicRoute } from "@/utils/routes"
+import { useTranslation } from "react-i18next"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export default function SettingMenu() {
+  const { t } = useTranslation()
   const theme = useTheme()
   const router = useRouter()
   const { group: qGroup, name: qName } = router.query
@@ -63,7 +65,7 @@ export default function SettingMenu() {
             fill={theme.bunadmin.iconColor}
           />
         </ListItemIcon>
-        <ListItemText primary="Setting" />
+        <ListItemText primary={t("Setting")} />
         {open ? (
           <ExpandLess fontSize="small" className={classes.expandIcon} />
         ) : (
@@ -81,7 +83,7 @@ export default function SettingMenu() {
               onClick={() => handleRoute({ route: item.route })}
             >
               {item.icon && <ListItemIcon>{item.icon}</ListItemIcon>}
-              <ListItemText primary={item.name} />
+              <ListItemText primary={t(item.name)} />
             </ListItem>
           ))}
         </List>

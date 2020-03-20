@@ -10,6 +10,7 @@ import UserMenu from "./TopBarRightMenu/UserMenu"
 import SettingMenu from "./TopBarRightMenu/SettingMenu"
 import Link from "@/components/Link"
 import NoticeMenu from "./TopBarRightMenu/NoticeMenu"
+import I18nMenu from "@/layouts/DefaultLayout/TopBar/TopBarRightMenu/I18nMenu"
 
 const useStyles = topBarStyles
 
@@ -55,6 +56,7 @@ export default function TopBar(props: TopBarProps) {
           <NoticeMenu />
           <UserMenu />
           <SettingMenu />
+          <I18nMenu />
         </div>
       </Toolbar>
     </AppBar>

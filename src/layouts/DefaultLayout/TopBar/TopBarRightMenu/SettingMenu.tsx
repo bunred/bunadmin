@@ -11,8 +11,10 @@ import ConfirmDialog from "@/components/CommonDialog/ConfirmDialog"
 import Divider from "@material-ui/core/Divider"
 import { settingMenus } from "@/utils/config/settingMenus"
 import { DynamicRoute } from "@/utils/routes"
+import { useTranslation } from "react-i18next"
 
 export default function SettingMenu() {
+  const { t } = useTranslation()
   const theme = useTheme()
   const router = useRouter()
   const { group: qGroup, name: qName } = router.query
@@ -80,13 +82,13 @@ export default function SettingMenu() {
             selected={item.route === `/${qGroup}/${qName}`}
             onClick={() => handleClose({ route: item.route })}
           >
-            {item.name}
+            {t(item.name)}
           </MenuItem>
         ))}
         {/* ClearDb */}
         <Divider />
         <MenuItem onClick={() => handleClearDb()}>
-          Reset Local Database
+          {t("Reset Local Database")}
         </MenuItem>
       </Menu>
       {/* ConfirmDialog */}
