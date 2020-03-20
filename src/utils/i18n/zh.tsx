@@ -12,6 +12,10 @@ const zh = {
     "Switch account": "切换用户",
     "Add another account": "使用新用户登录",
     Logout: "退出"
+  },
+  plugins: {
+    // LeftMenu
+    User: "用户"
   }
 }
 export default zh

@@ -12,6 +12,10 @@ const en = {
     "Switch account": "Switch account",
     "Add another account": "Add another account",
     Logout: "Logout"
+  },
+  plugins: {
+    // LeftMenu
+    User: "User"
   }
 }
 export default en
