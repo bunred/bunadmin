@@ -55,11 +55,17 @@ const defaultTheme = createMuiTheme({
       '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',
     body1: {
       fontSize: ".8125rem",
-      fontWeight: 600
+      fontWeight: 600,
+      letterSpacing: 0.8
     }
   },
   overrides: {
     // component name
+    MuiMenuItem: {
+      root: {
+        letterSpacing: 0.8
+      }
+    },
     MuiListItemIcon: {
       root: {
         color: iconColor,
