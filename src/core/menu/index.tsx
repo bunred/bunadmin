@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 
-import { CommonTableHead } from "@/components/CommonTable"
+import CommonTable, { CommonTableHead } from "@/components/CommonTable"
 
 import { Collection } from "./collections"
 import { Schema } from "./schema"
@@ -9,11 +9,12 @@ import { Columns } from "./columns"
 import { editableController } from "./controllers/editableController"
 import { CommonTableDefaultProps as DefaultProps } from "@/components/CommonTable/models/defaultProps"
 import rxSubscribe from "@/utils/database/rxSubscribe"
-import MaterialTable from "material-table"
 import tableIcons from "@/components/CommonTable/models/tableIcons"
 import { useTheme } from "@material-ui/core/styles"
+import { useTranslation } from "react-i18next"
 
 export default function LocalLeftMenuContainer() {
+  const { t } = useTranslation("table")
   const theme = useTheme()
   const [data, setData] = useState([])
 
@@ -29,16 +30,14 @@ export default function LocalLeftMenuContainer() {
 
   return (
     <>
-      <CommonTableHead title={Schema.title} />
-      <MaterialTable
-        title={Schema.title}
-        columns={Columns}
+      <CommonTableHead title={t(Schema.title)} />
+      <CommonTable
+        title={t(Schema.title)}
+        columns={Columns({ t })}
         editable={editableController()}
         data={data}
         // style
         style={DefaultProps.style}
-        // localization props
-        localization={DefaultProps.localization}
         // icons
         icons={tableIcons({ theme })}
         // options

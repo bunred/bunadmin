@@ -4,33 +4,33 @@ import { Column } from "material-table"
 import { Type } from "./types"
 import EditColumns from "./components/EditColumns"
 
-export const Columns: Column<Type>[] = [
-  { title: "Id", field: "id", editable: "onAdd", grouping: false },
-  { title: "Team", field: "team", defaultGroupOrder: 0 },
-  { title: "Group", field: "group", defaultGroupOrder: 1 },
-  { title: "Name", field: "name", grouping: false },
-  { title: "Label", field: "label", grouping: false },
+export const Columns = ({ t }: any): Column<Type>[] => [
+  { title: t("Id"), field: "id", editable: "onAdd", grouping: false },
+  { title: t("Team"), field: "team", defaultGroupOrder: 0 },
+  { title: t("Group"), field: "group", defaultGroupOrder: 1 },
+  { title: t("Name"), field: "name", grouping: false },
+  { title: t("Label"), field: "label", grouping: false },
   {
-    title: "Customized",
+    title: t("Customized"),
     field: "customized",
     lookup: { true: "True", false: "False" }
   },
   {
-    title: "Created At",
+    title: t("Created At"),
     field: "created_at",
     editable: "never",
     grouping: false,
     render: r => <>{r && new Date(r.created_at).toLocaleString()}</>
   },
   {
-    title: "Updated At",
+    title: t("Updated At"),
     field: "updated_at",
     editable: "never",
     grouping: false,
     render: r => <>{r ? new Date(r.updated_at).toLocaleString() : ""}</>
   },
   {
-    title: "Columns",
+    title: t("Columns"),
     field: "columns",
     grouping: false,
     editComponent: props => <EditColumns {...props} />,

@@ -15,11 +15,11 @@ import { Columns as notice_columns } from "../notice/columns"
 import { Columns as schema_columns } from "../schema/columns"
 import { Columns as setting_columns } from "../setting/columns"
 
-export const Data = [
-  // { name: auth.name, columns: auth_columns }, // !!!DEBUG ONLY
+export const Data = ({ t }: { t: any }) => [
+  // { name: auth.name, columns: auth_columns({ t }) }, // !!!DEBUG ONLY
 
-  { name: menu.name, columns: menu_columns },
-  { name: notice.name, columns: notice_columns },
-  { name: schema.name, columns: schema_columns },
-  { name: setting.name, columns: setting_columns }
+  { name: menu.name, columns: menu_columns({ t }) },
+  { name: notice.name, columns: notice_columns({ t }) },
+  { name: schema.name, columns: schema_columns({ t }) },
+  { name: setting.name, columns: setting_columns({ t }) }
 ]

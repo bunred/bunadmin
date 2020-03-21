@@ -3,10 +3,10 @@ import React from "react"
 import { Column } from "material-table"
 import { Type } from "./types"
 
-export const Columns: Column<Type>[] = [
-  { title: "Name", field: "name" },
+export const Columns = ({ t }: any): Column<Type>[] => [
+  { title: t("Name"), field: "name" },
   {
-    title: "Columns",
+    title: t("Columns"),
     field: "columns",
     render: r => <>{r && r.columns ? "..." : "EMPTY"}</>
   }

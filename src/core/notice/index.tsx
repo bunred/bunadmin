@@ -1,10 +1,9 @@
 import React, { useState } from "react"
 
-import MaterialTable from "material-table"
 import { useTheme } from "@material-ui/core/styles"
 import { CommonTableDefaultProps as DefaultProps } from "@/components/CommonTable/models/defaultProps"
 
-import { CommonTableHead } from "@/components/CommonTable"
+import CommonTable, { CommonTableHead } from "@/components/CommonTable"
 import tableIcons from "@/components/CommonTable/models/tableIcons"
 import rxSubscribe from "@/utils/database/rxSubscribe"
 import { Columns } from "./columns"
@@ -14,8 +13,10 @@ import { Collection } from "./collections"
 import ConfirmDialog from "@/components/CommonDialog/ConfirmDialog"
 import rxDb from "@/utils/database/rxConnect"
 import { Type } from "./types"
+import { useTranslation } from "react-i18next"
 
 export default function LocalNoticeContainer() {
+  const { t } = useTranslation("table")
   const theme = useTheme()
   const [data, setData] = useState([])
   const [selData, setSelData] = useState<Type[]>()
@@ -38,16 +39,14 @@ export default function LocalNoticeContainer() {
   return (
     <>
       <>
-        <CommonTableHead title={Schema.title} />
-        <MaterialTable
-          title={Schema.title}
-          columns={Columns}
+        <CommonTableHead title={t(Schema.title)} />
+        <CommonTable
+          title={t(Schema.title)}
+          columns={Columns({ t })}
           editable={editableController()}
           data={data}
           // style
           style={DefaultProps.style}
-          // localization props
-          localization={DefaultProps.localization}
           // icons
           icons={tableIcons({ theme })}
           // options

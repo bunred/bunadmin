@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 
-import MaterialTable, { MTableToolbar } from "material-table"
+import { MTableToolbar } from "material-table"
 import { useTheme } from "@material-ui/core/styles"
 import { CommonTableDefaultProps as DefaultProps } from "@/components/CommonTable/models/defaultProps"
 
-import { CommonTableHead } from "@/components/CommonTable"
+import CommonTable, { CommonTableHead } from "@/components/CommonTable"
 import tableIcons from "@/components/CommonTable/models/tableIcons"
 import { Columns } from "./columns"
 import { Schema } from "./schema"
@@ -19,8 +19,10 @@ import JSONInput from "react-json-editor-ajrm"
 // @ts-ignore
 import locale from "react-json-editor-ajrm/locale/en"
 import MigrationDialogs from "./components/Dialog"
+import { useTranslation } from "react-i18next"
 
 export default function MigrationContainer() {
+  const { t } = useTranslation("table")
   const theme = useTheme()
   const color: string = theme.bunadmin.iconColor
   const [selData, setSelData] = useState({
@@ -41,15 +43,13 @@ export default function MigrationContainer() {
   return (
     <>
       <>
-        <CommonTableHead title={Schema.title} />
-        <MaterialTable
-          title={Schema.title}
-          columns={Columns}
-          data={Data as any}
+        <CommonTableHead title={t(Schema.title)} />
+        <CommonTable
+          title={t(Schema.title)}
+          columns={Columns({ t })}
+          data={Data({ t }) as any}
           // style
           style={DefaultProps.style}
-          // localization props
-          localization={DefaultProps.localization}
           // icons
           icons={tableIcons({ theme })}
           // options
