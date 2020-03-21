@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import rxDb from "@/utils/database/rxConnect"
 import { Collection } from "@/core/schema/collections"
-import { CommonTableHead } from "../CommonTable"
-import MaterialTable, { Column } from "material-table"
+import CommonTable, { CommonTableHead } from "../CommonTable"
+import { Column } from "material-table"
 import { editableController } from "./controllers/editableController"
 import { CommonTableDefaultProps as DefaultProps } from "../CommonTable/models/defaultProps"
 import tableIcons from "../CommonTable/models/tableIcons"
@@ -15,6 +15,7 @@ import { LocalDataRoute } from "@/utils/routes"
 import dataController from "@/components/CommonSchema/controllers/dataController"
 import columnsController from "@/components/CommonSchema/controllers/columnsController"
 import TableSkeleton from "@/components/CommonTable/components/TableSkeleton"
+import { useTranslation } from "react-i18next"
 
 interface Interface {
   group: string
@@ -28,6 +29,7 @@ interface StateSchemaType {
 }
 
 export default function CommonSchema() {
+  const { t } = useTranslation("table")
   const theme = useTheme()
   const router = useRouter()
   const { group, name } = (router.query as unknown) as Interface
@@ -54,7 +56,7 @@ export default function CommonSchema() {
 
           // loop handing columns
           let columns = JSON.parse(current[0].columns as string)
-          columns = columnsController(columns)
+          columns = columnsController({ t, columns })
           const schema = { ...current[0], columns }
 
           setState({ schema, data: current[0] })
@@ -84,17 +86,17 @@ export default function CommonSchema() {
     return <Plugins team={data.team} group={data.group} name={data.name} />
   }
 
+  const title = (data.label && t(data.label)) || t(name)
+
   return (
     <>
-      <CommonTableHead title={name} />
-      <MaterialTable
-        title={schema.label || name}
+      <CommonTableHead title={title} />
+      <CommonTable
+        title={title}
         columns={(schema.columns as unknown) as Column<any>[]}
         editable={editableController()}
         // style
         style={DefaultProps.style}
-        // localization props
-        localization={DefaultProps.localization}
         // icons
         icons={tableIcons({ theme })}
         // options
