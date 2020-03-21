@@ -15,11 +15,11 @@ i18n
     },
     lng: "zh",
     fallbackLng: "zh",
-    debug: false,
+    debug: true,
 
     // have a common namespace used around the full app
-    ns: ["translations", "plugins"],
-    defaultNS: "translations",
+    ns: ["core"],
+    defaultNS: "core",
 
     keySeparator: false, // we use content as keys
 
