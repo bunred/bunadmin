@@ -15,10 +15,14 @@ const en = {
   },
   plugins: {
     // LeftMenu
-    User: "User"
+    User: "User",
+    Users: "Users"
   },
   table: {
-    // core menu fields
+    /**
+     * Bunadmin core
+     */
+    // menu
     "Menu Manager": "Menu Manager",
     Id: "ID",
     Name: "Name",
@@ -28,7 +32,7 @@ const en = {
     "Icon Type": "Icon Type",
     Parent: "Parent",
     Rank: "Rank",
-    // core schema fields
+    // schema
     "Schema Manager": "Schema Manager",
     Team: "Team",
     Group: "Group",
@@ -36,7 +40,7 @@ const en = {
     "Created At": "Created At",
     "Updated At": "Updated At",
     Columns: "Columns",
-    // core schema fields
+    // notice
     "Local Notice": "Local Notice",
     Title: "Title",
     Severity: "Severity",
@@ -45,17 +49,25 @@ const en = {
     Info: "Info",
     Warning: "Warning",
     Content: "Content",
-    // core auth fields
+    // auth
     Authentication: "Authentication",
     Username: "Username",
     Role: "Role",
     Details: "Details",
     "Last Signed-in": "Last Signed-in",
-    // core migration
+    // migration
     Migration: "Migration",
-    // core setting
+    // setting
     "Bunadmin Setting": "Bunadmin Parameters",
     Value: "Value",
+    // others
+    User: "User",
+    Email: "User",
+    Detail: "Detail",
+
+    /**
+     * material-table
+     */
     // headers
     actions: "Actions",
     // toolbar

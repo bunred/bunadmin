@@ -15,10 +15,14 @@ const zh = {
   },
   plugins: {
     // LeftMenu
-    User: "用户"
+    User: "用户",
+    Users: "用户"
   },
   table: {
-    // core menu fields
+    /**
+     * Bunadmin core fields
+     */
+    // menu
     "Menu Manager": "菜单配置",
     Id: "ID",
     Name: "名称",
@@ -28,7 +32,7 @@ const zh = {
     "Icon Type": "图标类型",
     Parent: "父级",
     Rank: "排序",
-    // core schema fields
+    // schema
     "Schema Manager": "模型管理",
     Team: "团队",
     Group: "分组",
@@ -36,7 +40,7 @@ const zh = {
     "Created At": "创建于",
     "Updated At": "更新于",
     Columns: "数据列",
-    // core notice fields
+    // notice
     "Local Notice": "消息日志",
     Title: "标题",
     Severity: "级别",
@@ -45,17 +49,25 @@ const zh = {
     Info: "普通",
     Warning: "警告",
     Content: "内容",
-    // core auth fields
+    // auth
     Authentication: "认证管理",
     Username: "用户名",
     Role: "角色",
     Details: "详情",
     "Last Signed-in": "上次登录",
-    // core migration
+    // migration
     Migration: "数据迁移",
-    // core setting
+    // setting
     "Bunadmin Setting": "BunAdmin 参数",
     Value: "参数值",
+    // others
+    User: "用户",
+    Email: "邮箱",
+    Detail: "详情",
+
+    /**
+     * material-table
+     */
     // headers
     actions: "操作",
     // toolbar

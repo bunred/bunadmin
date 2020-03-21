@@ -11,8 +11,13 @@ export default function addResource({
   group: string
 }) {
   Object.keys(languages).map(lan => {
-    let pluginI18n: any = requirePlugins(`${team}-${group}/utils/i18n/${lan}`)
-    pluginI18n = pluginI18n && pluginI18n.plugins
-    pluginI18n && i18n.addResourceBundle(lan, "plugins", pluginI18n, true, true)
+    const lang: any = requirePlugins(`${team}-${group}/utils/i18n/${lan}`)
+
+    if (!lang) return
+
+    lang.plugins &&
+      i18n.addResourceBundle(lan, "plugins", lang.plugins, true, true)
+
+    lang.table && i18n.addResourceBundle(lan, "table", lang.table, true, true)
   })
 }
