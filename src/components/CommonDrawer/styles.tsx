@@ -25,9 +25,8 @@ export default function styles({ width, height }: Props) {
         height,
         padding: theme.spacing(3)
       },
-      content: {
-        flexGrow: 1,
-        padding: theme.spacing(3)
+      drawContent: {
+        flexGrow: 1
       },
       toolbar: theme.mixins.toolbar
     })

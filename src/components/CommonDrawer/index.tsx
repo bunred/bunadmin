@@ -1,5 +1,6 @@
-import React, { useState } from "react"
+import React, { MutableRefObject, useCallback, useRef, useState } from "react"
 import { Button, Drawer } from "@material-ui/core"
+import CSS from "csstype"
 import styles from "./styles"
 
 interface Props {
@@ -7,6 +8,11 @@ interface Props {
   height?: number | string
   direction?: "left" | "top" | "right" | "bottom"
   buttonTitle: string
+  buttonDisabled?: boolean
+  onOpen?: (p: { contentRef: React.MutableRefObject<any | undefined> }) => void
+  onClose?: (p: { contentRef: React.MutableRefObject<any | undefined> }) => void
+  contentClassName?: string
+  contentStyles?: CSS.Properties
   children: React.ReactNode
 }
 
@@ -15,18 +21,33 @@ export default function CommonDrawer({
   height,
   direction,
   buttonTitle,
+  buttonDisabled,
+  onOpen,
+  onClose,
+  contentClassName,
+  contentStyles,
   children
 }: Props) {
   const classes = styles({ width, height })
   const [state, setState] = useState({ open: false })
+  const contentRef: MutableRefObject<any | undefined> = useRef()
 
-  function toggleDrawer() {
+  const toggleDrawer = useCallback(() => {
+    // handle function
+    if (!state.open) {
+      onOpen && setTimeout(() => onOpen({ contentRef }), 200)
+    } else {
+      onClose && setTimeout(() => onClose({ contentRef }), 200)
+    }
+
     setState({ ...state, open: !state.open })
-  }
+  }, [state.open])
 
   return (
     <>
-      <Button onClick={() => toggleDrawer()}>{buttonTitle}</Button>
+      <Button disabled={buttonDisabled} onClick={() => toggleDrawer()}>
+        {buttonTitle}
+      </Button>
       <Drawer
         className={classes.drawer}
         classes={{
@@ -36,7 +57,13 @@ export default function CommonDrawer({
         open={state.open}
         onClose={toggleDrawer}
       >
-        {children}
+        <div
+          ref={contentRef}
+          className={contentClassName || classes.drawContent}
+          style={{ ...contentStyles }}
+        >
+          {children}
+        </div>
       </Drawer>
     </>
   )
