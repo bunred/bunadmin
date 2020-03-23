@@ -11,7 +11,10 @@ const zh = {
     Profile: "个人资料",
     "Switch account": "切换用户",
     "Add another account": "使用新用户登录",
-    Logout: "退出"
+    Logout: "退出",
+    // others
+    Agree: "同意",
+    Disagree: "不同意"
   },
   plugins: {
     // LeftMenu
@@ -64,7 +67,6 @@ const zh = {
     User: "用户",
     Email: "邮箱",
     Detail: "详情",
-
     /**
      * material-table
      */

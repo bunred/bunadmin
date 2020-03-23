@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { ReactElement, useEffect } from "react"
 import Button from "@material-ui/core/Button"
 import Dialog from "@material-ui/core/Dialog"
 import DialogActions from "@material-ui/core/DialogActions"
@@ -7,19 +7,24 @@ import DialogContentText from "@material-ui/core/DialogContentText"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
 import { useTheme } from "@material-ui/core/styles"
+import { Translation } from "react-i18next"
 
 interface Interface {
   openModal: number
-  title?: string
-  msg?: string
+  title?: string | ReactElement
+  msg?: string | ReactElement
   doFunc: () => void
+  disagree?: string | ReactElement
+  agree?: string | ReactElement
 }
 
 export default function ConfirmDialog({
   openModal,
   title,
   msg,
-  doFunc
+  doFunc,
+  disagree,
+  agree
 }: Interface) {
   const [open, setOpen] = React.useState(false)
   const theme = useTheme()
@@ -53,10 +58,10 @@ export default function ConfirmDialog({
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose} color="primary">
-            Disagree
+            {disagree || <Translation>{t => t("Disagree")}</Translation>}
           </Button>
           <Button onClick={handleAgree} color="primary" autoFocus>
-            Agree
+            {agree || <Translation>{t => t("Agree")}</Translation>}
           </Button>
         </DialogActions>
       </Dialog>

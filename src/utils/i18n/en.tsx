@@ -11,7 +11,10 @@ const en = {
     Profile: "Profile",
     "Switch account": "Switch account",
     "Add another account": "Add another account",
-    Logout: "Logout"
+    Logout: "Logout",
+    // others
+    Agree: "同意",
+    Disagree: "不同意"
   },
   plugins: {
     // LeftMenu
