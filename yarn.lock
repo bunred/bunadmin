@@ -2338,6 +2338,11 @@
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
 
+"@types/sortablejs@^1.10.2":
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/@types/sortablejs/-/sortablejs-1.10.2.tgz#d749f6fe9965322b2107f6711a6fed692a71941e"
+  integrity sha512-aWK2oTpbjNmLyexl95L4ttd0kFIvbMIf1JR2YbNhUwIk9Y1cOwfAfyvfxBBmtg1ZDy64gpbgEdFjyqnzjh+3/A==
+
 "@types/spark-md5@3.0.2":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@types/spark-md5/-/spark-md5-3.0.2.tgz#da2e8a778a20335fc4f40b6471c4b0d86b70da55"
@@ -11617,6 +11622,11 @@ sort-keys@^2.0.0:
   integrity sha1-ZYU1WEhh7JfXMNbPQYIuH1ZoQSg=
   dependencies:
     is-plain-obj "^1.0.0"
+
+sortablejs@^1.10.2:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.10.2.tgz#6e40364d913f98b85a14f6678f92b5c1221f5290"
+  integrity sha512-YkPGufevysvfwn5rfdlGyrGjt7/CRHwvRPogD/lC+TnvcN29jDpCifKP+rBqf+LRldfXSTh+0CGLcSg0VIxq3A==
 
 source-list-map@^2.0.0:
   version "2.0.1"
