@@ -13,8 +13,9 @@ const en = {
     "Add another account": "Add another account",
     Logout: "Logout",
     // others
-    Agree: "同意",
-    Disagree: "不同意"
+    Show: "Show",
+    Agree: "Agree",
+    Disagree: "Disagree"
   },
   plugins: {
     // LeftMenu
@@ -67,6 +68,7 @@ const en = {
     User: "User",
     Email: "User",
     Detail: "Detail",
+    Null: "Null",
 
     /**
      * material-table

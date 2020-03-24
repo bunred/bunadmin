@@ -13,6 +13,7 @@ const zh = {
     "Add another account": "使用新用户登录",
     Logout: "退出",
     // others
+    Show: "显示",
     Agree: "同意",
     Disagree: "不同意"
   },
@@ -67,6 +68,8 @@ const zh = {
     User: "用户",
     Email: "邮箱",
     Detail: "详情",
+    Null: "空值",
+
     /**
      * material-table
      */
