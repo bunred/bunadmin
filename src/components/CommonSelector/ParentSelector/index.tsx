@@ -16,11 +16,13 @@ interface OptionType {
 interface Props extends EditComponentProps<any> {
   schemaName: string
   parentName: string
+  width?: string | number
 }
 
 export default function ParentSelector({
   schemaName,
   parentName,
+  width,
   rowData,
   onChange
 }: Props) {
@@ -87,7 +89,7 @@ export default function ParentSelector({
   return (
     <Autocomplete
       id="parent-selector"
-      style={{ width: 300 }}
+      style={{ width: width || 100 }}
       open={open}
       onOpen={() => {
         setOpen(true)
