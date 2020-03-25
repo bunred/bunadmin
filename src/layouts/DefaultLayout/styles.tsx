@@ -53,6 +53,10 @@ export const defaultLayoutStyles = makeStyles((theme: Theme) => {
     contentBox: {
       background: theme.bunadmin.contentBoxBg,
       marginTop: theme.spacing(8)
+    },
+    // table
+    treeDataThHidden: {
+      display: "none"
     }
   })
 })
