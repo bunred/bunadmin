@@ -41,11 +41,7 @@ export default function LocalLeftMenuContainer() {
         // icons
         icons={tableIcons({ theme })}
         // options
-        options={{ ...DefaultProps.options, selection: false }}
-        // actions
-        actions={[]}
-        // parentChildData
-        parentChildData={(row, rows) => rows.find(a => a.name === row.parent)}
+        options={{ ...DefaultProps.options }}
       />
     </>
   )
