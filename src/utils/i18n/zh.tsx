@@ -68,7 +68,8 @@ const zh = {
     User: "用户",
     Email: "邮箱",
     Detail: "详情",
-    Null: "空值",
+    "Null(ROOT)": "空值(根目录)",
+    Pos: "排序",
 
     /**
      * material-table

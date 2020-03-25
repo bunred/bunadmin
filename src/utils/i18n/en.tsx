@@ -68,7 +68,8 @@ const en = {
     User: "User",
     Email: "User",
     Detail: "Detail",
-    Null: "Null",
+    "Null(ROOT)": "Null(ROOT)",
+    Pos: "Rank",
 
     /**
      * material-table

@@ -2,35 +2,35 @@ import React, { useState } from "react"
 import TextField from "@material-ui/core/TextField"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import CircularProgress from "@material-ui/core/CircularProgress"
-import { EditComponentProps } from "material-table"
-import Type from "@plugins/buncms-shop/product_category/types"
-import queryParentSer from "./services/queryParentSer"
+import { EditComponentProps, Query } from "material-table"
 import { notice } from "@/core"
 
 interface OptionType {
-  id: string | number
+  id: string
   name: string
 }
 
-interface Props extends EditComponentProps<any> {
+interface ListSelectProps extends EditComponentProps<any> {
+  width?: number | string
   label?: string
+  shortName: string
   schemaName: string
-  parentName: string
-  width?: string | number
+  querySer: (query: Query<any>) => Promise<any>
 }
 
-export default function ParentSelector({
-  label,
-  schemaName,
-  parentName,
-  width,
+export default function ListSelector({
   rowData,
-  onChange
-}: Props) {
+  onChange,
+  width,
+  label,
+  shortName,
+  schemaName,
+  querySer
+}: ListSelectProps) {
   const [open, setOpen] = React.useState(false)
   const [options, setOptions] = React.useState<OptionType[]>([])
   const [name, setName] = React.useState("")
-  const [selected, setSelected] = useState(rowData[parentName])
+  const [selected, setSelected] = useState(rowData[shortName])
   const loading = open && options.length === 0
 
   React.useEffect(() => {
@@ -50,13 +50,11 @@ export default function ParentSelector({
   }, [open])
 
   async function dataCtrl() {
-    const { data: res, errors } = await queryParentSer(
-      schemaName,
-      parentName,
-      rowData.id,
-      name,
-      30
-    )
+    const { data: res, errors } = await querySer({
+      search: name,
+      page: 0,
+      pageSize: 30
+    } as Query<any>)
 
     if (errors) {
       return await notice({
@@ -66,7 +64,7 @@ export default function ParentSelector({
       })
     }
 
-    const resList: Type[] = res && res[schemaName]
+    const resList: any[] = res && res[schemaName]
 
     const options: OptionType[] = []
     resList.map(item => options.push({ id: item.id, name: item.name }))
@@ -87,8 +85,8 @@ export default function ParentSelector({
 
   return (
     <Autocomplete
-      id="parent-selector"
-      style={{ width: width || 100 }}
+      id={`list-selector-${shortName}`}
+      style={{ width: width ? width : 135 }}
       open={open}
       onOpen={() => {
         setOpen(true)
