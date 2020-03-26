@@ -16,6 +16,7 @@ interface ListSelectProps extends EditComponentProps<any> {
   shortName: string
   schemaName: string
   querySer: (query: Query<any>) => Promise<any>
+  customKey?: string
 }
 
 export default function ListSelector({
@@ -25,7 +26,8 @@ export default function ListSelector({
   label,
   shortName,
   schemaName,
-  querySer
+  querySer,
+  customKey
 }: ListSelectProps) {
   const [open, setOpen] = React.useState(false)
   const [options, setOptions] = React.useState<OptionType[]>([])
@@ -67,7 +69,12 @@ export default function ListSelector({
     const resList: any[] = res && res[schemaName]
 
     const options: OptionType[] = []
-    resList.map(item => options.push({ id: item.id, name: item.name }))
+    resList.map(item => {
+      const nameObj = customKey
+        ? { [customKey]: item[customKey] }
+        : { name: item.name }
+      options.push({ id: item.id, name: "", ...nameObj })
+    })
     setOptions(options)
   }
 
@@ -96,7 +103,7 @@ export default function ListSelector({
       }}
       onChange={handleSelect}
       getOptionSelected={option => option.id === (selected && selected.id)}
-      getOptionLabel={option => option.name}
+      getOptionLabel={option => (customKey ? option[customKey] : option.name)}
       value={selected}
       options={options}
       loading={loading}
