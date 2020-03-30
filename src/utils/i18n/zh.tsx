@@ -64,12 +64,18 @@ const zh = {
     // setting
     "Bunadmin Setting": "BunAdmin 参数",
     Value: "参数值",
+    // notice
+    "SUCCESS!": "成功！",
+    "WARNING!": "警告！",
+    "ERROR!": "出错！",
+    "INFO!": "信息！",
     // others
     User: "用户",
     Email: "邮箱",
     Detail: "详情",
     "Null(ROOT)": "空值(根目录)",
     Pos: "排序",
+    Save: "保存",
 
     /**
      * material-table

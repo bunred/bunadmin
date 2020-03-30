@@ -64,12 +64,18 @@ const en = {
     // setting
     "Bunadmin Setting": "Bunadmin Parameters",
     Value: "Value",
+    // notice
+    "SUCCESS!": "SUCCESS!",
+    "WARNING!": "WARNING!",
+    "ERROR!": "ERROR!",
+    "INFO!": "INFO!",
     // others
     User: "User",
     Email: "User",
     Detail: "Detail",
     "Null(ROOT)": "Null(ROOT)",
     Pos: "Rank",
+    Save: "Save",
 
     /**
      * material-table
