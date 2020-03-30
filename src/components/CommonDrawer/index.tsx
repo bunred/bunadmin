@@ -8,6 +8,9 @@ interface Props {
   height?: number | string
   direction?: "left" | "top" | "right" | "bottom"
   buttonTitle: string
+  buttonColor?: "inherit" | "default" | "primary" | "secondary" | undefined
+  buttonVariant?: "text" | "outlined" | "contained"
+  buttonSize?: "small" | "medium" | "large"
   buttonDisabled?: boolean
   onOpen?: (p: { contentRef: React.MutableRefObject<any | undefined> }) => void
   onClose?: (p: { contentRef: React.MutableRefObject<any | undefined> }) => void
@@ -21,6 +24,9 @@ export default function CommonDrawer({
   height,
   direction,
   buttonTitle,
+  buttonColor,
+  buttonVariant,
+  buttonSize,
   buttonDisabled,
   onOpen,
   onClose,
@@ -45,7 +51,13 @@ export default function CommonDrawer({
 
   return (
     <>
-      <Button disabled={buttonDisabled} onClick={() => toggleDrawer()}>
+      <Button
+        variant={buttonVariant || "text"}
+        size={buttonSize || "medium"}
+        color={buttonColor || "primary"}
+        disabled={buttonDisabled}
+        onClick={() => toggleDrawer()}
+      >
         {buttonTitle}
       </Button>
       <Drawer
