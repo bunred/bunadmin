@@ -102,7 +102,7 @@ export default function UserMenu() {
         <MenuItem disabled>
           <Trans
             i18nKey="Signed as $username"
-            values={{ name: state.username.substr(0, 20) }}
+            values={{ name: state.username && state.username.substr(0, 20) }}
           />
         </MenuItem>
         <MenuItem onClick={() => handleClose({})}>{t("Profile")}</MenuItem>
