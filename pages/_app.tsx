@@ -9,12 +9,36 @@ import { SnackbarProvider } from "notistack"
 import SnackMessage from "@/components/CommonSnackbar/Message"
 import rxInitData from "@/utils/database/rxInitData"
 import "@/utils/i18n"
+import { useTranslation } from "react-i18next"
+import { Collection } from "@/core/schema/collections"
+import rxDb from "@/utils/database/rxConnect"
+import { Type as SchemaType } from "@/core/schema/types"
+import addResource from "@/utils/scripts/addResource"
 
 const App = ({ Component, pageProps }: AppProps) => {
+  const { i18n } = useTranslation()
+  const Schema = Collection.name
+
   useEffect(() => {
     ;(async () => {
       // Init Data
       await rxInitData()
+
+      // Add i18n resource
+      const db = await rxDb()
+      let pathObj: any
+      db[Schema].find()
+        .exec()
+        .then((schemas: []) => {
+          schemas.map(({ team, group }: SchemaType) => {
+            if (!pathObj) pathObj = {}
+            // continue when plugin path added
+            if (!pathObj[team + group]) {
+              pathObj[team + group] = true
+              addResource({ i18n, team, group })
+            }
+          })
+        })
 
       const jssStyles = document.querySelector("#jss-server-side")
       if (jssStyles) {
