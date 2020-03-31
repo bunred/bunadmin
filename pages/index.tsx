@@ -3,8 +3,8 @@ import Container from "@material-ui/core/Container"
 import Typography from "@material-ui/core/Typography"
 import Box from "@material-ui/core/Box"
 import MuiLink from "@material-ui/core/Link"
-import ProTip from "../src/ProTip"
-import Link from "../src/Link"
+import ProTip from "../src/components/ProTip"
+import DefaultLayout from "../src/layouts/DefaultLayout"
 
 function Copyright() {
   return (
@@ -21,17 +21,16 @@ function Copyright() {
 
 export default function Index() {
   return (
-    <Container maxWidth="sm">
-      <Box my={4}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          BunAdmin with TypeScript
-        </Typography>
-        <Link href="/about" color="secondary">
-          Go to the about page
-        </Link>
-        <ProTip />
-        <Copyright />
-      </Box>
-    </Container>
+    <DefaultLayout>
+      <Container maxWidth="sm">
+        <Box p={3} my={4}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            Welcome to Bunadmin
+          </Typography>
+          <ProTip />
+          <Copyright />
+        </Box>
+      </Container>
+    </DefaultLayout>
   )
 }
