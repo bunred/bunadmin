@@ -19,6 +19,7 @@ yarn-error.log*
 
 # Idea
 /.idea/workspace.xml
+/.idea/vcs.xml
 
 # BunAdmin
 /env.js
