@@ -6,6 +6,7 @@ import SettingMenu from "./SettingMenu"
 import rxSubscribe from "@/utils/database/rxSubscribe"
 import { Collection } from "@/core/menu/collections"
 import { Type } from "@/core/menu/types"
+import { ENV } from "@/utils/config"
 
 const LeftMenu = () => {
   const [data, setData] = useState([] as Type[])
@@ -26,7 +27,7 @@ const LeftMenu = () => {
     <>
       <NestedList data={data} />
       <Divider />
-      <SettingMenu />
+      {ENV.ON_SETTING && <SettingMenu />}
     </>
   )
 }

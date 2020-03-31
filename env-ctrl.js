@@ -35,5 +35,23 @@ module.exports = (phase) => {
       if (isStaging) return STAG.SITE_URLS
       return 'SITE_URLS:not (isDev,isProd && !isStaging,isProd && isStaging)'
     })(),
+    SITE_NAME: (() => {
+      if (isDev) return DEV.SITE_NAME
+      if (isProd) return PROD.SITE_NAME
+      if (isStaging) return STAG.SITE_NAME
+      return 'SITE_NAME:not (isDev,isProd && !isStaging,isProd && isStaging)'
+    })(),
+    ON_I18N: (() => {
+      if (isDev) return DEV.ON_I18N
+      if (isProd) return PROD.ON_I18N
+      if (isStaging) return STAG.ON_I18N
+      return 'ON_I18N:not (isDev,isProd && !isStaging,isProd && isStaging)'
+    })(),
+    ON_SETTING: (() => {
+      if (isDev) return DEV.ON_SETTING
+      if (isProd) return PROD.ON_SETTING
+      if (isStaging) return STAG.ON_SETTING
+      return 'ON_SETTING:not (isDev,isProd && !isStaging,isProd && isStaging)'
+    })(),
   }
 }
