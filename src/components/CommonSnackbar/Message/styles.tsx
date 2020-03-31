@@ -13,9 +13,7 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "space-between",
     color: "#FFF"
   },
-  icons: {
-    marginLeft: "auto"
-  },
+  icons: {},
   expand: {
     padding: "8px 8px",
     transform: "rotate(0deg)",

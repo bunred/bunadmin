@@ -89,18 +89,20 @@ const SnackMessage = React.forwardRef(
             {props.message}
           </Typography>
           <div className={classes.icons}>
-            <IconButton
-              aria-label="Show more"
-              color="inherit"
-              className={
-                expanded
-                  ? `${classes.expand} ${classes.expandOpen}`
-                  : classes.expand
-              }
-              onClick={handleExpandClick}
-            >
-              <ExpandMoreIcon />
-            </IconButton>
+            {state.content && (
+              <IconButton
+                aria-label="Show more"
+                color="inherit"
+                className={
+                  expanded
+                    ? `${classes.expand} ${classes.expandOpen}`
+                    : classes.expand
+                }
+                onClick={handleExpandClick}
+              >
+                <ExpandMoreIcon />
+              </IconButton>
+            )}
             <IconButton
               color="inherit"
               className={classes.expand}
@@ -110,7 +112,12 @@ const SnackMessage = React.forwardRef(
             </IconButton>
           </div>
         </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <Collapse
+          in={expanded}
+          timeout="auto"
+          unmountOnExit
+          addEndListener={undefined}
+        >
           <Paper className={classes.collapse}>
             <Typography gutterBottom>{state.content}</Typography>
             <Button
