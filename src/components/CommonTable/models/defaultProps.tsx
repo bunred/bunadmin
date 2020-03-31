@@ -29,7 +29,7 @@ export const CommonTableDefaultProps: MaterialTableProps<any> = {
   // options
   options: {
     addRowPosition: "first",
-    draggable: true,
+    draggable: false,
     selection: true
   },
   // actions
