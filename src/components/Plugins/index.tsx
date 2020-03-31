@@ -6,14 +6,16 @@ interface Props {
   team: string
   group: string
   name: string
+  hideLoading?: boolean
 }
 
-function Plugins({ team, group, name }: Props) {
+function Plugins({ team, group, name, hideLoading }: Props) {
   const pluginPath = `${team}-${group}/${name}`
 
   const Plugin = dynamic({
     loader: () => import(`@plugins/${pluginPath}`),
-    loading: () => <TableSkeleton title={`${name} loading...`} />
+    loading: () =>
+      hideLoading ? null : <TableSkeleton title={`${name} loading...`} />
   })
 
   return <Plugin />

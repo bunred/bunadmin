@@ -28,7 +28,11 @@ interface StateSchemaType {
   notFound: boolean
 }
 
-export default function CommonSchema() {
+interface Props {
+  isAuthPath?: boolean
+}
+
+export default function CommonSchema({ isAuthPath }: Props) {
   const { t } = useTranslation("table")
   const theme = useTheme()
   const router = useRouter()
@@ -78,6 +82,22 @@ export default function CommonSchema() {
         />
       </div>
     )
+
+  // handle auth path START
+  if (!ready && isAuthPath) return null
+
+  if (ready && isAuthPath) {
+    // When the auth path does not exist in the plugin, a blank page will be rendered
+    return (
+      <Plugins
+        team={data.team}
+        group={data.group}
+        name={data.name}
+        hideLoading={true}
+      />
+    )
+  }
+  // handle user path END
 
   if (!ready) return <TableSkeleton />
 

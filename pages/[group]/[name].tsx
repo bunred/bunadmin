@@ -3,7 +3,6 @@ import CommonSchema from "@/components/CommonSchema"
 import DefaultLayout from "@/layouts/DefaultLayout"
 import { useRouter } from "next/router"
 import CorePages from "@/components/CorePages"
-import SignInContainer from "@/components/User/SignIn"
 import securityController from "@/core/auth/controllers/securityController"
 import CubeSpinner from "@/components/CommonBgs/CubeSpinner"
 import { ParsedUrlQuery } from "querystring"
@@ -30,8 +29,9 @@ const ModulePage = () => {
       break
     case "user":
       switch (name) {
-        case "sign-in":
-          return <SignInContainer />
+        case "sign-in": case "sign-up": case "recovery":
+          // skipped Layout
+          return <CommonSchema isAuthPath={true} />
         default:
           render = <CommonSchema />
       }
