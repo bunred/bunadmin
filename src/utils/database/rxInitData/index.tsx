@@ -1,11 +1,20 @@
-import rxDb from "../rxConnect"
-import { Collection as Setting } from "@/core/setting/collections"
-import initSetting from "./initSetting"
+import { RxDatabase } from "rxdb/dist/typings/types"
 
-export default async function rxNewDocuments() {
-  const db = await rxDb()
-  const setting = db[Setting.name]
-  const is_init = await setting.findOne({ name: { $eq: "init_status" } }).exec()
+interface Props {
+  db: RxDatabase<any>
+  collection: string
+  name: string
+  initFunc: () => Promise<void>
+}
+
+export default async function rxInitData({
+  db,
+  collection,
+  name,
+  initFunc
+}: Props) {
+  const setting = db[collection]
+  const is_init = await setting.findOne({ name: { $eq: name } }).exec()
 
   if (is_init) {
     /**
@@ -14,16 +23,16 @@ export default async function rxNewDocuments() {
      */
     // await setting.remove()
 
-    return console.log("DatabaseService: initialization data already exists")
+    return console.log(`DatabaseService: ${name} already exists`)
   } else {
-    await initSetting()
+    await initFunc()
 
     // set init status
     await setting.upsert({
-      name: "init_status",
+      name: name,
       value: "done"
     })
 
-    return console.log("DatabaseService: data initialized successfully")
+    return console.log(`DatabaseService: ${name} done`)
   }
 }
