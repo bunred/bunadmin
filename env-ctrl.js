@@ -18,10 +18,10 @@ module.exports = (phase) => {
 
   return {
     MAIN_URL: (() => {
-      if (isDev) return DEV.AUTH_URL
-      if (isProd) return PROD.AUTH_URL
-      if (isStaging) return STAG.AUTH_URL
-      return 'AUTH_URL:not (isDev,isProd && !isStaging,isProd && isStaging)'
+      if (isDev) return DEV.MAIN_URL
+      if (isProd) return PROD.MAIN_URL
+      if (isStaging) return STAG.MAIN_URL
+      return 'MAIN_URL:not (isDev,isProd && !isStaging,isProd && isStaging)'
     })(),
     AUTH_URL: (() => {
       if (isDev) return DEV.AUTH_URL
