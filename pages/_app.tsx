@@ -7,27 +7,27 @@ import defaultTheme from "@/utils/themes/defaultTheme"
 import CommonSnackbar from "@/components/CommonSnackbar"
 import { SnackbarProvider } from "notistack"
 import SnackMessage from "@/components/CommonSnackbar/Message"
-import rxInitData from "@/utils/database/rxInitData"
 import "@/utils/i18n"
 import { useTranslation } from "react-i18next"
-import { Collection } from "@/core/schema/collections"
+import { Collection as Schema } from "@/core/schema/collections"
 import rxDb from "@/utils/database/rxConnect"
 import { Type as SchemaType } from "@/core/schema/types"
 import addResource from "@/utils/scripts/addResource"
+import initData from "@/utils/scripts/initData"
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { i18n } = useTranslation()
-  const Schema = Collection.name
 
   useEffect(() => {
     ;(async () => {
       // Init Data
-      await rxInitData()
+      await initData()
 
       // Add i18n resource
       const db = await rxDb()
       let pathObj: any
-      db[Schema].find()
+      db[Schema.name]
+        .find()
         .exec()
         .then((schemas: []) => {
           schemas.map(({ team, group }: SchemaType) => {
