@@ -69,6 +69,12 @@ const en = {
     "WARNING!": "WARNING!",
     "ERROR!": "ERROR!",
     "INFO!": "INFO!",
+    // status
+    Draft: "Draft",
+    Ready: "Ready",
+    Approved: "Approved",
+    Rejected: "Rejected",
+    Published: "Published",
     // others
     User: "User",
     Email: "User",

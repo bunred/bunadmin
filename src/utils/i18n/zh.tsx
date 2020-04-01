@@ -69,6 +69,12 @@ const zh = {
     "WARNING!": "警告！",
     "ERROR!": "出错！",
     "INFO!": "信息！",
+    // status
+    Draft: "草稿",
+    Ready: "待审",
+    Approved: "已审",
+    Rejected: "拒绝",
+    Published: "公开",
     // others
     User: "用户",
     Email: "邮箱",
