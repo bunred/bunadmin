@@ -19,10 +19,15 @@ yarn-error.log*
 
 # Idea
 /.idea/workspace.xml
-/.idea/vcs.xml
 
-# BunAdmin
+# BunAdmin START
 /env.js
 
 /plugins/*
 !/plugins/.gitkeep
+
+# for plugins
+/.idea/vcs.xml
+yarn.lock
+
+# BunAdmin END
