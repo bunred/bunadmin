@@ -9,6 +9,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.43",
     "clsx": "latest",
+    "filehound": "^1.17.4",
     "formik": "^2.1.4",
     "formik-material-ui": "^2.0.0-beta.1",
     "i18next": "^19.3.3",
