@@ -45,6 +45,7 @@
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "ignore-loader": "^0.1.2",
     "jest": "^25.1.0",
     "prettier": "1.19.1",
     "react-screenshot-test": "^2.0.1",
