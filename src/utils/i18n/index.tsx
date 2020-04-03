@@ -15,7 +15,7 @@ i18n
     },
     lng: "zh",
     fallbackLng: "zh",
-    debug: true,
+    debug: false,
 
     // have a common namespace used around the full app
     ns: ["core"],
