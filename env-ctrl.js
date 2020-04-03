@@ -18,9 +18,18 @@ module.exports = (phase) => {
 
   return {
     MAIN_URL: (() => {
-      if (isDev) return DEV.MAIN_URL
-      if (isProd) return PROD.MAIN_URL
-      if (isStaging) return STAG.MAIN_URL
+      if (isDev) {
+        console.log('ENV: DEV')
+        return DEV.MAIN_URL
+      }
+      if (isProd) {
+        console.log('ENV: PROD')
+        return PROD.MAIN_URL
+      }
+      if (isStaging) {
+        console.log('ENV: STAG')
+        return STAG.MAIN_URL
+      }
       return 'MAIN_URL:not (isDev,isProd && !isStaging,isProd && isStaging)'
     })(),
     AUTH_URL: (() => {
