@@ -22,6 +22,7 @@ yarn-error.log*
 
 # BunAdmin START
 /env.js
+/deploy.sh
 
 /plugins/*
 !/plugins/.gitkeep
