@@ -7,9 +7,10 @@ import { Filter } from "material-table"
 interface Props {
   data: any
   nulls?: any | { parent_id: true }
+  enums?: any | { status: true }
 }
 
-export default function dataToGql({ data, nulls }: Props) {
+export default function dataToGql({ data, nulls, enums }: Props) {
   const fields: string[] = []
   Object.keys(data).map(key => {
     const value = data[key]
@@ -25,7 +26,11 @@ export default function dataToGql({ data, nulls }: Props) {
 
     if (valueType === "object") return
 
-    fields.push(`${key}: "${value}"`)
+    let keyValue = `${key}: "${value}"`
+
+    if (enums && enums[key]) keyValue = `${key}: ${value}`
+
+    fields.push(keyValue)
   })
 
   const objects = fields.join(", ")
