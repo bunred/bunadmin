@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import TextField from "@material-ui/core/TextField"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import CircularProgress from "@material-ui/core/CircularProgress"
-import { EditComponentProps, Query } from "material-table"
+import { EditComponentProps, Query, rxMtUpdateField } from "material-table"
 import { notice } from "@/core"
 
 interface OptionType {
@@ -20,6 +20,7 @@ interface ListSelectProps extends EditComponentProps<any> {
 }
 
 export default function ListSelector({
+  columnDef,
   rowData,
   onChange,
   width,
@@ -85,9 +86,13 @@ export default function ListSelector({
     await dataCtrl()
   }
 
-  function handleSelect(_e: React.ChangeEvent<{}>, value: any) {
+  async function handleSelect(_e: React.ChangeEvent<{}>, value: any) {
     onChange(value ? value.id : null)
     setSelected(value)
+    await rxMtUpdateField({
+      name: columnDef.field,
+      value: value ? value.id : null
+    })
   }
 
   return (
