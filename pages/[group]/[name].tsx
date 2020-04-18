@@ -3,8 +3,8 @@ import CommonSchema from "@/components/CommonSchema"
 import DefaultLayout from "@/layouts/DefaultLayout"
 import { useRouter } from "next/router"
 import CorePages from "@/components/CorePages"
-import securityController from "@/core/auth/controllers/securityController"
 import CubeSpinner from "@/components/CommonBgs/CubeSpinner"
+import security from "@plugins/buncms-user/utils/security"
 import { ParsedUrlQuery } from "querystring"
 
 const ModulePage = () => {
@@ -15,7 +15,7 @@ const ModulePage = () => {
   useEffect(() => {
     ;(async () => {
       if (!group || !name) return
-      await securityController({ setReady, router })
+      await security({ setReady, router })
     })()
   }, [group])
 
