@@ -1,4 +1,10 @@
-import React, { MutableRefObject, useCallback, useRef, useState } from "react"
+import React, {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from "react"
 import { Button, Drawer } from "@material-ui/core"
 import CSS from "csstype"
 import styles from "./styles"
@@ -7,12 +13,17 @@ interface Props {
   width?: number | string
   height?: number | string
   direction?: "left" | "top" | "right" | "bottom"
-  buttonTitle: string
+  buttonTitle: string | JSX.Element
   buttonColor?: "inherit" | "default" | "primary" | "secondary" | undefined
   buttonVariant?: "text" | "outlined" | "contained"
   buttonSize?: "small" | "medium" | "large"
   buttonDisabled?: boolean
+  buttonHidden?: boolean
+  // switch toggleDrawer
+  switchDrawer?: number
+  // run func when open drawer
   onOpen?: (p: { contentRef: React.MutableRefObject<any | undefined> }) => void
+  // run func when close drawer
   onClose?: (p: { contentRef: React.MutableRefObject<any | undefined> }) => void
   contentClassName?: string
   contentStyles?: CSS.Properties
@@ -28,6 +39,8 @@ export default function CommonDrawer({
   buttonVariant,
   buttonSize,
   buttonDisabled,
+  buttonHidden,
+  switchDrawer,
   onOpen,
   onClose,
   contentClassName,
@@ -37,6 +50,10 @@ export default function CommonDrawer({
   const classes = styles({ width, height })
   const [state, setState] = useState({ open: false })
   const contentRef: MutableRefObject<any | undefined> = useRef()
+
+  useEffect(() => {
+    switchDrawer && switchDrawer > 0 && toggleDrawer()
+  }, [switchDrawer])
 
   const toggleDrawer = useCallback(() => {
     // handle function
@@ -51,15 +68,17 @@ export default function CommonDrawer({
 
   return (
     <>
-      <Button
-        variant={buttonVariant || "text"}
-        size={buttonSize || "medium"}
-        color={buttonColor || "primary"}
-        disabled={buttonDisabled}
-        onClick={() => toggleDrawer()}
-      >
-        {buttonTitle}
-      </Button>
+      {!buttonHidden && (
+        <Button
+          variant={buttonVariant || "text"}
+          size={buttonSize || "medium"}
+          color={buttonColor || "primary"}
+          disabled={buttonDisabled}
+          onClick={() => toggleDrawer()}
+        >
+          {buttonTitle}
+        </Button>
+      )}
       <Drawer
         className={classes.drawer}
         classes={{
