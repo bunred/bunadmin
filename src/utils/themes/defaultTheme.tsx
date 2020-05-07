@@ -81,9 +81,12 @@ const defaultTheme = createMuiTheme({
     },
     // cssBaseLine
     MuiCssBaseline: {
+      // @ts-ignore
       "@global": {
         // body
-        background: bodyBg,
+        background: {
+          default: bodyBg
+        },
         // scrollbar start
         "*::-webkit-scrollbar": {
           width: ".4rem"
