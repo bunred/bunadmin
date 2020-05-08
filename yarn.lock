@@ -2413,11 +2413,6 @@
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
 
-"@types/sortablejs@^1.10.2":
-  version "1.10.4"
-  resolved "https://registry.npmjs.org/@types/sortablejs/-/sortablejs-1.10.4.tgz#1be9681f6c9a405146644f52d76b74c7beb0dbd6"
-  integrity sha512-iXdJUEM09Hc0RacStDvkEi5BBdHuuwdys0L5/GtsRiEht69Df4hapA3FwFIeXn2STicqJjBAkowyD1OA3jGgwA==
-
 "@types/spark-md5@3.0.2":
   version "3.0.2"
   resolved "https://registry.npmjs.org/@types/spark-md5/-/spark-md5-3.0.2.tgz#da2e8a778a20335fc4f40b6471c4b0d86b70da55"
@@ -3095,11 +3090,6 @@ atob@^2.1.2:
   version "2.1.2"
   resolved "https://registry.npmjs.org/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
-
-attr-accept@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.npmjs.org/attr-accept/-/attr-accept-2.1.0.tgz#a231a854385d36ff7a99647bb77b33c8a5175aee"
-  integrity sha512-sLzVM3zCCmmDtDNhI0i96k6PUztkotSOXqE4kDGQt/6iDi5M+H0srjeF+QC6jN581l4X/Zq3Zu/tgcErEssavg==
 
 available-typed-arrays@^1.0.0, available-typed-arrays@^1.0.1:
   version "1.0.2"
@@ -5371,13 +5361,6 @@ file-js@0.3.0:
     bluebird "^3.4.7"
     minimatch "^3.0.3"
     proper-lockfile "^1.2.0"
-
-file-selector@^0.1.12:
-  version "0.1.12"
-  resolved "https://registry.npmjs.org/file-selector/-/file-selector-0.1.12.tgz#fe726547be219a787a9dcc640575a04a032b1fd0"
-  integrity sha512-Kx7RTzxyQipHuiqyZGf+Nz4vY9R1XGxuQl/hLoJwq+J4avk/9wxxgZyHKtbyIPJmbD4A66DWGYfyykWNpcYutQ==
-  dependencies:
-    tslib "^1.9.0"
 
 file-uri-to-path@1.0.0:
   version "1.0.0"
@@ -9870,15 +9853,6 @@ react-double-scrollbar@0.0.15:
   resolved "https://registry.npmjs.org/react-double-scrollbar/-/react-double-scrollbar-0.0.15.tgz#e915ab8cb3b959877075f49436debfdb04288fe4"
   integrity sha1-6RWrjLO5WYdwdfSUNt6/2wQoj+Q=
 
-react-dropzone@^10.2.1:
-  version "10.2.2"
-  resolved "https://registry.npmjs.org/react-dropzone/-/react-dropzone-10.2.2.tgz#67b4db7459589a42c3b891a82eaf9ade7650b815"
-  integrity sha512-U5EKckXVt6IrEyhMMsgmHQiWTGLudhajPPG77KFSvgsMqNEHSyGpqWvOMc5+DhEah/vH4E1n+J5weBNLd5VtyA==
-  dependencies:
-    attr-accept "^2.0.0"
-    file-selector "^0.1.12"
-    prop-types "^15.7.2"
-
 react-eva-icons@0.0.8:
   version "0.0.8"
   resolved "https://registry.npmjs.org/react-eva-icons/-/react-eva-icons-0.0.8.tgz#779e5f1def0e5336ca85847f5b7af79d3f71b890"
@@ -10888,11 +10862,6 @@ sort-keys@^2.0.0:
   integrity sha1-ZYU1WEhh7JfXMNbPQYIuH1ZoQSg=
   dependencies:
     is-plain-obj "^1.0.0"
-
-sortablejs@^1.10.2:
-  version "1.10.2"
-  resolved "https://registry.npmjs.org/sortablejs/-/sortablejs-1.10.2.tgz#6e40364d913f98b85a14f6678f92b5c1221f5290"
-  integrity sha512-YkPGufevysvfwn5rfdlGyrGjt7/CRHwvRPogD/lC+TnvcN29jDpCifKP+rBqf+LRldfXSTh+0CGLcSg0VIxq3A==
 
 source-list-map@^2.0.0:
   version "2.0.1"
