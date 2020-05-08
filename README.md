@@ -1,6 +1,6 @@
 # BunAdmin
 
-A simple graphql admin dashboard(Front-End Only). Easy to expand with the flexible plugin. Graphql first, also supports api. Based on React, Material-UI, Realtime RxDB, Formik, I18N. Free and Open Source for personal and commercial purposes.
+A simple graphql admin dashboard(Front-End Only). Easy to expand with the flexible plugin. Graphql first, also supports api. Based on React, Next.js, Material-UI, Realtime RxDB, Formik, I18N. Free and Open Source for personal and commercial purposes.
 
 ## Main Feathers
 
@@ -33,16 +33,26 @@ Install it and run: (You can [install the Yarn v1.2.0+ package here](https://yar
 
 ```sh
 yarn
+cp env-example.js env.js
 yarn run dev
 ```
+Open [http://localhost:1911/](http://localhost:1911/)
+```
+cd plugins
+git clone https://github.com/bunred/bunadmin-plugin-buncms-user.git buncms-user
+yarn
+```
+Refresh preview
 
 ## Plugin
 
-Required plugin:
+**Required plugin:**
 [User Auth](https://github.com/bunred/bunadmin-plugin-buncms-user): use api
 
 Example plugin: 
 [File Explore](https://github.com/bunred/bunadmin-plugin-buncms-file): use graphql
+
+*You should clone to build your own plugin*
 
 A new plugin's structure should look like this:
 
@@ -76,6 +86,7 @@ There is only one theme for now, borrowed style from [ngx-admin](https://github.
 
 [material-ui](https://github.com/mui-org/material-ui)
 [material-table](https://github.com/mbrn/material-table)
+[next.js](https://github.com/zeit/next.js)
 [rxdb](https://github.com/pubkey/rxdb)
 [formik](https://github.com/jaredpalmer/formik)
 [ngx-admin](https://github.com/akveo/ngx-admin)
