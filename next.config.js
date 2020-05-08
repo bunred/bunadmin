@@ -38,8 +38,8 @@ module.exports = phase => {
       config.resolve.alias['@plugins'] = path.resolve(__dirname, 'plugins')
       // rules
       config.module.rules.push({
-        // ignore .md file
-        test: /\.md$/,
+        // ignore file or file types
+        test: /\.md$|LICENSE$/,
         use: [{ loader: "ignore-loader" }]
       })
       return config
