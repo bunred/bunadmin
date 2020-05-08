@@ -29,6 +29,5 @@ yarn-error.log*
 
 # for plugins
 /.idea/vcs.xml
-yarn.lock
 
 # BunAdmin END

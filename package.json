@@ -11,6 +11,7 @@
     "url": "https://github.com/bunred/bunadmin/issues"
   },
   "author": "BunRed Team",
+  "private": true,
   "workspaces": [
     "plugins/*"
   ],
