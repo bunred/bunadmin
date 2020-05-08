@@ -2,7 +2,7 @@
 
 A simple graphql admin dashboard(Front-End Only). Easy to expand with the flexible plugin. Graphql first, also supports api. Based on React, Next.js, Material-UI, Realtime RxDB, Formik, I18N. Free and Open Source for personal and commercial purposes.
 
-## Main Feathers
+## Feature
 
 * [✔️] Plugin *
 * [✔️] Multi-user *
@@ -42,7 +42,7 @@ cd plugins
 git clone https://github.com/bunred/bunadmin-plugin-buncms-user.git buncms-user
 yarn
 ```
-Refresh preview
+Refresh preview.
 
 ## Plugin
 
@@ -54,11 +54,14 @@ Example plugin:
 
 *You should clone to build your own plugin*
 
-A new plugin's structure should look like this:
+A new plugin's structure demo:
 
 - /plugins/[team]-[group]
     - /[name]
         - index.tsx
+        - column.tsx
+        - /utils
+            - initData.tsx
     - /[name]
         - index.tsx
     - package.json
@@ -67,6 +70,9 @@ Example:
 - /plugins/bunadmin-blog
     - /post
         - index.tsx
+        - column.tsx
+        - /utils
+            - initData.tsx
     - /category
         - index.tsx
     - package.json
@@ -74,13 +80,16 @@ Example:
 [User Auth Plugin](https://github.com/bunred/bunadmin-plugin-buncms-user)
 [File Explore Plugin](https://github.com/bunred/bunadmin-plugin-buncms-file)
 
-#### About intData file
+#### intData
 
-Used to generate menus and data models
+Used to generate menus and schema data.
+
+#### Column
+Column define how your data looks. [example code](https://github.com/bunred/bunadmin-plugin-buncms-user/blob/master/list/columns.tsx) [read more](https://material-table.com/#/docs/get-started)
 
 #### Theme
 
-There is only one theme for now, borrowed style from [ngx-admin](https://github.com/akveo/ngx-admin)
+There is only one theme for now which refers to [ngx-admin](https://github.com/akveo/ngx-admin).
 
 #### Thanks
 
