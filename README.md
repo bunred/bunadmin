@@ -47,9 +47,13 @@ Refresh preview.
 ## Plugin
 
 **Required plugin:**
+
 [User Auth](https://github.com/bunred/bunadmin-plugin-buncms-user): api example
+
 Example plugin: 
+
 [Strapi User](https://github.com/bunred/bunadmin-plugin-buncms-strapi-user): api example
+
 [File Explore](https://github.com/bunred/bunadmin-plugin-buncms-file): graphql example
 
 *You should clone to build your own plugin*
@@ -78,7 +82,9 @@ Example:
     - package.json
 
 [User Auth Plugin](https://github.com/bunred/bunadmin-plugin-buncms-user)
+
 [File Explore Plugin](https://github.com/bunred/bunadmin-plugin-buncms-file)
+
 [Strapi User Plugin](https://github.com/bunred/bunadmin-plugin-buncms-strapi-user)
 
 #### intData
@@ -86,7 +92,7 @@ Example:
 Used to generate menus and schema data.
 
 #### Column
-Column define how your data looks. [example code](https://github.com/bunred/bunadmin-plugin-buncms-user/blob/master/list/columns.tsx) [read more](https://material-table.com/#/docs/get-started)
+Column define how your data looks. [example code](https://github.com/bunred/bunadmin-plugin-buncms-user/blob/master/list/columns.tsx) | [read more](https://material-table.com/#/docs/get-started)
 
 #### Theme
 
