@@ -3,7 +3,6 @@ import TextField from "@material-ui/core/TextField"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import { EditComponentProps } from "material-table"
-import Type from "@plugins/buncms-shop/product_category/types"
 import queryParentSer from "./services/queryParentSer"
 import { notice } from "@/core"
 
@@ -66,7 +65,7 @@ export default function ParentSelector({
       })
     }
 
-    const resList: Type[] = res && res[schemaName]
+    const resList: OptionType[] = res && res[schemaName]
 
     const options: OptionType[] = []
     resList.map(item => options.push({ id: item.id, name: item.name }))
