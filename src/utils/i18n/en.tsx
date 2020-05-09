@@ -77,7 +77,7 @@ const en = {
     Published: "Published",
     // others
     User: "User",
-    Email: "User",
+    Email: "Email",
     Detail: "Detail",
     "Null(ROOT)": "Null(ROOT)",
     Pos: "Rank",

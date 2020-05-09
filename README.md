@@ -47,10 +47,10 @@ Refresh preview.
 ## Plugin
 
 **Required plugin:**
-[User Auth](https://github.com/bunred/bunadmin-plugin-buncms-user): use api
-
+[User Auth](https://github.com/bunred/bunadmin-plugin-buncms-user): api example
 Example plugin: 
-[File Explore](https://github.com/bunred/bunadmin-plugin-buncms-file): use graphql
+[Strapi User](https://github.com/bunred/bunadmin-plugin-buncms-strapi-user): api example
+[File Explore](https://github.com/bunred/bunadmin-plugin-buncms-file): graphql example
 
 *You should clone to build your own plugin*
 
@@ -79,6 +79,7 @@ Example:
 
 [User Auth Plugin](https://github.com/bunred/bunadmin-plugin-buncms-user)
 [File Explore Plugin](https://github.com/bunred/bunadmin-plugin-buncms-file)
+[Strapi User Plugin](https://github.com/bunred/bunadmin-plugin-buncms-strapi-user)
 
 #### intData
 
