@@ -16,51 +16,40 @@ module.exports = (phase) => {
   // when `next build` or `npm run build` is used
   const isStaging = PHASE_PRODUCTION_BUILD && process.env.STAGING === '1'
 
+  function setEnvKeyValue({ Key }) {
+    let ENV
+    if (isDev) ENV = "DEV"
+    if (isProd) ENV = "PROD"
+    if (isStaging) ENV = "STAG"
+
+    // When `yarn build`, this ENV will be undefined always, ignore that.
+    // You can check your ENV values in page code.
+
+    let envValue
+    switch (ENV) {
+      case "DEV":
+        envValue = DEV[Key]
+        break
+      case "PROD":
+        envValue = PROD[Key]
+        break
+      case "STAG":
+        envValue = STAG[Key]
+        break
+      default:
+        return `${Key}:not (isDev,isProd && !isStaging,isProd && isStaging)`
+    }
+
+    // console.debug(`- : ${ENV}, ${Key}, ${envValue}} `)
+    return envValue
+  }
+
   return {
-    MAIN_URL: (() => {
-      if (isDev) {
-        console.log('ENV: DEV')
-        return DEV.MAIN_URL
-      }
-      if (isProd) {
-        console.log('ENV: PROD')
-        return PROD.MAIN_URL
-      }
-      if (isStaging) {
-        console.log('ENV: STAG')
-        return STAG.MAIN_URL
-      }
-      return 'MAIN_URL:not (isDev,isProd && !isStaging,isProd && isStaging)'
-    })(),
-    AUTH_URL: (() => {
-      if (isDev) return DEV.AUTH_URL
-      if (isProd) return PROD.AUTH_URL
-      if (isStaging) return STAG.AUTH_URL
-      return 'AUTH_URL:not (isDev,isProd && !isStaging,isProd && isStaging)'
-    })(),
-    SITE_URLS: (() => {
-      if (isDev) return DEV.SITE_URLS
-      if (isProd) return PROD.SITE_URLS
-      if (isStaging) return STAG.SITE_URLS
-      return 'SITE_URLS:not (isDev,isProd && !isStaging,isProd && isStaging)'
-    })(),
-    SITE_NAME: (() => {
-      if (isDev) return DEV.SITE_NAME
-      if (isProd) return PROD.SITE_NAME
-      if (isStaging) return STAG.SITE_NAME
-      return 'SITE_NAME:not (isDev,isProd && !isStaging,isProd && isStaging)'
-    })(),
-    ON_I18N: (() => {
-      if (isDev) return DEV.ON_I18N
-      if (isProd) return PROD.ON_I18N
-      if (isStaging) return STAG.ON_I18N
-      return 'ON_I18N:not (isDev,isProd && !isStaging,isProd && isStaging)'
-    })(),
-    ON_SETTING: (() => {
-      if (isDev) return DEV.ON_SETTING
-      if (isProd) return PROD.ON_SETTING
-      if (isStaging) return STAG.ON_SETTING
-      return 'ON_SETTING:not (isDev,isProd && !isStaging,isProd && isStaging)'
-    })(),
+    MAIN_URL: (() => setEnvKeyValue({ Key: "MAIN_URL" }))(),
+    AUTH_URL: (() => setEnvKeyValue({ Key: "AUTH_URL" }))(),
+    SITE_URLS: (() => setEnvKeyValue({ Key: "SITE_URLS" }))(),
+    SITE_NAME: (() => setEnvKeyValue({ Key: "SITE_NAME" }))(),
+    ON_I18N: (() => setEnvKeyValue({ Key: "ON_I18N" }))(),
+    ON_SETTING: (() => setEnvKeyValue({ Key: "ON_SETTING" }))(),
   }
 }
