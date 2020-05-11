@@ -2,12 +2,17 @@ const envCtrl = require("./env-ctrl")
 const path = require('path')
 const FileHound = require('filehound')
 const fs = require("fs")
+const chalk = require('chalk')
 
 module.exports = phase => {
 
   const env = envCtrl(phase)
 
+  // Enable plugins START
+  console.log(chalk.white('- Enabling bunadmin plugins ...'))
+
   // Generate pluginsData.json START
+  console.log(chalk.white('  · generating pluginsData.json ...'))
   // find all plugin initData files
   const pluginsPath = path.resolve('plugins')
   const pluginsInitFiles = FileHound.create()
@@ -22,8 +27,13 @@ module.exports = phase => {
 
   const name = 'pluginsData.json'
   const savePath = path.resolve(__dirname, 'plugins', name)
-  fs.writeFile(savePath, jsonStr, 'utf8', () => { console.log(`Write to ${name}`) })
-  // Gen pluginsData.json END
+  fs.writeFile(savePath, jsonStr, 'utf8', () => {
+    console.log(chalk.white('  · generation complete!'))
+
+    // Enable plugins END
+    console.log(chalk.blue('- Bunadmin plugins are enabled.'))
+  })
+  // Generate pluginsData.json END
 
   return {
     env,
