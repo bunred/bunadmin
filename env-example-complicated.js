@@ -6,7 +6,9 @@
  * Please leave it undefined if not used.
  */
 
-const url = {
+const I18N_CODE = "en" // Default i18n code, resources: ./src/utils/i18n/
+
+const obj = {
   dev: {
     main: "http://192.168.2.2:51800/api/v1", // main
     auth: "http://192.168.2.2:51801/api/v1", // user
@@ -17,8 +19,8 @@ const url = {
       3: "http://192.168.2.2:51804/api/v1", // blog
     },
     name: "Bunadmin DEV",
-    on_18n: true, // enable I18N Button
-    on_setting: true // enable Setting Menus
+    on_18n: true,      // I18N Menu
+    on_setting: true,  // Setting Menu
   },
   prod: {
     main: "http://www.bunadmin.com/api/v1", // main
@@ -31,7 +33,7 @@ const url = {
     },
     name: "Bunadmin PROD",
     on_18n: false,
-    on_setting: false
+    on_setting: false,
   },
   stag: {
     main: "http://stag.main.com/api/v1", // main
@@ -44,33 +46,36 @@ const url = {
     },
     name: "Bunadmin STAG",
     on_18n: false,
-    on_setting: false
+    on_setting: false,
   },
 }
 
 module.exports = {
   DEV: {
-    MAIN_URL: url.dev.main,
-    AUTH_URL: url.dev.auth,
-    SITE_URLS: `${url.dev.sites[0]}, ${url.dev.sites[1]}, ${url.dev.sites[2]}`,
-    SITE_NAME: url.dev.name,
-    ON_I18N: url.dev.on_18n,
-    ON_SETTING: url.dev.on_setting,
+    I18N_CODE,
+    MAIN_URL: obj.dev.main,
+    AUTH_URL: obj.dev.auth,
+    SITE_URLS: `${obj.dev.sites[0]}, ${obj.dev.sites[1]}, ${obj.dev.sites[2]}`,
+    SITE_NAME: obj.dev.name,
+    ON_I18N: obj.dev.on_18n,
+    ON_SETTING: obj.dev.on_setting,
   },
   PROD: {
-    MAIN_URL: url.prod.main,
-    AUTH_URL: url.prod.auth,
-    SITE_URLS: `${url.prod.sites[0]}, ${url.prod.sites[1]}, ${url.prod.sites[2]}`,
-    SITE_NAME: url.prod.name,
-    ON_I18N: url.prod.on_18n,
-    ON_SETTING: url.prod.on_setting,
+    I18N_CODE,
+    MAIN_URL: obj.prod.main,
+    AUTH_URL: obj.prod.auth,
+    SITE_URLS: `${obj.prod.sites[0]}, ${obj.prod.sites[1]}, ${obj.prod.sites[2]}`,
+    SITE_NAME: obj.prod.name,
+    ON_I18N: obj.prod.on_18n,
+    ON_SETTING: obj.prod.on_setting,
   },
   STAG: {
-    MAIN_URL: url.stag.main,
-    AUTH_URL: url.stag.auth,
-    SITE_URLS: `${url.stag.sites[0]}, ${url.stag.sites[1]}, ${url.stag.sites[2]}`,
-    SITE_NAME: url.stag.name,
-    ON_I18N: url.stag.on_18n,
-    ON_SETTING: url.stag.on_setting,
+    I18N_CODE,
+    MAIN_URL: obj.stag.main,
+    AUTH_URL: obj.stag.auth,
+    SITE_URLS: `${obj.stag.sites[0]}, ${obj.stag.sites[1]}, ${obj.stag.sites[2]}`,
+    SITE_NAME: obj.stag.name,
+    ON_I18N: obj.stag.on_18n,
+    ON_SETTING: obj.stag.on_setting,
   }
 }

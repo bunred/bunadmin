@@ -14,6 +14,7 @@ import rxDb from "@/utils/database/rxConnect"
 import { Type as SchemaType } from "@/core/schema/types"
 import addResource from "@/utils/scripts/addResource"
 import initData from "@/utils/scripts/initData"
+import { Collection as Setting, SettingNames } from "@/core/setting/collections"
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { i18n } = useTranslation()
@@ -23,8 +24,15 @@ const App = ({ Component, pageProps }: AppProps) => {
       // Init Data
       await initData()
 
-      // Add i18n resource
+      // Load setting i18n_code
       const db = await rxDb()
+      const setting = db[Setting.name]
+      const resI18nCode = await setting
+        .findOne({ name: { $eq: SettingNames.i18n_code } })
+        .exec()
+      if (resI18nCode) i18n.changeLanguage(resI18nCode.value).then()
+
+      // Add i18n resource
       let pathObj: any
       db[Schema.name]
         .find()

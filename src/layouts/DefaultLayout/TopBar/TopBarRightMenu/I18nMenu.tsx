@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 import IconButton from "@material-ui/core/IconButton"
 import Menu from "@material-ui/core/Menu"
@@ -7,24 +7,42 @@ import { useTheme } from "@material-ui/core/styles"
 import { useTranslation } from "react-i18next"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText"
+import { i18nMenus } from "@/utils/i18n"
+import rxDb from "@/utils/database/rxConnect"
+import { Collection as Setting, SettingNames } from "@/core/setting/collections"
 
 export default function I18nMenu() {
   const { i18n } = useTranslation()
   const theme = useTheme()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
+  const [curCode, setCurCode] = useState<string>()
 
-  const languages = [
-    { code: "zh", name: "中文" },
-    { code: "en", name: "English" }
-  ]
+  useEffect(() => {
+    ;(async () => {
+      const db = await rxDb()
+      const setting = db[Setting.name]
+      const resI18nCode = await setting
+        .findOne({ name: { $eq: SettingNames.i18n_code } })
+        .exec()
+      if (resI18nCode) setCurCode(resI18nCode.value)
+    })()
+  }, [])
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
 
   const handleI18n = ({ code }: { code: string }) => {
-    i18n.changeLanguage(code)
+    i18n.changeLanguage(code).then(async () => {
+      // update setting i18n_code
+      const db = await rxDb()
+      await db[Setting.name].upsert({
+        name: SettingNames.i18n_code,
+        value: code
+      })
+      setCurCode(code)
+    })
     handleClose()
   }
 
@@ -63,13 +81,14 @@ export default function I18nMenu() {
         open={open}
         onClose={handleClose}
       >
-        {languages.map((item, index) => (
+        {i18nMenus.map((item, index) => (
           <ListItem
             key={index}
             button
             onClick={() => handleI18n({ code: item.code })}
+            selected={item.code === curCode}
           >
-            <ListItemText primary={item.name} />
+            <ListItemText color={"red"} primary={item.name} />
           </ListItem>
         ))}
       </Menu>

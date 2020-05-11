@@ -4,11 +4,12 @@ import { ServerStyleSheets } from "@material-ui/core/styles"
 import defaultTheme from "../src/utils/themes/defaultTheme"
 // @ts-ignore
 import { resetServerContext } from "react-beautiful-dnd"
+import { ENV } from "@/utils/config"
 
 export default class MyDocument extends Document {
   render() {
     return (
-      <html lang="en">
+      <html lang={ENV.I18N_CODE}>
         <Head>
           {/* PWA primary color */}
           <meta

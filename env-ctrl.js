@@ -51,5 +51,6 @@ module.exports = (phase) => {
     SITE_NAME: (() => setEnvKeyValue({ Key: "SITE_NAME" }))(),
     ON_I18N: (() => setEnvKeyValue({ Key: "ON_I18N" }))(),
     ON_SETTING: (() => setEnvKeyValue({ Key: "ON_SETTING" }))(),
+    I18N_CODE: (() => setEnvKeyValue({ Key: "I18N_CODE" }))(),
   }
 }

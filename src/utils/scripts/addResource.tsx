@@ -1,5 +1,5 @@
-import languages from "@/utils/config/languages"
 import requirePlugins from "@/utils/scripts/requirePlugins"
+import { i18nCodes } from "@/utils/i18n"
 
 export default function addResource({
   i18n,
@@ -10,7 +10,7 @@ export default function addResource({
   team: string
   group: string
 }) {
-  Object.keys(languages).map(lan => {
+  Object.keys(i18nCodes).map(lan => {
     const lang: any = requirePlugins(`${team}-${group}/utils/i18n/${lan}`)
 
     if (!lang) return
