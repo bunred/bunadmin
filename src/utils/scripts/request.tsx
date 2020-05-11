@@ -61,7 +61,7 @@ const request = extend({
   errorHandler, // 默认错误处理
   credentials: "same-origin", // 默认请求是否带上cookie
   prefix: ENV.MAIN_URL,
-  timeout: 10000, // ms
+  timeout: 2000, // ms
   redirect: "follow",
   headers: {
     "Content-Type": "application/json"

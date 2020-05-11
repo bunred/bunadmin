@@ -17,8 +17,9 @@ yarn-error.log*
 # Next.js
 /.next
 
-# Idea
+# IDE
 /.idea/workspace.xml
+.vscode/*
 
 # BunAdmin START
 /env.js
@@ -29,5 +30,7 @@ yarn-error.log*
 
 # for plugins
 /.idea/vcs.xml
+yarn.lock
+package-lock.json
 
 # BunAdmin END
