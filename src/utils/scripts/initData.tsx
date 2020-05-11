@@ -1,9 +1,10 @@
 import rxInitData from "@/utils/database/rxInitData"
-import { Collection as Setting } from "@/core/setting/collections"
+import { Collection as Setting, SettingNames } from "@/core/setting/collections"
 import initDocsData from "@/utils/database/rxInitData/initDocsData"
 import requirePlugins from "@/utils/scripts/requirePlugins"
 import rxDb from "@/utils/database/rxConnect"
 import { Primary as AuthPrimary } from "@/core/auth/schema"
+import { ENV } from "@/utils/config"
 
 interface InitData {
   plugin: string
@@ -20,26 +21,30 @@ export default async function initData() {
   await rxInitData({
     db,
     collection: Setting.name,
-    name: "init_status",
+    name: SettingNames.init_status,
     initFunc: () =>
       initDocsData({
         db,
         collection: Setting.name,
         docsData: [
           {
+            name: SettingNames.i18n_code,
+            value: ENV.I18N_CODE
+          },
+          {
             name: AuthPrimary, // username
             value: undefined
           },
           {
-            name: "site_name",
+            name: SettingNames.role,
             value: undefined
           },
           {
-            name: "theme",
+            name: SettingNames.site_name,
             value: undefined
           },
           {
-            name: "theme",
+            name: SettingNames.theme,
             value: undefined
           }
         ]
