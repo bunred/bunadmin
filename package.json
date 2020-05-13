@@ -1,6 +1,6 @@
 {
   "name": "bunadmin",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "A simple graphql admin dashboard. Easy to expand with the flexible plugin. Graphql first, also supports api. Based on React, Material-UI, Realtime RxDB, Formik, I18N.",
   "license": "Apache-2.0",
   "repository": {
@@ -26,7 +26,7 @@
     "i18next": "^19.3.3",
     "json-bigint": "^0.3.0",
     "lerna": "^3.20.2",
-    "material-table": "npm:bunadmin-table",
+    "material-table": "npm:bunadmin-table@1.1.2",
     "next": "latest",
     "notistack": "^0.9.8",
     "pouchdb-adapter-http": "^7.2.1",
@@ -37,7 +37,7 @@
     "react-i18next": "^11.3.3",
     "react-json-editor-ajrm": "^2.5.9",
     "react-json-view": "^1.19.1",
-    "rxdb": "^8.7.5",
+    "rxdb": "8.9.0",
     "rxjs": "^6.5.4",
     "shortid": "^2.2.15",
     "umi-request": "^1.2.19"
