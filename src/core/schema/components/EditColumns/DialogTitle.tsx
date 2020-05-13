@@ -28,7 +28,7 @@ const styles = (theme: Theme) =>
 interface DialogTitleProps extends WithStyles<typeof styles> {
   id: string
   children: React.ReactNode
-  onClick: () => void
+  onClick?: () => void
   setMode: (arg0: string) => void
 }
 

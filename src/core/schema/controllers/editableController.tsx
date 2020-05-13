@@ -42,6 +42,7 @@ export function editableController(): EditableDataType<Type> {
           const db = await rxDb()
 
           await db[collection].insert({
+            // @ts-ignore
             [primary]: nanoId,
             ...newData,
             customized: ((newData.customized as unknown) as string) === "true",
