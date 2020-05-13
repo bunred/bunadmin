@@ -11,11 +11,21 @@ interface OptionType {
   name: string
 }
 
+export type CustomParentData = {
+  data: {
+    [key: string]: { res: any; errors?: any }
+  }
+  errors?: any
+}
+
+export type CustomParentSer = Promise<CustomParentData>
+
 interface Props extends EditComponentProps<any> {
   label?: string
   schemaName: string
   parentName: string
   width?: string | number
+  customParentSer?: CustomParentSer
 }
 
 export default function ParentSelector({
@@ -24,7 +34,8 @@ export default function ParentSelector({
   parentName,
   width,
   rowData,
-  onChange
+  onChange,
+  customParentSer
 }: Props) {
   const [open, setOpen] = React.useState(false)
   const [options, setOptions] = React.useState<OptionType[]>([])
@@ -49,13 +60,9 @@ export default function ParentSelector({
   }, [open])
 
   async function dataCtrl() {
-    const { data: res, errors } = await queryParentSer(
-      schemaName,
-      parentName,
-      rowData.id,
-      name,
-      30
-    )
+    const { data: res, errors } = customParentSer
+      ? await customParentSer
+      : await queryParentSer(schemaName, parentName, rowData.id, name, 30)
 
     if (errors) {
       return await notice({
