@@ -30,6 +30,3 @@ docker run -d \
 --label ${label} \
 --network=traefik_default \
 ${container}
-
-docker tag ${container} registry.cn-shenzhen.aliyuncs.com/bunlu/${container}:1.0.1
-docker push registry.cn-shenzhen.aliyuncs.com/bunlu/${container}:1.0.1
