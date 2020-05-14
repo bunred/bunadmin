@@ -47,7 +47,7 @@
     "dev": "next -p 1911",
     "build": "next build",
     "prettier": "prettier --write  --no-semi src/** pages/** plugins/** test/**",
-    "start": "next start -p 1912",
+    "start": "next start -p $PORT",
     "test": "prettier --check --no-semi src/** pages/** test/** && jest",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
   },

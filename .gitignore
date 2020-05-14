@@ -22,7 +22,8 @@ yarn-error.log*
 .vscode/*
 
 # BunAdmin START
-/env.js
+# heroku
+#/env.js
 /deploy.sh
 
 /plugins/*
