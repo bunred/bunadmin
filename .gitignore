@@ -32,5 +32,6 @@ yarn-error.log*
 /.idea/vcs.xml
 yarn.lock
 package-lock.json
+plugins-info.json
 
 # BunAdmin END
