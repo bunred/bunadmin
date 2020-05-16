@@ -4,12 +4,13 @@ A simple graphql admin dashboard(Front-End Only). Easy to expand with the flexib
 
 ## Feature
 
-* [✔️] Plugin *
-* [✔️] Multi-user *
-* [✔️] Multi-language
-* [✔️] Data migration *
-* [✔️] Log / message *
-* [✔️] Dockerfile & Deploy Shell
+* [x] Plugins / One-click Update Plugins *
+* [x] Multi-user *
+* [x] Multi-language
+* [x] Data migration *
+* [x] Log / message *
+* [x] Common Components
+* [x] Dockerfile & Deploy Shell
 
 ### Demo
 [Online demo](http://bunadmin-example-strapi.herokuapp.com/)
@@ -91,6 +92,18 @@ Example:
     - /category
         - index.tsx
     - package.json
+
+#### Update Plugins
+One-click install / upgrade plugin.
+```
+cp plugins-info-example.json plugins-info.json
+node plugins-update.js
+```
+You can contribute your open plugin to [bunadmin plugins public library](https://github.com/bunred/bunadmin-plugins)
+
+You can also create your own [private plugin](https://github.com/bunred/bunadmin/plugins-info-example.json#L40)
+
+## Develop
 
 #### intData
 
