@@ -18,7 +18,7 @@ const rmDir = function(dir) {
   try {
     files = fs.readdirSync(dir)
   } catch (e) {
-    return console.log("!Oops, directory not exist.")
+    return console.log("  · !Oops, directory not exist.")
   }
 
   if (files.length > 0) {
@@ -34,22 +34,27 @@ const rmDir = function(dir) {
   fs.rmdirSync(dir)
 } // rmDir() end
 
-const downloadAndUnzip = function (url, folder) {
+const downloadAndUnzip = async function (reqOptions, folder) {
+  const url = reqOptions.url
   const extractedFolder = url.replace(/.*?github.com\/.*?\/(.*?)\/archive\/(.*?).zip/g, '$1-$2')
 
   const download = async function (url) {
     try {
       return await request({
-        url: url,
-        method: 'GET',
+        ...reqOptions,
         encoding: null
       })
     } catch (e) {
-      return console.error(`Download Error: ${folder}, ${url}`)
+      console.error(`  · Download plugin failed: '${folder}', ${url}`)
+      return "download_error"
     }
   }
 
   const unzip = function (buffer) {
+    if (buffer === "download_error") {
+      return buffer
+    }
+
     const zip = new AdmZip(buffer)
 
     zip.extractAllToAsync(plugins, true, function () {
@@ -59,14 +64,17 @@ const downloadAndUnzip = function (url, folder) {
         }
         fs.renameSync(`${plugins}/${extractedFolder}`, `${plugins}/${folder}`)
       } catch (e) {
-        console.log(e)
+        console.log(`  · Unzip error: directory ${folder}`)
+        return "unzip_error"
       }
     }) // zip.extractAllToAsync end
 
+    return "unzip done"
+
   } // unzip() end
 
-  return download(url)
-    .then(unzip)
+  const downRes = await download(url)
+  return unzip(downRes)
 } // downloadAndUnzip() END
 
 // Checking plugins START
@@ -75,61 +83,117 @@ console.log(chalk.white('- Checking bunadmin plugins updates...'))
 const newJsonInfo = []
 // read and handle plugins-info.json
 const pluginsInfoArr = require("./plugins-info.json") || []
-pluginsInfoArr.forEach(function(p, i) {
-  const isEnabled = p["enable"]
-  if (!isEnabled) {
-    newJsonInfo.push(p)
-    return console.log(chalk.white(`  · Plugin is not enabled: ${p["plugin-id"]}`))
+let keepOldNum = 0
+
+async function updatePlugins() {
+  for (let i = 0; i < pluginsInfoArr.length; i++) {
+    const p = pluginsInfoArr[i]
+
+    const isEnabled = p["enable"]
+    if (!isEnabled) {
+      newJsonInfo[i] = p // keep original plugin data
+      keepOldNum++
+      console.log(chalk.white(`  · Plugin is not enabled: ${p["plugin-id"]}`))
+      continue
+    }
+
+    const currentVersion = p["plugin-version"]
+    const urlOL = prefixUrl + `/${p["plugin-navigation"]}/${p["plugin-author"]}/${p["plugin-id"]}.json`
+    let reqOptions = {
+      url: urlOL
+    }
+
+    const isCustomRequest = p["custom-request-options"] && p["custom-request-options"]["url"]
+    if (isCustomRequest) {
+      reqOptions = p["custom-request-options"]
+    }
+
+    let data
+    try {
+      data = await request(reqOptions)
+    } catch (e) {
+      console.error(`  · Remote plugin does not exist: ${p["plugin-id"]}`)
+      newJsonInfo[i] = p // keep original plugin data
+      continue
+    }
+
+    const jsonOL = JSON.parse(data)
+
+    const localFolder = p["plugin-folder"]
+    const existedFolder = fs.existsSync(`${plugins}/${localFolder}`)
+
+    const newVersion = jsonOL["plugin-version"]
+    // No plugin updates available
+    if (existedFolder && compareVersions(newVersion, currentVersion) <= 0) {
+      console.log(chalk.white(`  · No plugin updates available: ${p["plugin-id"]}`))
+      newJsonInfo[i] = p // keep original plugin data
+      keepOldNum++
+
+      continue
+    } // if compareVersions end
+
+    const downloadUrl = jsonOL["plugin-download"] && jsonOL["plugin-download"]["url"]
+    const pluginFolder = jsonOL["plugin-folder"]
+
+    if (!downloadUrl || !pluginFolder) {
+      console.error(`  · Params Error: please check the plugin '${p["plugin-id"]}'`)
+      continue
+    }
+
+    const downloadOpts = {
+      ...reqOptions,
+      url: downloadUrl,
+      encoding: null
+    }
+
+    // download to update plugin
+    const duRes = await downloadAndUnzip(downloadOpts, pluginFolder) // downloadAnUnzip end
+
+    if (duRes === "download_error") {
+      newJsonInfo[i] = p // keep original plugin data
+      keepOldNum++
+    } else {
+      if (existedFolder) {
+        console.log(chalk.green(`  · Plugin updated : ${p["plugin-id"]}@${newVersion}`))
+      } else {
+        console.log(chalk.green(`  · Plugin installed : ${p["plugin-id"]}@${newVersion}`))
+      }
+      // update plugin info, keep local original custom-request-options
+      if (isCustomRequest) {
+        // remove online custom-request-options, such as "Warning!!!"
+        delete jsonOL["custom-request-options"]
+
+        newJsonInfo[i] = {
+          enable: true,
+          "custom-request-options": reqOptions,
+          ...jsonOL,
+        }
+      } else {
+        newJsonInfo[i] = { enable: true, ...jsonOL }
+      }
+    }
+
+  } // pluginsInfoArr for end
+}
+
+updatePlugins().then(_r => {
+  // console.log(newJsonInfo)
+  // return
+
+// all plugins' info same to local origin, skip updating plugin-infos.json
+  if (keepOldNum === pluginsInfoArr.length) {
+    return console.log(chalk.blue('- Checking bunadmin plugins completed.'))
   }
 
-  const currentVersion = p["plugin-version"]
-  const urlOL = prefixUrl + `/${p["plugin-navigation"]}/${p["plugin-author"]}/${p["plugin-id"]}.json`
+// write new plugins-info.json
+  const savePath = path.resolve(__dirname, pluginsInfo)
+  const prettier = require("prettier")
+  const preJson = prettier.format(JSON.stringify(newJsonInfo), { parser: "json" })
 
-  try {
-    request(urlOL).then((data) => {
-      const jsonOL = JSON.parse(data)
+  fs.writeFile(savePath, preJson, 'utf8', () => {
 
-      const newVersion = jsonOL["plugin-version"]
-      // No plugin updates available
-      if (compareVersions(newVersion, currentVersion) <= 0) {
-        console.log(chalk.white(`  · No plugin updates available: ${p["plugin-id"]}`))
-        newJsonInfo.push(p)
-
-        // last one
-        if (i + 1 === pluginsInfoArr.length) {
-          console.log(chalk.blue('- Checking plugins completed.'))
-        }
-
-        return
-      } // if compareVersions end
-
-      const downloadUrl = jsonOL["plugin-download"]["url"]
-      const pluginFolder = jsonOL["plugin-folder"]
-
-      // download to update plugin
-      downloadAndUnzip(downloadUrl, pluginFolder).then(function () {
-        console.log(chalk.green(`  · Plugin updated to ${newVersion}: ${p["plugin-id"]}`))
-        newJsonInfo.push({ enable: true, ...jsonOL })
-
-        // last one
-        if (i + 1 === pluginsInfoArr.length) {
-          console.log(chalk.blue('- Checking bunadmin plugins completed.'))
-
-          // write new plugins-info.json
-          const savePath = path.resolve(__dirname, pluginsInfo)
-          fs.writeFile(savePath, JSON.stringify(newJsonInfo), 'utf8', () => {
-
-            // Checking plugins END
-            console.log(chalk.blue('- Updated plugins-info.json'))
-          })
-        }
-      }).catch(function (err) {
-        console.error(err)
-      }) // downloadAnUnzip end
-
-    }) // request(urlOL) end
-  } catch (e) {
-    console.log(e)
-  } // try catch end
-
-}) // pluginsInfoArr forEach end
+    // Checking plugins END
+    console.log(chalk.white('  · Updated plugins-info.json'))
+    console.log(chalk.blue('- Checking bunadmin plugins completed.'))
+  })
+});
