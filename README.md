@@ -32,33 +32,43 @@ Data Migration
 ## How to use
 Download the code [or clone the repo](https://github.com/bunred/bunadmin):
 
-```sh
+```
 git clone https://github.com/bunred/bunadmin.git
 cd bunadmin
 ```
 
-Install it and run: (You can [install the Yarn v1.2.0+ package here](https://yarnpkg.com/))
+Install packages: (You can [install the Yarn v1.2.0+ package here](https://yarnpkg.com/))
 
-```sh
+```
 yarn
 cp env-example.js env.js
 yarn run dev
 ```
+Install plugins  and run
+```
+cp plugins-info-example.json plugins-info.json
+node plugins-update.js
+```
 Open [http://localhost:1911/](http://localhost:1911/)
-```
-cd plugins
-git clone https://github.com/bunred/bunadmin-plugin-buncms-user.git buncms-user
-yarn
-```
-Refresh preview.
 
 ## Plugin
 
-**Required plugin:**
+#### One-click install / update plugins
+```
+cp plugins-info-example.json plugins-info.json
+node plugins-update.js
+```
+You can contribute your open plugin to [bunadmin plugins public library](https://github.com/bunred/bunadmin-plugins)
+
+You can also create your own [private plugin](https://github.com/bunred/bunadmin/blob/master/plugins-info-example.json#L41)
+
+---
+
+**Required plugin**
 
 [User Auth](https://github.com/bunred/bunadmin-plugin-buncms-user): api example
 
-Example plugin: 
+Example plugin
 
 [Strapi User](https://github.com/bunred/bunadmin-plugin-buncms-strapi-user): api example
 
@@ -70,7 +80,9 @@ Example plugin:
 
 *You should clone to build your own plugin*
 
-A new plugin's structure demo:
+---
+
+#### Plugin structure
 
 - /plugins/[team]-[group]
     - /[name]
@@ -92,17 +104,7 @@ Example:
     - /category
         - index.tsx
     - package.json
-
-#### Update Plugins
-One-click install / upgrade plugin.
-```
-cp plugins-info-example.json plugins-info.json
-node plugins-update.js
-```
-You can contribute your open plugin to [bunadmin plugins public library](https://github.com/bunred/bunadmin-plugins)
-
-You can also create your own [private plugin](https://github.com/bunred/bunadmin/plugins-info-example.json#L40)
-
+    
 ## Develop
 
 #### intData
@@ -136,6 +138,14 @@ Heroku:
 heroku container:push web
 heroku container:release web
 ```
+
+#### Backup private files
+Usually you need to manually backup the following files
+
+* env.js
+* deploy.sh
+* plugins-info.json
+* yarn.lock
 
 #### Thanks
 
