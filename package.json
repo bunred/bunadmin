@@ -20,7 +20,6 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.47",
     "clsx": "latest",
-    "compare-versions": "^3.6.0",
     "filehound": "^1.17.4",
     "formik": "^2.1.4",
     "formik-material-ui": "^2.0.0-beta.1",
@@ -53,18 +52,15 @@
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
   },
   "devDependencies": {
-    "@bunred/sync-plugins": "^1.0.3",
+    "@bunred/sync-plugins": "^1.0.4",
     "@types/next": "latest",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
-    "adm-zip": "^0.4.14",
     "chalk": "^4.0.0",
     "ignore-loader": "^0.1.2",
     "jest": "^25.1.0",
     "prettier": "1.19.1",
-    "react-screenshot-test": "^2.0.1",
-    "request-promise-native": "^1.0.8",
     "typescript": "latest"
   },
   "keywords": [
