@@ -8,10 +8,16 @@ import { Collection } from "@/core/menu/collections"
 import { Type } from "@/core/menu/types"
 import { ENV } from "@/utils/config"
 
-const LeftMenu = () => {
-  const [data, setData] = useState([] as Type[])
+export interface LeftMenuProps {
+  data?: Type[]
+  offLeftSetting?: boolean
+}
+
+const LeftMenu = ({ data: propsData, offLeftSetting }: LeftMenuProps) => {
+  const [data, setData] = useState(propsData || ([] as Type[]))
 
   useEffect(() => {
+    if (propsData) return
     ;(async () => {
       await rxSubscribe({
         collection: Collection.name,
@@ -21,13 +27,13 @@ const LeftMenu = () => {
         }
       })
     })()
-  }, [])
+  }, [propsData])
 
   return (
     <>
-      <NestedList data={data} />
+      <NestedList data={propsData || data} />
       <Divider />
-      {ENV.ON_SETTING && <SettingMenu />}
+      {!offLeftSetting && ENV.ON_SETTING && <SettingMenu />}
     </>
   )
 }
