@@ -4,15 +4,16 @@ A simple graphql admin dashboard(Front-End Only). Easy to expand with the flexib
 
 ## Feature
 
-* [x] Plugins / One-click Update Plugins *
-* [x] Multi-user *
-* [x] Multi-language
-* [x] Data migration *
-* [x] Log / message *
-* [x] Common Components
-* [x] Dockerfile & Deploy Shell
+* ✅ Plugins / One-click Update Plugins *
+* ✅️ Multi-user *
+* ✅️ Multi-language
+* ✅ Data migration *
+* ✅ Log / message *
+* ✅ Common Components
+* ✅ MDX Documentation
+* ✅ Dockerfile & Deploy Shell
 
-### Demo
+## Demo
 [Online Demo](https://strapi-demo.bunadmin.com/)
 
 [Documentation](https://strapi-demo.bunadmin.com/doc/components/table)
@@ -148,6 +149,14 @@ Usually you need to manually backup the following files
 * deploy.sh
 * plugins-info.json
 * yarn.lock
+
+#### Create your own document
+*Use mdx to combine your own components.*
+
+Add these two plugins to `plugin-info.json`
+[doc](https://github.com/bunred/bunadmin-plugins/blob/master/navigation/documentation/bunred/bunadmin-plugin-doc.json) [file](https://github.com/bunred/bunadmin-plugins/blob/master/navigation/file-upload/bunred/bunadmin-plugin-buncms-file.json)
+
+Refer to [bunadmin-plugin-doc](https://github.com/bunred/bunadmin-plugin-doc.git) to make your document
 
 #### Thanks
 
