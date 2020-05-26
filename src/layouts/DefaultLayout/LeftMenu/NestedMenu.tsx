@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
@@ -8,7 +8,7 @@ import Collapse from "@material-ui/core/Collapse"
 import { Type } from "@/core/menu/types"
 import MenuIcon from "./MenuIcon"
 import { useRouter } from "next/router"
-import { DynamicRoute } from "@/utils/routes"
+import { DynamicRoute, DynamicDocRoute } from "@/utils/routes"
 import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
 import { useTranslation } from "react-i18next"
@@ -38,9 +38,21 @@ interface Props {
 export default function NestedList({ data }: Props): any {
   const { t } = useTranslation("plugins")
   const router = useRouter()
-  const { group: qGroup, name: qName } = router.query
+  let { group: qGroup, name: qName } = router.query
   const classes = useStyles()
   const [open, setOpen] = React.useState({} as { [key: string]: boolean })
+
+  if (router.route === DynamicDocRoute) {
+    qGroup = "doc/" + router.query.category
+    qName = router.query.slug
+  }
+
+  useEffect(() => {
+    // set default opened parent
+    if (typeof qGroup !== "string") return
+    const parent = qGroup.replace("doc/", "")
+    handleOpen({ name: parent })
+  }, [])
 
   const handleOpen = ({ name }: { name: string }) => {
     setOpen({
@@ -54,6 +66,10 @@ export default function NestedList({ data }: Props): any {
       const isUrl = new RegExp("^http.*").test(slug)
 
       if (!isUrl) {
+        if (router.route === DynamicDocRoute) {
+          return router.push(DynamicDocRoute, slug).then(_r => {})
+        }
+
         router.push(DynamicRoute, slug).then(_r => {})
       } else {
         router.push(slug).then(_r => {})

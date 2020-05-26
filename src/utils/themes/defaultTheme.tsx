@@ -87,6 +87,9 @@ const defaultTheme = createMuiTheme({
         background: {
           default: bodyBg
         },
+        img: {
+          width: "100%"
+        },
         // scrollbar start
         "*::-webkit-scrollbar": {
           width: ".4rem"

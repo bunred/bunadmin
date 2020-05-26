@@ -5,19 +5,20 @@ import Box from "@material-ui/core/Box"
 import { useTheme } from "@material-ui/core/styles"
 import { defaultLayoutStyles } from "./styles"
 import DefaultHead from "@/components/DefaultHead"
-import LeftMenu from "./LeftMenu"
+import LeftMenu, { LeftMenuProps } from "./LeftMenu"
 import TopBar from "./TopBar"
 import { Container, Fade } from "@material-ui/core"
 
 const useStyles = defaultLayoutStyles
 
-interface ResponsiveDrawerProps {
+interface DefaultLayoutProps {
   children?: any
+  leftMenu?: LeftMenuProps
 }
 
 // ResponsiveDrawer
-export default function DefaultLayout(props: ResponsiveDrawerProps) {
-  const { children } = props
+export default function DefaultLayout(props: DefaultLayoutProps) {
+  const { children, leftMenu } = props
   const classes = useStyles()
   const theme = useTheme()
   const [open, setOpen] = React.useState(true)
@@ -52,7 +53,7 @@ export default function DefaultLayout(props: ResponsiveDrawerProps) {
             keepMounted: true // Better open performance on mobile.
           }}
         >
-          <LeftMenu />
+          <LeftMenu {...leftMenu} />
         </Drawer>
       </nav>
       <Container className={classes.content}>
