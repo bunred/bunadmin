@@ -3,6 +3,9 @@ const path = require("path")
 const FileHound = require("filehound")
 const fs = require("fs")
 const chalk = require("chalk")
+const withMDX = require("@next/mdx")({
+  extension: /\.mdx?$/
+})
 
 module.exports = phase => {
   const env = envCtrl(phase)
@@ -34,7 +37,7 @@ module.exports = phase => {
   })
   // Generate pluginsData.json END
 
-  return {
+  return withMDX({
     env,
     poweredByHeader: false,
     generateBuildId: async () => {
@@ -48,14 +51,10 @@ module.exports = phase => {
       // rules
       config.module.rules.push({
         // ignore file or file types
-        test: /LICENSE$/,
+        test: /\.md$|LICENSE$/,
         use: [{ loader: "ignore-loader" }]
-      })
-      config.module.rules.push({
-        test: /\.md$/,
-        use: "raw-loader"
       })
       return config
     }
-  }
+  })
 }
