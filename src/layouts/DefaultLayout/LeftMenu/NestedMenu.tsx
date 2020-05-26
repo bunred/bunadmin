@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
@@ -43,9 +43,16 @@ export default function NestedList({ data }: Props): any {
   const [open, setOpen] = React.useState({} as { [key: string]: boolean })
 
   if (router.route === DynamicDocRoute) {
-    qGroup = "doc"
+    qGroup = "doc/" + router.query.category
     qName = router.query.slug
   }
+
+  useEffect(() => {
+    // set default opened parent
+    if (typeof qGroup !== "string") return
+    const parent = qGroup.replace("doc/", "")
+    handleOpen({ name: parent })
+  }, [])
 
   const handleOpen = ({ name }: { name: string }) => {
     setOpen({
