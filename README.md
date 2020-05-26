@@ -13,7 +13,9 @@ A simple graphql admin dashboard(Front-End Only). Easy to expand with the flexib
 * [x] Dockerfile & Deploy Shell
 
 ### Demo
-[Online demo](http://bunadmin-example-strapi.herokuapp.com/)
+[Online Demo](https://strapi-demo.bunadmin.com/)
+
+[Documentation](https://strapi-demo.bunadmin.com/doc/components/table)
 
 Username / password: `bunadmin_test`
 
