@@ -13,6 +13,7 @@ interface Interface {
   openModal: number
   title?: string | ReactElement
   msg?: string | ReactElement
+  content?: ReactElement
   doFunc: () => void
   disagree?: string | ReactElement
   agree?: string | ReactElement
@@ -22,6 +23,7 @@ export default function ConfirmDialog({
   openModal,
   title,
   msg,
+  content,
   doFunc,
   disagree,
   agree
@@ -54,14 +56,14 @@ export default function ConfirmDialog({
       >
         <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>
         <DialogContent>
-          <DialogContentText>{msg}</DialogContentText>
+          {content || <DialogContentText>{msg}</DialogContentText>}
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
-            {disagree || <Translation>{t => t("Disagree")}</Translation>}
+          <Button autoFocus onClick={handleClose}>
+            {disagree || <Translation>{t => t("Cancel")}</Translation>}
           </Button>
           <Button onClick={handleAgree} color="primary" autoFocus>
-            {agree || <Translation>{t => t("Agree")}</Translation>}
+            {agree || <Translation>{t => t("Confirm")}</Translation>}
           </Button>
         </DialogActions>
       </Dialog>

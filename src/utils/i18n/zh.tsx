@@ -14,8 +14,9 @@ const zh = {
     Logout: "退出",
     // others
     Show: "显示",
-    Agree: "同意",
-    Disagree: "不同意"
+    Confirm: "确认",
+    Cancel: "取消",
+    "Request Failed": "请求失败"
   },
   plugins: {
     // LeftMenu

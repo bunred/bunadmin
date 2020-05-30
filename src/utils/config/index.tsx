@@ -10,6 +10,7 @@ interface EnvTypes {
   SITE_NAME: string
   ON_I18N: boolean
   ON_SETTING: boolean
+  ON_DOC: boolean
   I18N_CODE: string
 }
 
@@ -20,5 +21,6 @@ export const ENV = {
   SITE_NAME: process.env.SITE_NAME || "BunAdmin",
   ON_I18N: process.env.ON_I18N || false,
   ON_SETTING: process.env.ON_SETTING || false,
+  ON_DOC: process.env.ON_DOC || false,
   I18N_CODE: process.env.I18N_CODE || "en"
 } as EnvTypes

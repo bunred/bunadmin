@@ -12,6 +12,9 @@ import Link from "@/components/Link"
 import NoticeMenu from "./TopBarRightMenu/NoticeMenu"
 import I18nMenu from "@/layouts/DefaultLayout/TopBar/TopBarRightMenu/I18nMenu"
 import { ENV } from "@/utils/config"
+import DocMenu from "./TopBarRightMenu/DocMenu"
+import { useRouter } from "next/router"
+import { DynamicDocRoute } from "@/utils/routes"
 
 const useStyles = topBarStyles
 
@@ -23,6 +26,8 @@ export default function TopBar(props: TopBarProps) {
   const { menuClick } = props
   const classes = useStyles()
   const theme = useTheme()
+  const router = useRouter()
+  const isDoc = router.route === DynamicDocRoute
 
   return (
     <AppBar
@@ -54,10 +59,15 @@ export default function TopBar(props: TopBarProps) {
         </div>
 
         <div className={classes.rightBlock}>
-          <NoticeMenu />
-          <UserMenu />
-          {ENV.ON_SETTING && <SettingMenu />}
+          {!isDoc && (
+            <>
+              <NoticeMenu />
+              <UserMenu />
+              {ENV.ON_SETTING && <SettingMenu />}
+            </>
+          )}
           {ENV.ON_I18N && <I18nMenu />}
+          {ENV.ON_DOC && <DocMenu isDoc={isDoc} />}
         </div>
       </Toolbar>
     </AppBar>
