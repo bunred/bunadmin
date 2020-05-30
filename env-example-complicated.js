@@ -16,11 +16,12 @@ const obj = {
       0: "http://192.168.2.2:51802/api/v1", // shop
       1: "http://192.168.2.2:51803/api/v1", // file
       2: "http://bucket-name.s3-website.Region.amazonaws.com/", // S3
-      3: "http://192.168.2.2:51804/api/v1", // blog
+      3: "http://192.168.2.2:51804/api/v1" // blog
     },
     name: "Bunadmin DEV",
-    on_18n: true,      // I18N Menu
-    on_setting: true,  // Setting Menu
+    on_18n: true, // I18N Menu
+    on_setting: true, // Setting Menu
+    on_doc: true // Doc Menu
   },
   prod: {
     main: "http://www.bunadmin.com/api/v1", // main
@@ -29,11 +30,12 @@ const obj = {
       0: "http://shop.bunadmin.com/api/v1", // shop
       1: "http://file.bunadmin.com/api/v1", // file
       2: "http://bucket-name.s3-website.Region.amazonaws.com/", // S3
-      3: "http://blog.bunadmin.com/api/v1", // blog
+      3: "http://blog.bunadmin.com/api/v1" // blog
     },
     name: "Bunadmin PROD",
     on_18n: false,
     on_setting: false,
+    on_doc: false
   },
   stag: {
     main: "http://stag.main.com/api/v1", // main
@@ -42,12 +44,13 @@ const obj = {
       0: "http://stag.shop.com/api/v1", // shop
       1: "http://stag.file.com/api/v1", // file
       2: "http://bucket-name.s3-website.Region.amazonaws.com/", // S3
-      3: "http://stag.blog.com/api/v1", // blog
+      3: "http://stag.blog.com/api/v1" // blog
     },
     name: "Bunadmin STAG",
     on_18n: false,
     on_setting: false,
-  },
+    on_doc: false
+  }
 }
 
 module.exports = {
@@ -59,6 +62,7 @@ module.exports = {
     SITE_NAME: obj.dev.name,
     ON_I18N: obj.dev.on_18n,
     ON_SETTING: obj.dev.on_setting,
+    ON_DOC: obj.dev.on_doc
   },
   PROD: {
     I18N_CODE,
@@ -68,6 +72,7 @@ module.exports = {
     SITE_NAME: obj.prod.name,
     ON_I18N: obj.prod.on_18n,
     ON_SETTING: obj.prod.on_setting,
+    ON_DOC: obj.dev.on_doc
   },
   STAG: {
     I18N_CODE,
@@ -77,5 +82,6 @@ module.exports = {
     SITE_NAME: obj.stag.name,
     ON_I18N: obj.stag.on_18n,
     ON_SETTING: obj.stag.on_setting,
+    ON_DOC: obj.dev.on_doc
   }
 }

@@ -1,20 +1,20 @@
 /**
  * Environment Controller
  */
-const { DEV, PROD, STAG } = require('./env')
+const { DEV, PROD, STAG } = require("./env")
 
 const {
   PHASE_DEVELOPMENT_SERVER,
-  PHASE_PRODUCTION_BUILD,
-} = require('next/constants')
+  PHASE_PRODUCTION_BUILD
+} = require("next/constants")
 
-module.exports = (phase) => {
+module.exports = phase => {
   // when started in development mode `next dev` or `npm run dev` regardless of the value of STAGING environmental variable
   const isDev = phase === PHASE_DEVELOPMENT_SERVER
   // when `next build` or `npm run build` is used
-  const isProd = phase === PHASE_PRODUCTION_BUILD && process.env.STAGING !== '1'
+  const isProd = phase === PHASE_PRODUCTION_BUILD && process.env.STAGING !== "1"
   // when `next build` or `npm run build` is used
-  const isStaging = PHASE_PRODUCTION_BUILD && process.env.STAGING === '1'
+  const isStaging = PHASE_PRODUCTION_BUILD && process.env.STAGING === "1"
 
   function setEnvKeyValue({ Key }) {
     let ENV
@@ -51,6 +51,7 @@ module.exports = (phase) => {
     SITE_NAME: (() => setEnvKeyValue({ Key: "SITE_NAME" }))(),
     ON_I18N: (() => setEnvKeyValue({ Key: "ON_I18N" }))(),
     ON_SETTING: (() => setEnvKeyValue({ Key: "ON_SETTING" }))(),
-    I18N_CODE: (() => setEnvKeyValue({ Key: "I18N_CODE" }))(),
+    ON_DOC: (() => setEnvKeyValue({ Key: "ON_DOC" }))(),
+    I18N_CODE: (() => setEnvKeyValue({ Key: "I18N_CODE" }))()
   }
 }

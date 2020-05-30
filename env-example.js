@@ -13,19 +13,23 @@ module.exports = {
     I18N_CODE,
     MAIN_URL: "http://192.168.2.2:51800/api/v1",
     AUTH_URL: "http://192.168.2.2:51801/api/v1",
-    SITE_URLS: "http://192.168.2.2:51802/api/v1, http://192.168.2.2:51803/api/v1",
+    SITE_URLS:
+      "http://192.168.2.2:51802/api/v1, http://192.168.2.2:51803/api/v1",
     SITE_NAME: "BunAdmin DEV",
-    ON_I18N: true,    // I18N Menu
+    ON_I18N: true, // I18N Menu
     ON_SETTING: true, // Setting Menu
+    ON_DOC: true // Doc Menu
   },
   PROD: {
     I18N_CODE,
     MAIN_URL: "http://www.bunadmin.com/api/v1",
     AUTH_URL: "http://user.bunadmin.com/api/v1",
-    SITE_URLS: "http://doc.bunadmin.com/api/v1, http://blog.bunadmin.com/api/v1",
+    SITE_URLS:
+      "http://doc.bunadmin.com/api/v1, http://blog.bunadmin.com/api/v1",
     SITE_NAME: "BunAdmin PROD",
     ON_I18N: true,
     ON_SETTING: false,
+    ON_DOC: false // Doc Menu
   },
   STAG: {
     I18N_CODE,
@@ -35,5 +39,6 @@ module.exports = {
     SITE_NAME: "BunAdmin STAG",
     ON_I18N: true,
     ON_SETTING: undefined,
+    ON_DOC: undefined
   }
 }
