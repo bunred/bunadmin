@@ -14,8 +14,9 @@ const en = {
     Logout: "Logout",
     // others
     Show: "Show",
-    Agree: "Agree",
-    Disagree: "Disagree"
+    Confirm: "Confirm",
+    Cancel: "Cancel",
+    "Request Failed": "Request Failed"
   },
   plugins: {
     // LeftMenu

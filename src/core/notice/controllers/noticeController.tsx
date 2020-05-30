@@ -9,7 +9,7 @@ const primary = Primary
 interface Interface {
   title: string
   severity?: SeverityType | null
-  content?: string
+  content?: string | object
 }
 
 export default async function noticeController({
@@ -22,6 +22,11 @@ export default async function noticeController({
 
   try {
     const db = await rxDb()
+
+    if (typeof content === "object") content = JSON.stringify(content)
+    if (typeof content !== "string") {
+      return console.error("`content` requires string: " + content)
+    }
 
     const data = { title, severity: severity || "success", content }
 
