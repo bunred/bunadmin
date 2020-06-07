@@ -15,6 +15,8 @@ import { Type as SchemaType } from "@/core/schema/types"
 import addResource from "@/utils/scripts/addResource"
 import initData from "@/utils/scripts/initData"
 import { Collection as Setting, SettingNames } from "@/core/setting/collections"
+import { Provider } from "react-redux"
+import { store } from "@/utils/store"
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { i18n } = useTranslation()
@@ -69,25 +71,27 @@ const App = ({ Component, pageProps }: AppProps) => {
           rel="stylesheet"
         />
       </Head>
-      <ThemeProvider theme={defaultTheme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        {/* Snackbar / Notice */}
-        <SnackbarProvider
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right"
-          }}
-          autoHideDuration={2000}
-          content={(key, message) => (
-            <SnackMessage id={key} message={message} />
-          )}
-        >
-          <CommonSnackbar />
-        </SnackbarProvider>
-        {/* Core component */}
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider theme={defaultTheme}>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          {/* Snackbar / Notice */}
+          <SnackbarProvider
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right"
+            }}
+            autoHideDuration={2000}
+            content={(key, message) => (
+              <SnackMessage id={key} message={message} />
+            )}
+          >
+            <CommonSnackbar />
+          </SnackbarProvider>
+          {/* Core component */}
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </Provider>
     </>
   )
 }
