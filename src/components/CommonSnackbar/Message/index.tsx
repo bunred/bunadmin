@@ -12,29 +12,28 @@ import CloseIcon from "@material-ui/icons/Close"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import CheckCircleIcon from "@material-ui/icons/OpenInNew"
 import { useStyles } from "./styles"
-import rxSubscribe from "@/utils/database/rxSubscribe"
-import { Collection } from "@/core/notice/collections"
 import { SeverityType } from "@/core/notice/types"
 import { useTheme } from "@material-ui/core/styles"
 import { LocalDataRoute } from "@/utils/routes"
 import { useRouter } from "next/router"
+import { useSelector } from "react-redux"
+import { selectNotice } from "@/slices/noticeSlice"
 
 interface State {
-  severity: SeverityType | "none"
-  content: string | null
+  severity?: SeverityType
+  content?: string | null
 }
 
 const SnackMessage = React.forwardRef(
   (props: { id: SnackbarKey; message: SnackbarMessage }, ref) => {
+    const notice = useSelector(selectNotice)
+
     const router = useRouter()
     const theme = useTheme()
     const classes = useStyles()
     const { closeSnackbar } = useSnackbar()
     const [expanded, setExpanded] = useState(false)
-    const [state, setState] = useState({
-      severity: "none",
-      content: null
-    } as State)
+    const [state, setState] = useState<State>({})
 
     const colors = {
       none: null,
@@ -45,19 +44,11 @@ const SnackMessage = React.forwardRef(
     }
 
     React.useEffect(() => {
-      ;(async () => {
-        await rxSubscribe({
-          collection: Collection.name,
-          sort: { created_at: "desc" },
-          callback: data => {
-            const item = data[0]
-
-            if (!item) return
-            setState({ severity: item.severity, content: item.content })
-          }
-        })
-      })()
-    }, [])
+      setState({
+        severity: notice.severity || "success",
+        content: notice.content
+      })
+    }, [notice])
 
     const handleExpandClick = () => {
       setExpanded(!expanded)
@@ -69,18 +60,11 @@ const SnackMessage = React.forwardRef(
 
     return (
       <Card
-        style={
-          state.severity !== "none"
-            ? {
-                background: colors[state.severity],
-                transition: "width .2s ease-in-out"
-              }
-            : {
-                background: "#FFF",
-                transition: "width .2s ease-in-out"
-                // theme.bunadmin.iconColor // theme.palette.primary.light
-              }
-        }
+        style={{
+          // theme.bunadmin.iconColor // theme.palette.primary.light
+          background: colors[state.severity || "success"],
+          transition: "width .2s ease-in-out"
+        }}
         className={classes.card}
         ref={ref}
       >

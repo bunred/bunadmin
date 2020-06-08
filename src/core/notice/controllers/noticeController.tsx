@@ -2,6 +2,8 @@ import rxDb from "@/utils/database/rxConnect"
 import { SeverityType } from "../types"
 import { Collection } from "../collections"
 import { Primary } from "../schema"
+import { store } from "@/utils/store"
+import { setNotice } from "@/slices/noticeSlice"
 
 const collection = Collection.name
 const primary = Primary
@@ -25,10 +27,19 @@ export default async function noticeController({
 
     if (typeof content === "object") content = JSON.stringify(content)
     if (typeof content !== "string") {
-      return console.error("`content` requires string: " + content)
+      content = undefined
+      // console.warn(typeof content, content)
     }
 
     const data = { title, severity: severity || "success", content }
+
+    store.dispatch(
+      setNotice({
+        title: title,
+        severity: severity,
+        content: content
+      })
+    )
 
     await db[collection].insert({
       [primary]: nanoId,
