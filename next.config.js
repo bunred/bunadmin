@@ -41,7 +41,7 @@ module.exports = phase => {
     env,
     poweredByHeader: false,
     generateBuildId: async () => {
-      return "bunadmin-1.0.0-alpha.4"
+      return "bunadmin-1.0.0-alpha.5"
     },
     // webpack
     webpack: config => {
