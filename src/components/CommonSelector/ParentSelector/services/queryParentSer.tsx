@@ -7,7 +7,8 @@ export default async function queryParentSer(
   parentName: string,
   selfId: string | number,
   name?: string,
-  limit?: number
+  limit?: number,
+  prefix?: string
 ) {
   const token = await storedToken()
 
@@ -29,7 +30,7 @@ export default async function queryParentSer(
   `
 
   return request("/graphql", {
-    prefix: ENV.SITE_URLS[0],
+    prefix: prefix || ENV.SITE_URLS[0],
     method: "POST",
     headers: { token },
     data: JSON.stringify({ query: gql })

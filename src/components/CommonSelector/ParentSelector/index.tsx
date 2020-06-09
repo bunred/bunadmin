@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import TextField from "@material-ui/core/TextField"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import CircularProgress from "@material-ui/core/CircularProgress"
-import { EditComponentProps } from "material-table"
+import { EditComponentProps, rxMtUpdateField } from "material-table"
 import queryParentSer from "./services/queryParentSer"
 import { notice } from "@/core"
 
@@ -33,6 +33,7 @@ export default function ParentSelector({
   schemaName,
   parentName,
   width,
+  columnDef,
   rowData,
   onChange,
   customParentSer
@@ -86,9 +87,13 @@ export default function ParentSelector({
     await dataCtrl()
   }
 
-  function handleSelect(_e: React.ChangeEvent<{}>, value: any) {
+  async function handleSelect(_e: React.ChangeEvent<{}>, value: any) {
     onChange(value ? value.id : null)
     setSelected(value)
+    await rxMtUpdateField({
+      name: columnDef.field,
+      value: value ? value.id : null
+    })
   }
 
   return (
