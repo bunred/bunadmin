@@ -30,7 +30,7 @@
     "i18next": "^19.4.5",
     "json-bigint": "^0.3.0",
     "lerna": "^3.22.0",
-    "material-table": "npm:bunadmin-table@1.1.2",
+    "material-table": "npm:bunadmin-table@1.2.2",
     "next": "^9.4.4",
     "notistack": "^0.9.16",
     "pouchdb-adapter-http": "^7.2.1",
