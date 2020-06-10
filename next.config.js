@@ -51,7 +51,7 @@ module.exports = phase => {
       // rules
       config.module.rules.push({
         // ignore file or file types
-        test: /\.md$|LICENSE$/,
+        test: /\.md$|LICENSE$|\.yml$/,
         use: [{ loader: "ignore-loader" }]
       })
       return config
