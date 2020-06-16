@@ -72,7 +72,7 @@ module.exports = {
     SITE_NAME: obj.prod.name,
     ON_I18N: obj.prod.on_18n,
     ON_SETTING: obj.prod.on_setting,
-    ON_DOC: obj.dev.on_doc
+    ON_DOC: obj.prod.on_doc
   },
   STAG: {
     I18N_CODE,
@@ -82,6 +82,6 @@ module.exports = {
     SITE_NAME: obj.stag.name,
     ON_I18N: obj.stag.on_18n,
     ON_SETTING: obj.stag.on_setting,
-    ON_DOC: obj.dev.on_doc
+    ON_DOC: obj.stag.on_doc
   }
 }
