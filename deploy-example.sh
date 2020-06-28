@@ -13,6 +13,7 @@ if [[ "$1" == "1" ]]; then
 fi
 
 STAGING=$1 yarn build
+next export
 
 docker volume create ${container}
 docker build -t ${container} . --build-arg STAGING=$1

@@ -6,12 +6,7 @@ EXPOSE 1912
 ARG STAGING
 ENV STAGING=${STAGING}
 
-COPY .next .next
-COPY package.json package.json
-COPY public public
-COPY env.js env.js
+COPY out out
 
-#RUN yarn --production
-COPY node_modules node_modules
-
-CMD [ "yarn", "start" ]
+RUN yarn global add serve
+CMD serve -s out -l 1912
