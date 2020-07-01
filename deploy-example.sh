@@ -2,6 +2,7 @@
 # PROD: ./deploy.sh, STAG: ./deploy.sh 1
 
 container=bunadmin
+version=1.0.0
 port=1912:1912
 
 env=PROD
@@ -16,7 +17,7 @@ STAGING=$1 yarn build
 next export
 
 docker volume create ${container}
-docker build -t ${container} . --build-arg STAGING=$1
+docker build -t ${container}:${version} . --build-arg STAGING=$1
 
 docker stop ${container}
 docker rm ${container}
@@ -30,4 +31,4 @@ docker run -d \
 -v ${container}:/data \
 --label ${label} \
 --network=traefik_default \
-${container}
+${container}:${version}
