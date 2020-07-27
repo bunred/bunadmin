@@ -23,8 +23,10 @@ yarn-error.log*
 .vscode/*
 
 # BunAdmin START
-/env.js
-/deploy.sh
+/env*.env
+/deploy*.sh
+
+/bunadmin*.tgz
 
 /plugins/*
 !/plugins/.gitkeep
