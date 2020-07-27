@@ -1,4 +1,3 @@
-const envCtrl = require("./env-ctrl")
 const path = require("path")
 const FileHound = require("filehound")
 const fs = require("fs")
@@ -7,9 +6,7 @@ const withMDX = require("@next/mdx")({
   extension: /\.mdx?$/
 })
 
-module.exports = phase => {
-  const env = envCtrl(phase)
-
+module.exports = () => {
   // Enable plugins START
   console.log(chalk.white("- Enabling bunadmin plugins ..."))
 
@@ -38,7 +35,6 @@ module.exports = phase => {
   // Generate pluginsData.json END
 
   return withMDX({
-    env,
     poweredByHeader: false,
     generateBuildId: async () => {
       return "bunadmin-1.0.0-alpha.5"
