@@ -10,18 +10,21 @@ import { MDXProvider } from "@mdx-js/react";
 import Highlight, { defaultProps } from "prism-react-renderer";
 // import theme from "prism-react-renderer/themes/vsDark"
 
-function Code({ children, className }: any) {
-  if (!className) return null;
-  const language = className.replace(/language-/, "");
-  return (
-    <Highlight
-      {...defaultProps}
-      theme={undefined}
-      code={children.trim()}
-      language={language}
-    >
-      {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <pre className={className} style={style}>
+export default function PostTemplate({ category, slug }: any) {
+  const [menuData, setMenuData] = useState<Type[]>([]);
+
+  function Code({ children, className }: any) {
+    if (!className) return null;
+    const language = className.replace(/language-/, "");
+    return (
+      <Highlight
+        {...defaultProps}
+        theme={undefined}
+        code={children.trim()}
+        language={language}
+      >
+        {({ className, style, tokens, getLineProps, getTokenProps }) => (
+          <pre className={className} style={style}>
           {tokens.map((line, i) => (
             <div key={i} {...getLineProps({ line, key: i })}>
               {line.map((token, key) => (
@@ -30,22 +33,21 @@ function Code({ children, className }: any) {
             </div>
           ))}
         </pre>
-      )}
-    </Highlight>
-  );
-}
+        )}
+      </Highlight>
+    );
+  }
 
-const mdComponents = {
-  code: Code
-};
+  const mdComponents = {
+    code: Code
+  };
 
-export default function PostTemplate({ category, slug }: any) {
-  const [menuData, setMenuData] = useState<Type[]>([]);
+  const bunadminDocPath = 'bunadmin-doc'
 
   useEffect(() => {
     (async () => {
       try {
-        const content = await import(`@plugins/bunadmin-doc/menus`);
+        const content = await import(`@plugins/${bunadminDocPath}/menus`);
         const menuData = content && (content.default as Type[]);
         setMenuData(menuData);
       } catch (e) {}
@@ -53,7 +55,7 @@ export default function PostTemplate({ category, slug }: any) {
   }, []);
 
   const DocComponent = dynamic({
-    loader: () => import(`@plugins/bunadmin-doc/${category}/${slug}.mdx`),
+    loader: () => import(`@plugins/${bunadminDocPath}/${category}/${slug}.mdx`),
     loading: () => <TableSkeleton title={`${slug} loading...`} />
   });
 
@@ -80,10 +82,17 @@ export default function PostTemplate({ category, slug }: any) {
   );
 }
 
-PostTemplate.getInitialProps = async (context: {
-  query: { category: any; slug: any };
-}) => {
-  const { category, slug } = context.query;
+export async function getStaticPaths(_props: any) {
+  return {
+    paths: [{ params: { category: 'components', slug: 'drawer' } }],
+    fallback: false
+  }
+}
 
-  return { category, slug };
-};
+export async function getStaticProps(context: {
+  params: { category: any; slug: any };
+}) {
+  const { category, slug } = context.params;
+
+  return { props: { category, slug } };
+}
