@@ -4,18 +4,31 @@ import DefaultLayout from "@/layouts/DefaultLayout"
 import { useRouter } from "next/router"
 import CorePages from "@/components/CorePages"
 import CubeSpinner from "@/components/CommonBgs/CubeSpinner"
-import security from "@plugins/buncms-user/utils/security"
 import { ParsedUrlQuery } from "querystring"
+import CommonError from "@/components/CommonError"
 
 const ModulePage = () => {
   const router = useRouter()
   const [ready, setReady] = useState(false)
+  const [error, setError] = useState(false)
   const { group, name } = router.query as ParsedUrlQuery
+
+  function showError () {
+    setReady(true)
+    setError(true)
+  }
 
   useEffect(() => {
     ;(async () => {
-      if (!group || !name) return
-      await security({ setReady, router })
+      if (!group || !name) return showError()
+      const bunadminUserPath = 'buncms-user'
+      try {
+        const security = await import(`@plugins/${bunadminUserPath}/utils/security`)
+        if (!security) return showError()
+        await security({ setReady, router })
+      } catch (e) {
+        showError()
+      }
     })()
   }, [group])
 
@@ -39,6 +52,14 @@ const ModulePage = () => {
     default:
       render = <CommonSchema />
   }
+
+  if (error) render = (
+    <CommonError
+      statusCode={403}
+      hasLayout={false}
+      message={"Errors: buncms-user/utils/security"}
+    />
+  )
 
   return <DefaultLayout>{render}</DefaultLayout>
 }
