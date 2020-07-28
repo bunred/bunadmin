@@ -42,13 +42,23 @@ module.exports = () => {
     // webpack
     webpack: config => {
       // alias
-      config.resolve.alias["@"] = path.resolve(__dirname, "src")
+      config.resolve.alias["@"] = path.resolve(__dirname, "dist/src")
       config.resolve.alias["@plugins"] = path.resolve(__dirname, "plugins")
       // rules
       config.module.rules.push({
         // ignore file or file types
         test: /\.md$|LICENSE$|\.yml$/,
         use: [{ loader: "ignore-loader" }]
+      })
+      config.module.rules.push({
+        // loader jsx, tsx with next/babel
+        test: /\.jsx$|\.tsx$/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["next/babel"]
+          }
+        }
       })
       return config
     }

@@ -26,6 +26,7 @@ yarn-error.log*
 /env*.env
 /deploy*.sh
 
+dist
 /bunadmin*.tgz
 
 /plugins/*
