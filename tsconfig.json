@@ -33,9 +33,13 @@
   },
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "pages",
+    "pages/counter/*.tsx",
+    "plugins"
   ],
   "include": [
+    "index.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"

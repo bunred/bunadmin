@@ -1,6 +1,6 @@
 {
-  "name": "bunadmin",
-  "version": "1.0.0-alpha.5",
+  "name": "@bunred/bunadmin",
+  "version": "1.1.0-alpha.3",
   "description": "A simple graphql admin dashboard. Easy to expand with the flexible plugin. Graphql first, also supports api. Based on React, Material-UI, Realtime RxDB, Formik, I18N.",
   "license": "Apache-2.0",
   "repository": {
@@ -22,7 +22,10 @@
     "pages",
     "public",
     "plugins",
-    "next.config.js"
+    "src",
+    "next.config.js",
+    "next-env.d.ts",
+    "tsconfig.json"
   ],
   "dependencies": {
     "@material-ui/core": "^4.10.0",
@@ -59,7 +62,7 @@
   },
   "scripts": {
     "setup": "yarn && yarn build",
-    "dev": "next dist -p 1911",
+    "dev": "next -p 1911",
     "build": "next build",
     "prettier": "prettier --write  --no-semi src/** pages/** plugins/** test/**",
     "start": "next start -p 1912",
