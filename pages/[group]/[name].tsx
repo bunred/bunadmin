@@ -11,23 +11,28 @@ const ModulePage = () => {
   const router = useRouter()
   const [ready, setReady] = useState(false)
   const [error, setError] = useState(false)
+  const [errorMsg, setErrorMsg] = useState("")
   const { group, name } = router.query as ParsedUrlQuery
 
-  function showError () {
+  function showError (msg: string) {
     setReady(true)
     setError(true)
+    setErrorMsg(msg)
   }
 
   useEffect(() => {
     ;(async () => {
-      if (!group || !name) return showError()
-      const bunadminUserPath = 'buncms-user'
+      if (!group || !name) return // waiting or not exists
+      // return showError(`group or name not exists`)
+
       try {
-        const security = await import(`@plugins/${bunadminUserPath}/utils/security`)
-        if (!security) return showError()
+        // @ts-ignore
+        let { security } = await import(`bunadmin-plugin-auth`)
+        if (!security) return showError(`security required 'bunadmin-plugin-auth'`)
+        setError(false)
         await security({ setReady, router })
       } catch (e) {
-        showError()
+        showError(e.toString())
       }
     })()
   }, [group])
@@ -57,7 +62,7 @@ const ModulePage = () => {
     <CommonError
       statusCode={403}
       hasLayout={false}
-      message={"Errors: buncms-user/utils/security"}
+      message={`${errorMsg}`}
     />
   )
 
