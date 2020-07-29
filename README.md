@@ -4,6 +4,7 @@ A simple graphql admin dashboard(Front-End Only). Easy to expand with the flexib
 
 ## Feature
 
+* ✅ Package / Use as a node module *
 * ✅ Plugins / One-click Update Plugins *
 * ✅️ Multi-user *
 * ✅️ Multi-language
@@ -38,18 +39,22 @@ Download the code [or clone the repo](https://github.com/bunred/bunadmin):
 ```
 git clone https://github.com/bunred/bunadmin.git
 cd bunadmin
+
+# or you can use as npm package
+git clone https://github.com/bunred/bunadmin-example.git bunadmin
+cd bunadmin
 ```
 
 Install packages: (You can [install the Yarn v1.2.0+ package here](https://yarnpkg.com/))
 
 ```
 yarn
-cp env-example.js env.js
+cp e.g./env-*.env env-dev.env
 yarn run dev
 ```
 Install plugins  and run
 ```
-cp plugins-info-example.json plugins-info.json
+cp e.g./plugins-info.json plugins-info.json
 node plugins-update.js
 ```
 Open [http://localhost:1911/](http://localhost:1911/)
@@ -58,7 +63,7 @@ Open [http://localhost:1911/](http://localhost:1911/)
 
 #### One-click install / update plugins
 ```
-cp plugins-info-example.json plugins-info.json
+cp e.g./plugins-info.json plugins-info.json
 node plugins-update.js
 ```
 You can contribute your open plugin to [bunadmin plugins public library](https://github.com/bunred/bunadmin-plugins)
