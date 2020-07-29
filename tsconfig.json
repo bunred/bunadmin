@@ -14,24 +14,32 @@
     },
     "module": "esnext",
     "moduleResolution": "node",
-    "noEmit": true,
+    "noEmit": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "preserveConstEnums": true,
     "removeComments": false,
     "skipLibCheck": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "strict": true,
     "target": "esnext",
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "outDir": "dist",
+    "declaration": true,
+    "declarationDir": "./dist"
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist",
+    "pages",
+    "pages/counter/*.tsx",
+    "plugins"
   ],
   "include": [
+    "index.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"

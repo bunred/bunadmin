@@ -15,12 +15,13 @@ interface EnvTypes {
 }
 
 export const ENV = {
-  MAIN_URL: process.env.MAIN_URL,
-  AUTH_URL: process.env.AUTH_URL || process.env.MAIN_URL,
-  SITE_URLS: strToArr(process.env.SITE_URLS),
-  SITE_NAME: process.env.SITE_NAME || "BunAdmin",
-  ON_I18N: process.env.ON_I18N || false,
-  ON_SETTING: process.env.ON_SETTING || false,
-  ON_DOC: process.env.ON_DOC || false,
-  I18N_CODE: process.env.I18N_CODE || "en"
+  MAIN_URL: process.env.NEXT_PUBLIC_MAIN_URL,
+  AUTH_URL:
+    process.env.NEXT_PUBLIC_AUTH_URL || process.env.NEXT_PUBLIC_MAIN_URL,
+  SITE_URLS: strToArr(process.env.NEXT_PUBLIC_SITE_URLS),
+  SITE_NAME: process.env.NEXT_PUBLIC_SITE_NAME || "BunAdmin",
+  ON_I18N: process.env.NEXT_PUBLIC_ON_I18N === "true" || false,
+  ON_SETTING: process.env.NEXT_PUBLIC_ON_SETTING === "true" || false,
+  ON_DOC: process.env.NEXT_PUBLIC_ON_DOC === "true" || false,
+  I18N_CODE: process.env.NEXT_PUBLIC_I18N_CODE || "en"
 } as EnvTypes

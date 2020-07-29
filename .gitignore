@@ -23,8 +23,12 @@ yarn-error.log*
 .vscode/*
 
 # BunAdmin START
-/env.js
-/deploy.sh
+/env*.env
+/deploy*.sh
+/plugins-info.json
+
+dist
+/*.tgz
 
 /plugins/*
 !/plugins/.gitkeep
@@ -33,6 +37,5 @@ yarn-error.log*
 /.idea/vcs.xml
 yarn.lock
 package-lock.json
-plugins-info.json
 
 # BunAdmin END
