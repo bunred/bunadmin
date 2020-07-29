@@ -1,6 +1,6 @@
 import React from "react"
-import CommonError from "../src/components/CommonError"
-import { ErrorProps } from "../src/components/CommonError/models/types"
+import CommonError from "@/components/CommonError"
+import { ErrorProps } from "@/components/CommonError/models/types"
 
 function Error({ statusCode }: { statusCode: number }) {
   return <CommonError statusCode={statusCode} hasLayout={true} />
