@@ -51,6 +51,15 @@ export default async function initData() {
       })
   })
 
+  // Init Auth Plugin Data
+  try {
+    // @ts-ignore
+    let { initData: authInitData } = await import(`bunadmin-plugin-auth`)
+    initData && (await initPluginData(db, authInitData))
+  } catch (e) {
+    console.warn("initData required 'bunadmin-plugin-auth'")
+  }
+
   // Init Plugins Data
   const pluginsData = require("@plugins/pluginsData")
   pluginsData.map(async (path: string) => {
@@ -60,21 +69,24 @@ export default async function initData() {
 
     const initData: InitData = fileContent.default
 
-    // Init Plugin's Data
-    await rxInitData({
-      db,
-      collection: Setting.name,
-      name: `init-${initData.plugin}`,
-      initFunc: async () => {
-        // Loop init DocsData
-        initData.list.map(async item => {
-          await initDocsData({
-            db,
-            collection: item.name,
-            docsData: item.data
-          })
+    await initPluginData(db, initData)
+  })
+}
+
+async function initPluginData(db: any, initData: InitData) {
+  await rxInitData({
+    db,
+    collection: Setting.name,
+    name: `init-${initData.plugin}`,
+    initFunc: async () => {
+      // Loop init DocsData
+      initData.list.map(async item => {
+        await initDocsData({
+          db,
+          collection: item.name,
+          docsData: item.data
         })
-      }
-    })
+      })
+    }
   })
 }
