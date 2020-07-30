@@ -16,7 +16,7 @@ module.exports = () => {
   const pluginsPath = path.resolve("plugins")
   const pluginsInitFiles = FileHound.create()
     .paths(pluginsPath)
-    .match("initData.tsx")
+    .match("initData.js")
     .findSync()
   let jsonStr = JSON.stringify(pluginsInitFiles)
 
@@ -52,7 +52,7 @@ module.exports = () => {
       })
       config.module.rules.push({
         // loader jsx, tsx with next/babel
-        test: /\.jsx$|\.tsx$/,
+        test: /\.jsx$|\.tsx$|\.ts$/,
         use: {
           loader: "babel-loader",
           options: {
