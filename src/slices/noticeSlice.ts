@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '@/utils/store';
-import {SeverityType} from "@/core/notice/types"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { RootState } from "@/utils/store"
+import { SeverityType } from "@/core/notice/types"
 
 interface NoticeState {
   title: string
@@ -10,24 +10,24 @@ interface NoticeState {
 }
 
 const initialState: NoticeState = {
-  title: "init-notice",
-};
+  title: "init-notice"
+}
 
 export const noticeSlice = createSlice({
-  name: 'notice',
+  name: "notice",
   initialState,
   reducers: {
     setNotice: (state, action: PayloadAction<NoticeState>) => {
-      state.title = action.payload.title;
-      state.severity = action.payload.severity;
-      state.content = action.payload.content;
+      state.title = action.payload.title
+      state.severity = action.payload.severity
+      state.content = action.payload.content
       state.key = action.payload.key || new Date().getTime() + Math.random()
-    },
-  },
-});
+    }
+  }
+})
 
-export const { setNotice } = noticeSlice.actions;
+export const { setNotice } = noticeSlice.actions
 
-export const selectNotice = (state: RootState) => state.notice;
+export const selectNotice = (state: RootState) => state.notice
 
-export default noticeSlice.reducer;
+export default noticeSlice.reducer

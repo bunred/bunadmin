@@ -4,10 +4,10 @@ import {
   Action,
   EnhancedStore,
   AnyAction
-} from "@reduxjs/toolkit";
-import counterReducer from "../slices/counterSlice";
-import noticeReducer from "../slices/noticeSlice";
-import { ThunkMiddlewareFor } from "@reduxjs/toolkit/src/getDefaultMiddleware";
+} from "@reduxjs/toolkit"
+import counterReducer from "../slices/counterSlice"
+import noticeReducer from "../slices/noticeSlice"
+import { ThunkMiddlewareFor } from "@reduxjs/toolkit/src/getDefaultMiddleware"
 
 export const store: EnhancedStore<
   any,
@@ -18,12 +18,12 @@ export const store: EnhancedStore<
     counter: counterReducer,
     notice: noticeReducer
   }
-});
+})
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof store.getState>
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
   unknown,
   Action<string>
->;
+>

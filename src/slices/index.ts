@@ -6,10 +6,4 @@ import {
   selectCount
 } from "./counterSlice"
 
-export {
-  decrement,
-  increment,
-  incrementByAmount,
-  incrementAsync,
-  selectCount
-}
+export { decrement, increment, incrementByAmount, incrementAsync, selectCount }

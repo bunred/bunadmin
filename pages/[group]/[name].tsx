@@ -14,7 +14,7 @@ const ModulePage = () => {
   const [errorMsg, setErrorMsg] = useState("")
   const { group, name } = router.query as ParsedUrlQuery
 
-  function showError (msg: string) {
+  function showError(msg: string) {
     setReady(true)
     setError(true)
     setErrorMsg(msg)
@@ -28,7 +28,8 @@ const ModulePage = () => {
       try {
         // @ts-ignore
         let { security } = await import(`bunadmin-plugin-auth`)
-        if (!security) return showError(`security required 'bunadmin-plugin-auth'`)
+        if (!security)
+          return showError(`security required 'bunadmin-plugin-auth'`)
         setError(false)
         await security({ setReady, router })
       } catch (e) {
@@ -47,7 +48,9 @@ const ModulePage = () => {
       break
     case "user":
       switch (name) {
-        case "sign-in": case "sign-up": case "recovery":
+        case "sign-in":
+        case "sign-up":
+        case "recovery":
           // skipped Layout
           return <CommonSchema isAuthPath={true} />
         default:
@@ -58,13 +61,10 @@ const ModulePage = () => {
       render = <CommonSchema />
   }
 
-  if (error) render = (
-    <CommonError
-      statusCode={403}
-      hasLayout={false}
-      message={`${errorMsg}`}
-    />
-  )
+  if (error)
+    render = (
+      <CommonError statusCode={403} hasLayout={false} message={`${errorMsg}`} />
+    )
 
   return <DefaultLayout>{render}</DefaultLayout>
 }
