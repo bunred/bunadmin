@@ -1,25 +1,13 @@
-import { store } from "./store";
-import { ENV } from "./config";
-import i18n from "./i18n";
-import { DynamicRoute, UserRoute } from "./routes";
-import rxDb from "./database/rxConnect";
-import defaultTheme from "./themes/defaultTheme";
+export { useTranslation } from "react-i18next";
 
-import addResource from "./scripts/addResource";
-import initData from "./scripts/initData";
-import request from "./scripts/request";
-import storedToken from "./scripts/storedToken";
+export { store } from "./store";
+export { ENV } from "./config";
+export { DynamicRoute, UserRoute } from "./routes";
+export { default as rxDb } from "./database/rxConnect";
+export { default as defaultTheme } from "./themes/defaultTheme";
 
-export {
-  store,
-  ENV,
-  i18n,
-  DynamicRoute,
-  UserRoute,
-  rxDb,
-  defaultTheme,
-  addResource,
-  initData,
-  request,
-  storedToken
-};
+export { default as initData } from "./scripts/initData";
+export { default as request } from "./scripts/request";
+export { default as storedToken } from "./scripts/storedToken";
+
+export { default as dataToGql } from "./scripts/dataToGql";

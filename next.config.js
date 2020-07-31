@@ -16,7 +16,7 @@ module.exports = () => {
   const pluginsPath = path.resolve("plugins")
   const pluginsInitFiles = FileHound.create()
     .paths(pluginsPath)
-    .match("initData.tsx")
+    .match("initData.js")
     .findSync()
   let jsonStr = JSON.stringify(pluginsInitFiles)
 
@@ -44,6 +44,7 @@ module.exports = () => {
       // alias
       config.resolve.alias["@"] = path.resolve(__dirname, "dist/src")
       config.resolve.alias["@plugins"] = path.resolve(__dirname, "plugins")
+      config.resolve.alias["@bunred/bunadmin"] = path.resolve(__dirname, "dist")
       // rules
       config.module.rules.push({
         // ignore file or file types
@@ -52,7 +53,7 @@ module.exports = () => {
       })
       config.module.rules.push({
         // loader jsx, tsx with next/babel
-        test: /\.jsx$|\.tsx$/,
+        test: /\.jsx$|\.tsx$|\.ts$/,
         use: {
           loader: "babel-loader",
           options: {
