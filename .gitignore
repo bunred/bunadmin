@@ -25,7 +25,6 @@ yarn-error.log*
 # BunAdmin START
 /env*.env
 /deploy*.sh
-/plugins-info.json
 
 dist
 /*.tgz

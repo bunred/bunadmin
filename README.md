@@ -4,24 +4,27 @@ A simple graphql admin dashboard(Front-End Only). Easy to expand with the flexib
 
 ## Feature
 
-* ✅ Package / Use as a node module *
-* ✅ Plugins / One-click Update Plugins *
-* ✅️ Multi-user *
-* ✅️ Multi-language
-* ✅ Data migration *
-* ✅ Log / message *
-* ✅ Common Components
-* ✅ MDX Documentation
-* ✅ Dockerfile & Deploy Shell
+* ✅ &nbsp; Package / Use as a node module *
+* ✅ &nbsp; Plugins / One-click Update Plugins *
+* ✅️ &nbsp; Multi-user *
+* ✅️ &nbsp; Multi-language
+* ✅ &nbsp; Data migration *
+* ✅ &nbsp; Log / message *
+* ✅ &nbsp; Common Components
+* ✅ &nbsp; MDX Documentation
+* ✅ &nbsp; Dockerfile & Deploy Shell
 
-## Demo
-[Online Demo](https://strapi-demo.bunadmin.com/)
+## Quick Start
 
-[Documentation](https://strapi-demo.bunadmin.com/doc/components/table)
+```shell script
+yarn create react-app my-admin --template bunadmin
+cd my-admin
+yarn update-plugins && yarn dev
+```
 
-Username / password: `bunadmin_test`
+Open [http://localhost:1911/](http://localhost:1911/)
 
-See more on [bunadmin-example-strapi](https://github.com/bunred/bunadmin-example-strapi)
+[Example Code](https://github.com/bunred/bunadmin-example.git)
 
 ## Screenshot
 Sign in
@@ -32,51 +35,24 @@ Data Migration
 
 [More screenshots](https://chris533.gitbook.io/bunadmin/screenshot)
 
+## Plugins
 
-## How to use
-Download the code [or clone the repo](https://github.com/bunred/bunadmin):
-
+*Functions need to be implemented by plugins, you need to build and update plugin-info*
+```json
+[
+  {
+    "enable": true,
+    "plugin-id": "bunadmin-plugin-auth",
+    "plugin-folder": "buncms-user"
+  }
+]
 ```
-git clone https://github.com/bunred/bunadmin.git
-cd bunadmin
 
-# or you can use as npm package
-git clone https://github.com/bunred/bunadmin-example.git bunadmin
-cd bunadmin
-```
-
-Install packages: (You can [install the Yarn v1.2.0+ package here](https://yarnpkg.com/))
-
-```
-yarn
-cp e.g./env-*.env env-dev.env
-yarn run dev
-```
-Install plugins  and run
-```
-cp e.g./plugins-info.json plugins-info.json
-node plugins-update.js
-```
-Open [http://localhost:1911/](http://localhost:1911/)
-
-## Plugin
-
-#### One-click install / update plugins
-```
-cp e.g./plugins-info.json plugins-info.json
-node plugins-update.js
-```
-You can contribute your open plugin to [bunadmin plugins public library](https://github.com/bunred/bunadmin-plugins)
-
-You can also create your own [private plugin](https://github.com/bunred/bunadmin/blob/master/plugins-info-example.json#L41)
-
----
-
-**Required plugin**
+**Required**
 
 [User Auth](https://github.com/bunred/bunadmin-plugin-buncms-user): api example
 
-Example plugin
+Examples
 
 [Strapi User](https://github.com/bunred/bunadmin-plugin-buncms-strapi-user): api example
 
@@ -86,8 +62,6 @@ Example plugin
 
 [Strapi Blog](https://github.com/bunred/bunadmin-plugin-strapi-blog-example): api example
 
-*You should clone to build your own plugin*
-
 ---
 
 #### Plugin structure
@@ -96,10 +70,16 @@ Example plugin
     - /[name]
         - index.tsx
         - column.tsx
-        - /utils
-            - initData.tsx
+        - types.ts
     - /[name]
         - index.tsx
+        - column.tsx
+        - types.ts
+    - /utils
+        - i18n/
+            - en.ts
+            - zh.ts
+        - initData.ts
     - package.json
 
 Example:
@@ -107,10 +87,10 @@ Example:
     - /post
         - index.tsx
         - column.tsx
-        - /utils
-            - initData.tsx
     - /category
         - index.tsx
+    - /utils
+        - initData.ts
     - package.json
     
 ## Develop
@@ -128,7 +108,7 @@ There is only one theme for now which refers to [ngx-admin](https://github.com/a
 
 #### Deployment
 ```
-cp deploy-example.sh deploy.sh
+cp e.g./deploy-*.sh deploy-my-admin.sh
 ./deploy.sh
 ```
 AliCloud:
@@ -147,13 +127,20 @@ heroku container:push web
 heroku container:release web
 ```
 
+## Demo
+[Online Demo](https://strapi-demo.bunadmin.com/)
+
+[Documentation](https://strapi-demo.bunadmin.com/doc/components/table)
+
+Username / password: `bunadmin_test`
+
+See more on [bunadmin-example-strapi](https://github.com/bunred/bunadmin-example-strapi)
+
 #### Backup private files
 Usually you need to manually backup the following files
 
-* env.js
-* deploy.sh
-* plugins-info.json
-* yarn.lock
+* env-prod.env
+* deploy-my-admin.sh
 
 #### Create your own document
 *Use mdx to combine your own components.*
