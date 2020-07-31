@@ -16,7 +16,7 @@ module.exports = () => {
   const pluginsPath = path.resolve("plugins")
   const pluginsInitFiles = FileHound.create()
     .paths(pluginsPath)
-    .match("initData.js")
+    .match(["initData.js", "initData.ts"])
     .findSync()
   let jsonStr = JSON.stringify(pluginsInitFiles)
 
@@ -48,7 +48,7 @@ module.exports = () => {
       // rules
       config.module.rules.push({
         // ignore file or file types
-        test: /\.md$|LICENSE$|\.yml$/,
+        test: /\.md$|LICENSE$|\.yml$|\.lock$/,
         use: [{ loader: "ignore-loader" }]
       })
       config.module.rules.push({
