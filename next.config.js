@@ -44,6 +44,7 @@ module.exports = () => {
       // alias
       config.resolve.alias["@"] = path.resolve(__dirname, "dist/src")
       config.resolve.alias["@plugins"] = path.resolve(__dirname, "plugins")
+      config.resolve.alias["@bunred/bunadmin"] = path.resolve(__dirname, "dist")
       // rules
       config.module.rules.push({
         // ignore file or file types
