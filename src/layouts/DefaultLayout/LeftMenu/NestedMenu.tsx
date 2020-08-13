@@ -81,6 +81,11 @@ export default function NestedList({ data }: Props): any {
 
   if (data.length === 0) return null
 
+  // sorting
+  data = data.sort(function(a, b) {
+    return Number(b.rank) - Number(a.rank)
+  })
+
   return (
     <>
       {data
