@@ -37,5 +37,5 @@ export const Schema = {
       type: "string"
     }
   },
-  required: ["team", "group", "name", "columns"]
+  required: ["team", "group", "name"]
 }

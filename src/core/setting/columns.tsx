@@ -11,6 +11,8 @@ export const Columns = ({ t }: any): Column<Type>[] => [
     field: "updated_at",
     editable: "never",
     grouping: false,
-    render: r => <>{r ? new Date(r.updated_at).toLocaleString() : ""}</>
+    render: r => (
+      <>{r && r.updated_at ? new Date(r.updated_at).toLocaleString() : ""}</>
+    )
   }
 ]

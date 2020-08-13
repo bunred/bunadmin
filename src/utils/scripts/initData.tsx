@@ -1,10 +1,13 @@
 import rxInitData from "@/utils/database/rxInitData"
 import { Collection as Setting, SettingNames } from "@/core/setting/collections"
-import initDocsData from "@/utils/database/rxInitData/initDocsData"
+import initDocsData, {
+  DocsData
+} from "@/utils/database/rxInitData/initDocsData"
 import requirePlugins from "@/utils/scripts/requirePlugins"
 import rxDb from "@/utils/database/rxConnect"
 import { Primary as AuthPrimary } from "@/core/auth/schema"
 import { ENV } from "@/utils/config"
+import { Menu, MenuType, Schema, SchemaType } from "@/core"
 
 interface InitData {
   plugin: string
@@ -12,6 +15,7 @@ interface InitData {
     name: string
     data: any
   }[]
+  data: DocsData[]
 }
 
 export default async function initData() {
@@ -80,6 +84,50 @@ async function initPluginData(db: any, initData: InitData) {
     name: `init-${initData.plugin}`,
     initFunc: async () => {
       // Loop init DocsData
+      if (initData.data) {
+        // handle Data
+        const schemaData = ([] as unknown) as SchemaType[]
+        const menuData = ([] as unknown) as MenuType[]
+        initData.data.map(item => {
+          if ("group" in item) {
+            schemaData.push({
+              id: item.id,
+              name: item.name,
+              label: item.label,
+              group: item.group,
+              team: item.team,
+              customized: item.customized,
+              columns: item.columns,
+              created_at: Date.now()
+            })
+            // @ts-ignore
+            const menuItem: MenuType = item
+            menuData.push({
+              id: item.id,
+              name: item.name,
+              label: item.label,
+              slug: `/${item.group}/${item.name}`,
+              parent: menuItem.parent || "",
+              rank: menuItem.rank || "0",
+              icon_type: menuItem.icon_type,
+              icon: menuItem.icon
+            })
+          }
+        })
+        // init Schema Data
+        await initDocsData({
+          db,
+          collection: Schema.name,
+          docsData: schemaData
+        })
+        // init Menu Data
+        await initDocsData({
+          db,
+          collection: Menu.name,
+          docsData: menuData
+        })
+        return
+      }
       initData.list.map(async item => {
         await initDocsData({
           db,

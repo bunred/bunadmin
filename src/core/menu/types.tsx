@@ -8,6 +8,6 @@ export interface Type {
   slug?: string
   icon?: MenuIcon
   icon_type?: MenuIconType
-  parent: string
-  rank: string
+  parent: string | ""
+  rank?: string
 }

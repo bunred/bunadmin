@@ -11,3 +11,4 @@ export { default as request } from "./scripts/request"
 export { default as storedToken } from "./scripts/storedToken"
 
 export { default as dataToGql } from "./scripts/dataToGql"
+export * from "./scripts/types"

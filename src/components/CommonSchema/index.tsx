@@ -59,7 +59,9 @@ export default function CommonSchema({ isAuthPath }: Props) {
           if (!current[0]) return setState({ notFound: true })
 
           // loop handing columns
-          let columns = JSON.parse(current[0].columns as string)
+          let columns = current[0].columns
+            ? JSON.parse(current[0].columns as string)
+            : []
           columns = columnsController({ t, columns })
           const schema = { ...current[0], columns }
 
