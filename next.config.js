@@ -37,10 +37,16 @@ module.exports = () => {
   return withMDX({
     poweredByHeader: false,
     generateBuildId: async () => {
-      return "bunadmin-1.0.0-alpha.5"
+      return "bunadmin-" + require("./package.json").version
     },
     // webpack
-    webpack: config => {
+    webpack: (config, { isServer }) => {
+      // Fixes npm packages that depend on `fs` module
+      if (!isServer) {
+        config.node = {
+          fs: "empty"
+        }
+      }
       // alias
       config.resolve.alias["@"] = path.resolve(__dirname, "dist/src")
       config.resolve.alias["@plugins"] = path.resolve(__dirname, "plugins")
@@ -48,7 +54,7 @@ module.exports = () => {
       // rules
       config.module.rules.push({
         // ignore file or file types
-        test: /\.md$|LICENSE$|\.yml$|\.lock$/,
+        test: /\.md$|LICENSE$|\.yml$|\.lock$|\.css$|\.jpg$/,
         use: [{ loader: "ignore-loader" }]
       })
       config.module.rules.push({
