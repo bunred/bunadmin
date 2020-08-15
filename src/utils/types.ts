@@ -1,4 +1,6 @@
 import { MenuType, SchemaType } from "@/core"
+import { TFunction } from "i18next"
+import { RefObject } from "react"
 
 type Plugin = {
   disable_menu?: boolean
@@ -21,3 +23,8 @@ type PluginMenu = Pick<
 >
 
 export interface IPluginData extends Plugin, PluginSchema, PluginMenu {}
+
+export type PluginColumns = {
+  t: TFunction
+  tableRef: RefObject<any>
+}
