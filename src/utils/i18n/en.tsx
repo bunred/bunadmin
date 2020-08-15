@@ -91,7 +91,7 @@ const en = {
     actions: "Actions",
     // toolbar
     searchTooltip: "Search",
-    searchPlaceholder: "Enter your search keyword",
+    searchPlaceholder: "Search",
     nRowsSelected: "{0} row(s) selected",
     exportTitle: "Export",
     exportAriaLabel: "Export",

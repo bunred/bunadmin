@@ -1,5 +1,8 @@
 export { useTranslation } from "react-i18next"
+import mockjs from "mockjs"
+export const Mock = mockjs
 
+export * from "./types"
 export { store } from "./store"
 export { ENV } from "./config"
 export { DynamicRoute, UserRoute } from "./routes"
@@ -11,4 +14,3 @@ export { default as request } from "./scripts/request"
 export { default as storedToken } from "./scripts/storedToken"
 
 export { default as dataToGql } from "./scripts/dataToGql"
-export * from "./scripts/types"
