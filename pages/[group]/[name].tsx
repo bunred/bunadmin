@@ -27,9 +27,9 @@ const ModulePage = () => {
 
       try {
         // @ts-ignore
-        let { security } = await import(`bunadmin-plugin-auth`)
+        let { security } = await import(`@plugins/buncms-user`)
         if (!security)
-          return showError(`security required 'bunadmin-plugin-auth'`)
+          return showError(`security required '@plugins/buncms-user'`)
         setError(false)
         await security({ setReady, router })
       } catch (e) {
