@@ -10,4 +10,5 @@ export interface Type {
   icon_type?: MenuIconType
   parent: string | ""
   rank?: string
+  ignore_menu?: boolean
 }

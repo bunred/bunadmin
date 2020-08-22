@@ -16,10 +16,11 @@ type PluginSchema = Pick<
   | "created_at"
   | "customized"
   | "columns"
+  | "ignore_schema"
 >
 type PluginMenu = Pick<
   MenuType,
-  "slug" | "icon" | "icon_type" | "parent" | "rank"
+  "slug" | "icon" | "icon_type" | "parent" | "rank" | "ignore_menu"
 >
 
 export interface IPluginData extends Plugin, PluginSchema, PluginMenu {}

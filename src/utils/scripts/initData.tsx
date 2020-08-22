@@ -11,11 +11,11 @@ import { Menu, MenuType, Schema, SchemaType } from "@/core"
 
 interface InitData {
   plugin: string
-  list: {
+  list?: {
     name: string
     data: any
   }[]
-  data: DocsData[]
+  data?: DocsData[]
 }
 
 export default async function initData() {
@@ -58,10 +58,10 @@ export default async function initData() {
   // Init Auth Plugin Data
   try {
     // @ts-ignore
-    let { initData: authInitData } = await import(`bunadmin-plugin-auth`)
+    let { initData: authInitData } = await import(`@plugins/buncms-user`)
     initData && (await initPluginData(db, authInitData))
   } catch (e) {
-    console.warn("initData required 'bunadmin-plugin-auth'")
+    console.warn("initData required '@plugins/buncms-user'")
   }
 
   // Init Plugins Data
@@ -90,28 +90,30 @@ async function initPluginData(db: any, initData: InitData) {
         const menuData = ([] as unknown) as MenuType[]
         initData.data.map(item => {
           if ("group" in item) {
-            schemaData.push({
-              id: item.id,
-              name: item.name,
-              label: item.label,
-              group: item.group,
-              team: item.team,
-              customized: item.customized,
-              columns: item.columns,
-              created_at: Date.now()
-            })
+            !item.ignore_schema &&
+              schemaData.push({
+                id: item.id,
+                name: item.name,
+                label: item.label,
+                group: item.group,
+                team: item.team,
+                customized: item.customized,
+                columns: item.columns,
+                created_at: Date.now()
+              })
             // @ts-ignore
             const menuItem: MenuType = item
-            menuData.push({
-              id: item.id,
-              name: item.name,
-              label: item.label,
-              slug: `/${item.group}/${item.name}`,
-              parent: menuItem.parent || "",
-              rank: menuItem.rank || "0",
-              icon_type: menuItem.icon_type,
-              icon: menuItem.icon
-            })
+            !menuItem.ignore_menu &&
+              menuData.push({
+                id: item.id,
+                name: item.name,
+                label: item.label,
+                slug: `/${item.group}/${item.name}`,
+                parent: menuItem.parent || "",
+                rank: menuItem.rank || "0",
+                icon_type: menuItem.icon_type,
+                icon: menuItem.icon
+              })
           }
         })
         // init Schema Data
@@ -128,13 +130,14 @@ async function initPluginData(db: any, initData: InitData) {
         })
         return
       }
-      initData.list.map(async item => {
-        await initDocsData({
-          db,
-          collection: item.name,
-          docsData: item.data
+      initData.list &&
+        initData.list.map(async item => {
+          await initDocsData({
+            db,
+            collection: item.name,
+            docsData: item.data
+          })
         })
-      })
     }
   })
 }
