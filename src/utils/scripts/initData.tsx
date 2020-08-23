@@ -108,7 +108,9 @@ async function initPluginData(db: any, initData: InitData) {
                 id: item.id,
                 name: item.name,
                 label: item.label,
-                slug: `/${item.group}/${item.name}`,
+                slug:
+                  // disable onClick route when group is same as name
+                  item.group === item.name ? "" : `/${item.group}/${item.name}`,
                 parent: menuItem.parent || "",
                 rank: menuItem.rank || "0",
                 icon_type: menuItem.icon_type,

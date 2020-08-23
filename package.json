@@ -1,6 +1,6 @@
 {
   "name": "@bunred/bunadmin",
-  "version": "1.1.0-alpha.10",
+  "version": "1.1.0-alpha.12",
   "description": "A simple graphql admin dashboard. Easy to expand with the flexible plugin. Graphql first, also supports api. Based on React, Material-UI, Realtime RxDB, Formik, I18N.",
   "license": "Apache-2.0",
   "private": true,
@@ -72,7 +72,7 @@
     "start": "next start -p 1912",
     "test": "prettier --check --no-semi src/** pages/** test/** && jest",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
-    "pack": "rm -rf dist && tsc && npm pack"
+    "pack": "rm -rf dist & tsc && npm pack"
   },
   "devDependencies": {
     "@bunred/sync-plugins": "^1.1.1",
