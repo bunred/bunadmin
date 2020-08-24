@@ -19,11 +19,10 @@ export default async function rxInitData({
   if (is_init) {
     /**
      * !!!DEBUG ONLY
-     * Initialize data every refresh
+     * Initialize data after refreshing
      */
     // await setting.remove()
-
-    return console.log(`DatabaseService: ${name} already exists`)
+    // return console.log(`DatabaseService: ${name} already exists`)
   } else {
     await initFunc()
 
@@ -35,6 +34,6 @@ export default async function rxInitData({
 
     console.log(`DatabaseService: ${name} done`)
 
-    return location.reload()
+    return true
   }
 }

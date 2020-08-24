@@ -65,20 +65,25 @@ export default async function initData() {
   }
 
   // Init Plugins Data
+  let count = 0
   const pluginsData = require("@plugins/pluginsData")
   pluginsData.map(async (path: string) => {
+    count++
     const fileContent: any = requirePlugins(path)
 
     if (!fileContent) return
 
     const initData: InitData = fileContent.default
 
-    await initPluginData(db, initData)
+    const initStatus = await initPluginData(db, initData)
+
+    // reload after the last one done
+    initStatus && pluginsData.length === count && location.reload()
   })
 }
 
 async function initPluginData(db: any, initData: InitData) {
-  await rxInitData({
+  return await rxInitData({
     db,
     collection: Setting.name,
     name: `init-${initData.plugin}`,
