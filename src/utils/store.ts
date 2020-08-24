@@ -5,9 +5,11 @@ import {
   EnhancedStore,
   AnyAction
 } from "@reduxjs/toolkit"
+import { ThunkMiddlewareFor } from "@reduxjs/toolkit/src/getDefaultMiddleware"
 import counterReducer from "../slices/counterSlice"
 import noticeReducer from "../slices/noticeSlice"
-import { ThunkMiddlewareFor } from "@reduxjs/toolkit/src/getDefaultMiddleware"
+import nestedMenuReducer from "../slices/nestedMenuSlice"
+import schemaReducer from "../slices/schemaSlice"
 
 export const store: EnhancedStore<
   any,
@@ -16,7 +18,9 @@ export const store: EnhancedStore<
 > = configureStore({
   reducer: {
     counter: counterReducer,
-    notice: noticeReducer
+    notice: noticeReducer,
+    nestedMenu: nestedMenuReducer,
+    schema: schemaReducer
   }
 })
 

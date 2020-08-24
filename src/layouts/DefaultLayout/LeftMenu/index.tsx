@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 
 import Divider from "@material-ui/core/Divider"
 import NestedList from "./NestedMenu"
 import SettingMenu from "./SettingMenu"
-import rxSubscribe from "@/utils/database/rxSubscribe"
-import { Collection } from "@/core/menu/collections"
 import { Type } from "@/core/menu/types"
 import { ENV } from "@/utils/config"
+import { useSelector } from "react-redux"
+import { selectNestedMenu } from "@/slices/nestedMenuSlice"
 
 export interface LeftMenuProps {
   data?: Type[]
@@ -14,24 +14,11 @@ export interface LeftMenuProps {
 }
 
 const LeftMenu = ({ data: propsData, offLeftSetting }: LeftMenuProps) => {
-  const [data, setData] = useState(propsData || ([] as Type[]))
-
-  useEffect(() => {
-    if (propsData) return
-    ;(async () => {
-      await rxSubscribe({
-        collection: Collection.name,
-        sort: { rank: "desc" },
-        callback: data => {
-          setData(data)
-        }
-      })
-    })()
-  }, [propsData])
+  const menus = useSelector(selectNestedMenu)
 
   return (
     <>
-      <NestedList data={propsData || data} />
+      <NestedList data={propsData || menus} />
       <Divider />
       {!offLeftSetting && ENV.ON_SETTING && <SettingMenu />}
     </>

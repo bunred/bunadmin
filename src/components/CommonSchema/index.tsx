@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import rxDb from "@/utils/database/rxConnect"
-import { Collection } from "@/core/schema/collections"
 import CommonTable, { CommonTableHead } from "../CommonTable"
 import { Column } from "material-table"
-import { editableController } from "./controllers/editableController"
+import { editableController } from "@/components"
 import { CommonTableDefaultProps as DefaultProps } from "../CommonTable/models/defaultProps"
 import tableIcons from "../CommonTable/models/tableIcons"
 import { Type } from "@/core/schema/types"
@@ -16,6 +14,8 @@ import dataController from "@/components/CommonSchema/controllers/dataController
 import columnsController from "@/components/CommonSchema/controllers/columnsController"
 import TableSkeleton from "@/components/CommonTable/components/TableSkeleton"
 import { useTranslation } from "react-i18next"
+import { useSelector } from "react-redux"
+import { selectSchema } from "@/slices/schemaSlice"
 
 interface Interface {
   group: string
@@ -40,34 +40,29 @@ export default function CommonSchema({ isAuthPath }: Props) {
   const [ready, setReady] = useState(false)
   const [state, setState] = useState({})
   const { schema, data, notFound } = state as StateSchemaType
-  const Schema = Collection.name
+  const schemas = useSelector(selectSchema)
 
   useEffect(() => {
     if (!group || !name) return
     ;(async () => {
-      const db = await rxDb()
-      db[Schema].find()
-        .exec()
-        .then((schemas: any) => {
-          // local_database schemas not existed
-          if (!schemas) return setState({ notFound: true })
-          const current = schemas.filter(
-            (item: Interface) => item.group === group && item.name === name
-          )
+      // local_database schemas not existed
+      if (!schemas) return setState({ notFound: true })
+      const current = schemas.filter(
+        (item: Interface) => item.group === group && item.name === name
+      )
 
-          // current schema not existed
-          if (!current[0]) return setState({ notFound: true })
+      // current schema not existed
+      if (!current[0]) return setState({ notFound: true })
 
-          // loop handing columns
-          let columns = current[0].columns
-            ? JSON.parse(current[0].columns as string)
-            : []
-          columns = columnsController({ t, columns })
-          const schema = { ...current[0], columns }
+      // loop handing columns
+      let columns = current[0].columns
+        ? JSON.parse(current[0].columns as string)
+        : []
+      columns = columnsController({ t, columns })
+      const schema = { ...current[0], columns }
 
-          setState({ schema, data: current[0] })
-          setReady(true)
-        })
+      setState({ schema, data: current[0] })
+      setReady(true)
     })()
   }, [name])
 
