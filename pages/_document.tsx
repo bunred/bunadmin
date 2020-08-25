@@ -16,6 +16,10 @@ export default class MyDocument extends Document {
             name="theme-color"
             content={defaultTheme.palette.primary.main}
           />
+          <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+          />
         </Head>
         <body>
           <Main />
