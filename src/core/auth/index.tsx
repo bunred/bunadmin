@@ -85,7 +85,7 @@ export default function AuthInfoContainer() {
                         padding: "10px 30px"
                       }}
                     >
-                      {rowData.details || "DETAILS IS EMPTY"}
+                      {rowData.details || "EMPTY"}
                     </div>
                   )
                 } else {

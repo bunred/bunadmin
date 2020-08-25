@@ -1,7 +1,6 @@
 import React from "react"
 import { Column } from "material-table"
 import { Type } from "./types"
-import ParentSelect from "./components/ParentSelect"
 import { Button, Tooltip } from "@material-ui/core"
 
 export const Columns = ({ t }: any): Column<Type>[] => [
@@ -28,14 +27,12 @@ export const Columns = ({ t }: any): Column<Type>[] => [
     title: t("Parent"),
     field: "parent",
     initialEditValue: "",
-    defaultGroupOrder: 0,
-    editComponent: props => <ParentSelect {...props} />
+    defaultGroupOrder: 0
   },
   {
     title: t("Parent"),
     field: "parent",
-    initialEditValue: "",
-    editComponent: props => <ParentSelect {...props} />
+    initialEditValue: ""
   },
   { title: t("Rank"), field: "rank", type: "numeric", initialEditValue: "0" }
 ]

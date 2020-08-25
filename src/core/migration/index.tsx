@@ -14,10 +14,6 @@ import rxDb from "@/utils/database/rxConnect"
 import IconButton from "@material-ui/core/IconButton"
 import { fsDownload } from "@/utils/scripts/fs"
 import { Type } from "./types"
-// @ts-ignore
-import JSONInput from "react-json-editor-ajrm"
-// @ts-ignore
-import locale from "react-json-editor-ajrm/locale/en"
 import MigrationDialogs from "./components/Dialog"
 import { useTranslation } from "react-i18next"
 
@@ -140,7 +136,7 @@ export default function MigrationContainer() {
                     color="inherit"
                   >
                     <EvaIcon
-                      name="edit-2-outline"
+                      name="sync-outline"
                       size="large"
                       fill={theme.bunadmin.iconColor}
                     />
@@ -149,45 +145,6 @@ export default function MigrationContainer() {
               </div>
             )
           }}
-          // detailPanel
-          detailPanel={[
-            {
-              icon: "code",
-              render: rowData => {
-                if (!rowData.columns) {
-                  return (
-                    <div
-                      style={{
-                        color: "white",
-                        backgroundColor: theme.bunadmin.iconColor,
-                        padding: "10px 30px"
-                      }}
-                    >
-                      {rowData.columns || "COLUMNS IS EMPTY"}
-                    </div>
-                  )
-                } else {
-                  const json = rowData.columns || {}
-                  return (
-                    <JSONInput
-                      viewOnly
-                      theme="light_mitsuketa_tribute"
-                      placeholder={json}
-                      locale={locale}
-                      style={{
-                        outerBox: { width: "100%" },
-                        container: { width: "100%", fontSize: 14 }
-                      }}
-                      colors={{
-                        background: theme.bunadmin.jsonViewBg,
-                        default: theme.palette.primary.light
-                      }}
-                    />
-                  )
-                } // check columns
-              } // render
-            } // item
-          ]}
         />
       </>
       <MigrationDialogs

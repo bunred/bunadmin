@@ -2,7 +2,6 @@ import React from "react"
 
 import { Column } from "material-table"
 import { Type } from "./types"
-import EditColumns from "./components/EditColumns"
 
 export const Columns = ({ t }: any): Column<Type>[] => [
   { title: t("Id"), field: "id", editable: "onAdd", grouping: false },
@@ -16,28 +15,9 @@ export const Columns = ({ t }: any): Column<Type>[] => [
     lookup: { true: "True", false: "False" }
   },
   {
-    title: t("Created At"),
-    field: "created_at",
-    editable: "never",
-    grouping: false,
-    render: r => (
-      <>{r && r.created_at && new Date(r.created_at).toLocaleString()}</>
-    )
-  },
-  {
-    title: t("Updated At"),
-    field: "updated_at",
-    editable: "never",
-    grouping: false,
-    render: r => (
-      <>{r && r.updated_at ? new Date(r.updated_at).toLocaleString() : ""}</>
-    )
-  },
-  {
     title: t("Columns"),
     field: "columns",
     grouping: false,
-    editComponent: props => <EditColumns {...props} />,
     render: r => <>{r && r.columns ? "..." : "EMPTY"}</>
   }
 ]

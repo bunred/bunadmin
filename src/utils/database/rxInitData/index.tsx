@@ -16,7 +16,7 @@ export default async function rxInitData({
   const setting = db[collection]
   const is_init = await setting.findOne({ name: { $eq: name } }).exec()
 
-  if (is_init) {
+  if (!!is_init) {
     /**
      * !!!DEBUG ONLY
      * Initialize data after refreshing
@@ -34,6 +34,6 @@ export default async function rxInitData({
 
     console.log(`DatabaseService: ${name} done`)
 
-    return true
+    return location.reload()
   }
 }
