@@ -79,7 +79,7 @@ export default function UserMenu() {
         color="inherit"
       >
         <EvaIcon
-          name="person-outline"
+          name="shield-outline"
           size="large"
           fill={theme.bunadmin.iconColor}
         />
