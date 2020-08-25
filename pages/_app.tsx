@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { AppProps } from "next/app"
 import Head from "next/head"
 import { ThemeProvider } from "@material-ui/core/styles"
@@ -9,46 +9,23 @@ import { SnackbarProvider } from "notistack"
 import SnackMessage from "@/components/CommonSnackbar/Message"
 import "@/utils/i18n"
 import { useTranslation } from "react-i18next"
-import { Collection as Schema } from "@/core/schema/collections"
 import rxDb from "@/utils/database/rxConnect"
-import { Type as SchemaType } from "@/core/schema/types"
+import { Type, Type as SchemaType } from "@/core/schema/types"
 import addResource from "@/utils/scripts/addResource"
 import initData from "@/utils/scripts/initData"
 import { Collection as Setting, SettingNames } from "@/core/setting/collections"
-import { Provider } from "react-redux"
+import { Provider, useSelector } from "react-redux"
 import { store } from "@/utils/store"
+import { selectSchema } from "../src/slices/schemaSlice"
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { i18n } = useTranslation()
+  const [ready, setReady] = useState(false)
 
   useEffect(() => {
     ;(async () => {
       // Init Data
       await initData()
-
-      // Load setting i18n_code
-      const db = await rxDb()
-      const setting = db[Setting.name]
-      const resI18nCode = await setting
-        .findOne({ name: { $eq: SettingNames.i18n_code } })
-        .exec()
-      if (resI18nCode) i18n.changeLanguage(resI18nCode.value).then()
-
-      // Add i18n resource
-      let pathObj: any
-      db[Schema.name]
-        .find()
-        .exec()
-        .then((schemas: []) => {
-          schemas.map(({ team, group }: SchemaType) => {
-            if (!pathObj) pathObj = {}
-            // continue when plugin path added
-            if (!pathObj[team + group]) {
-              pathObj[team + group] = true
-              addResource({ i18n, team, group })
-            }
-          })
-        })
 
       const jssStyles = document.querySelector("#jss-server-side")
       if (jssStyles) {
@@ -57,6 +34,42 @@ const App = ({ Component, pageProps }: AppProps) => {
       }
     })()
   }, [])
+
+  const AddSources = () => {
+    ;(async () => {
+      if (ready) return
+      let schemas = useSelector(selectSchema)
+      schemas = schemas.map((item: Type) => ({ ...item }))
+      // Load setting i18n_code
+      let db
+      try {
+        db = await rxDb()
+      } catch (e) {
+        // console.error(e)
+      }
+
+      if (!db) return
+      const setting = db[Setting.name]
+      const resI18nCode = await setting
+        .findOne({ name: { $eq: SettingNames.i18n_code } })
+        .exec()
+      if (resI18nCode) i18n.changeLanguage(resI18nCode.value).then()
+
+      // Add i18n resource
+      let pathObj: any
+      schemas.map(({ team, group }: SchemaType) => {
+        if (!pathObj) pathObj = {}
+        // continue when plugin path added
+        if (!pathObj[team + group]) {
+          pathObj[team + group] = true
+          addResource({ i18n, team, group })
+        }
+      })
+
+      setReady(true)
+    })()
+    return null
+  }
 
   return (
     <>
@@ -90,6 +103,8 @@ const App = ({ Component, pageProps }: AppProps) => {
           </SnackbarProvider>
           {/* Core component */}
           <Component {...pageProps} />
+          {/* AddSources */}
+          <AddSources />
         </ThemeProvider>
       </Provider>
     </>
