@@ -1,6 +1,6 @@
 {
   "name": "@bunred/bunadmin",
-  "version": "1.1.0-alpha.12",
+  "version": "1.1.0-beta.1",
   "description": "A simple graphql admin dashboard. Easy to expand with the flexible plugin. Graphql first, also supports api. Based on React, Material-UI, Realtime RxDB, Formik, I18N.",
   "license": "Apache-2.0",
   "private": true,
@@ -56,7 +56,6 @@
     "react-dom": "latest",
     "react-eva-icons": "0.0.8",
     "react-i18next": "^11.5.0",
-    "react-json-editor-ajrm": "^2.5.9",
     "react-json-view": "^1.19.1",
     "react-redux": "^7.2.0",
     "rxdb": "8.9.0",
