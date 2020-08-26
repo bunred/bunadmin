@@ -65,6 +65,11 @@ export default function NestedList({ data }: Props): any {
     if (slug !== undefined && slug !== "") {
       const isUrl = new RegExp("^http.*").test(slug)
 
+      if (slug.indexOf("/auth-") > -1) {
+        // /auth-buncms/users -> /auth/users
+        slug = slug.replace(/auth-.*\/.*?/, "auth/")
+      }
+
       if (!isUrl) {
         if (router.route === DynamicDocRoute) {
           return router.push(DynamicDocRoute, slug).then(_r => {})

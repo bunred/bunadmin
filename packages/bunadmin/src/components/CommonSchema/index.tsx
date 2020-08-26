@@ -47,9 +47,18 @@ export default function CommonSchema({ isAuthPath }: Props) {
     ;(async () => {
       // local_database schemas not existed
       if (!schemas) return setState({ notFound: true })
-      const current = schemas.filter(
-        (item: Interface) => item.group === group && item.name === name
-      )
+      const current = schemas.filter((item: Interface) => {
+        let itemGroup = item.group
+
+        if (itemGroup.indexOf("auth-") > -1) {
+          // auth-buncms -> auth
+          itemGroup = itemGroup.replace(/auth-.*/, "auth")
+        }
+
+        return itemGroup === group && item.name === name
+      })
+
+      console.log(current)
 
       // current schema not existed
       if (!current[0]) return setState({ notFound: true })

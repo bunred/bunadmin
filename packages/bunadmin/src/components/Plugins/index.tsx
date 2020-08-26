@@ -10,7 +10,12 @@ interface Props {
 }
 
 function Plugins({ team, group, name, hideLoading }: Props) {
-  const pluginPath = `${team}-${group}/${name}`
+  let pluginPath = `${team}-${group}/${name}`
+
+  // bunadmin-blog/category -> bunadmin-plugin-blog/category
+  if (pluginPath.indexOf("bunadmin-auth") < 0) {
+    pluginPath = pluginPath.replace("bunadmin-", "bunadmin-plugin-")
+  }
 
   const Plugin = dynamic({
     loader: () => import(`@plugins/${pluginPath}`),
