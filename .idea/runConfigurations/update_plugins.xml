@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="update plugins" type="NodeJSConfigurationType" path-to-js-file="plugins-update.js" working-dir="$PROJECT_DIR$">
+  <configuration default="false" name="update plugins" type="NodeJSConfigurationType" path-to-js-file="$PROJECT_DIR$/packages/bunadmin/plugins-update.js" working-dir="$PROJECT_DIR$">
     <method v="2" />
   </configuration>
 </component>

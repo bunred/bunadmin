@@ -1,7 +1,7 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules
 
 # misc
 .DS_Store
@@ -15,11 +15,12 @@ yarn-debug.log*
 yarn-error.log*
 
 # Next.js
-/.next
-/out
+.next
+out
 
 # IDE
-/.idea/workspace.xml
+.idea/workspace.xml
+.idea/vcs.xml
 .vscode/*
 
 # BunAdmin START
@@ -27,13 +28,13 @@ yarn-error.log*
 /deploy*.sh
 
 dist
-/*.tgz
+*.tgz
 
 /plugins/*
 !/plugins/.gitkeep
+pluginsData.json
 
 # for plugins
-/.idea/vcs.xml
 yarn.lock
 package-lock.json
 

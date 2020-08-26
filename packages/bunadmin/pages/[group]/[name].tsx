@@ -6,6 +6,7 @@ import CorePages from "@/components/CorePages"
 import CubeSpinner from "@/components/CommonBgs/CubeSpinner"
 import { ParsedUrlQuery } from "querystring"
 import CommonError from "@/components/CommonError"
+import { ENV } from "../../src/utils/config";
 
 const ModulePage = () => {
   const router = useRouter()
@@ -27,9 +28,9 @@ const ModulePage = () => {
 
       try {
         // @ts-ignore
-        let { security } = await import(`@plugins/buncms-user`)
+        let { security } = await import(`@plugins/${ENV.AUTH_PLUGIN}`)
         if (!security)
-          return showError(`security required '@plugins/buncms-user'`)
+          return showError(`security required '@plugins/${ENV.AUTH_PLUGIN}'`)
         setError(false)
         await security({ setReady, router })
       } catch (e) {

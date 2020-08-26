@@ -61,10 +61,10 @@ export default async function initData() {
   // Init Auth Plugin Data
   try {
     // @ts-ignore
-    let { initData: authInitData } = await import(`@plugins/buncms-user`)
+    let { initData: authInitData } = await import(`@plugins/${ENV.AUTH_PLUGIN}`)
     initData && (await initPluginData(authInitData))
   } catch (e) {
-    console.warn("initData required '@plugins/buncms-user'")
+    console.warn(`initData required '@plugins/${ENV.AUTH_PLUGIN}'`)
   }
 
   // Init Plugins Data
