@@ -28,6 +28,21 @@ module.exports = () => {
   jsonStr = jsonStr.replace(/\\\\/g, "/")
   jsonStr = jsonStr.replace(/".*?\/plugins\/(.*?)"/gm, `"$1"`)
 
+  // handling duplicate auth plugins (keep one)
+  const countAuth = (jsonStr.match(/bunadmin-auth-/g) || []).length
+  if (countAuth > 1) {
+    const newArr = []
+    JSON.parse(jsonStr).map(item => {
+      if (
+        item.indexOf(process.env.NEXT_PUBLIC_AUTH_PLUGIN) > -1 ||
+        item.indexOf("bunadmin-auth-") < 0
+      ) {
+        newArr.push(item)
+      }
+    })
+    jsonStr = JSON.stringify(newArr)
+  }
+
   const name = "pluginsData.json"
   const savePath = path.resolve(pluginsPath, name)
   fs.writeFile(savePath, jsonStr, "utf8", () => {
