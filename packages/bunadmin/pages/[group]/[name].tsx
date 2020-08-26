@@ -27,8 +27,8 @@ const ModulePage = () => {
       // return showError(`group or name not exists`)
 
       try {
-        // @ts-ignore
-        let { security } = await import(`@plugins/${ENV.AUTH_PLUGIN}`)
+        // @ts-ignore & ENV.AUTH_PLUGIN undefined
+        let { security } = await import(`@plugins/${process.env.NEXT_PUBLIC_AUTH_PLUGIN}`)
         if (!security)
           return showError(`security required '@plugins/${ENV.AUTH_PLUGIN}'`)
         setError(false)

@@ -13,7 +13,11 @@ module.exports = () => {
   // Generate pluginsData.json START
   console.log(chalk.white("  · generating pluginsData.json ..."))
   // find all plugin initData files
-  const pluginsPath = path.resolve("plugins")
+  const asPackage = __dirname.indexOf("/node_modules/") > -1
+  const pluginsPath = asPackage
+    ? path.resolve(__dirname, "plugins") // PROD using as package
+    : path.resolve(__dirname, "../../plugins") // DEV
+
   const pluginsInitFiles = FileHound.create()
     .paths(pluginsPath)
     .match(["initData.js", "initData.ts"])
@@ -25,7 +29,7 @@ module.exports = () => {
   jsonStr = jsonStr.replace(/".*?\/plugins\/(.*?)"/gm, `"$1"`)
 
   const name = "pluginsData.json"
-  const savePath = path.resolve(__dirname, "plugins", name)
+  const savePath = path.resolve(pluginsPath, name)
   fs.writeFile(savePath, jsonStr, "utf8", () => {
     console.log(chalk.white("  · generation complete!"))
 
@@ -48,9 +52,9 @@ module.exports = () => {
         }
       }
       // alias
-      config.resolve.alias["@"] = path.resolve(__dirname, "dist/src")
-      config.resolve.alias["@plugins"] = path.resolve(__dirname, "plugins")
-      config.resolve.alias["@bunred/bunadmin"] = path.resolve(__dirname, "dist")
+      config.resolve.alias["@"] = path.resolve(__dirname, "src")
+      config.resolve.alias["@plugins"] = pluginsPath
+      config.resolve.alias["@bunred/bunadmin"] = path.resolve(__dirname)
       // rules
       config.module.rules.push({
         // ignore file or file types

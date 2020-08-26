@@ -4,6 +4,7 @@ function strToArr(str?: string) {
 }
 
 interface EnvTypes {
+  AUTH_PLUGIN: string
   MAIN_URL?: string
   AUTH_URL?: string
   SITE_URLS: string[]
@@ -16,6 +17,7 @@ interface EnvTypes {
 }
 
 export const ENV: EnvTypes = {
+  AUTH_PLUGIN: process.env.NEXT_PUBLIC_AUTH_PLUGIN || "buncms-user",
   MAIN_URL: process.env.NEXT_PUBLIC_MAIN_URL,
   AUTH_URL:
     process.env.NEXT_PUBLIC_AUTH_URL || process.env.NEXT_PUBLIC_MAIN_URL,
