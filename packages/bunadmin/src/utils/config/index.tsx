@@ -17,7 +17,7 @@ interface EnvTypes {
 }
 
 export const ENV: EnvTypes = {
-  AUTH_PLUGIN: process.env.NEXT_PUBLIC_AUTH_PLUGIN || "buncms-user",
+  AUTH_PLUGIN: process.env.NEXT_PUBLIC_AUTH_PLUGIN || "bunadmin-auth-buncms",
   MAIN_URL: process.env.NEXT_PUBLIC_MAIN_URL,
   AUTH_URL:
     process.env.NEXT_PUBLIC_AUTH_URL || process.env.NEXT_PUBLIC_MAIN_URL,

@@ -1,7 +1,7 @@
 export const DynamicRoute = "/[group]/[name]"
 export const DynamicDocRoute = "/doc/[category]/[slug]"
 
-const userPrefix = "/user"
+const userPrefix = "/auth"
 
 export const UserRoute = {
   signIn: `${userPrefix}/sign-in`,

@@ -47,7 +47,7 @@ const ModulePage = () => {
     case "core":
       render = <CorePages />
       break
-    case "user":
+    case "auth":
       switch (name) {
         case "sign-in":
         case "sign-up":
