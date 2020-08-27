@@ -8,8 +8,8 @@
     "dist"
   ],
   "dependencies": {
-    "@bunred/bunadmin": "^1.1.0-beta.1",
-    "bunadmin-source-strapi": "/Volumes/Bunlu/Projects/Bunadmin/bunadmin-plugin-data-source-strapi/bunadmin-source-strapi-1.0.1-alpha.6-dev.3.tgz"
+    "@bunred/bunadmin": "^1.1.0-beta.1.1",
+    "bunadmin-source-strapi": "^1.0.1-alpha.7"
   },
   "devDependencies": {
     "prettier": "1.19.1",

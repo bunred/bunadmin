@@ -1,6 +1,6 @@
 {
   "name": "bunadmin-auth-buncms",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.1",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,7 +8,7 @@
     "dist"
   ],
   "dependencies": {
-    "@bunred/bunadmin": "^1.1.0-alpha.5"
+    "@bunred/bunadmin": "^1.1.0-beta.1.1"
   },
   "devDependencies": {
     "prettier": "1.19.1",
@@ -16,6 +16,6 @@
   },
   "scripts": {
     "test": "prettier --check --no-semi src/** pages/** test/** && jest",
-    "pack": "rm -rf dist && tsc && npm pack"
+    "pack": "rm -rf dist & tsc && npm pack"
   }
 }

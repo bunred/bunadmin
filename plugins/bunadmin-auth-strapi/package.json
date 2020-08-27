@@ -8,7 +8,7 @@
     "dist"
   ],
   "dependencies": {
-    "@bunred/bunadmin": "^1.1.0-beta.1"
+    "@bunred/bunadmin": "^1.1.0-beta.1.1"
   },
   "devDependencies": {
     "prettier": "1.19.1",
