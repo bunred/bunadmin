@@ -1,0 +1,10 @@
+# dependencies
+/node_modules
+
+# Idea
+/.idea/workspace.xml
+
+# BunAdmin
+dist
+*.tgz
+yarn.lock
