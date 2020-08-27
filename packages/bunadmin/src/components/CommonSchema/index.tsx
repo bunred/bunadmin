@@ -58,8 +58,6 @@ export default function CommonSchema({ isAuthPath }: Props) {
         return itemGroup === group && item.name === name
       })
 
-      console.log(current)
-
       // current schema not existed
       if (!current[0]) return setState({ notFound: true })
 

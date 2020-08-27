@@ -14,7 +14,8 @@ function Plugins({ team, group, name, hideLoading }: Props) {
 
   // bunadmin-blog/category -> bunadmin-plugin-blog/category
   if (pluginPath.indexOf("bunadmin-auth") < 0) {
-    pluginPath = pluginPath.replace("bunadmin-", "bunadmin-plugin-")
+    pluginPath = pluginPath.replace("bunadmin-", "")
+    pluginPath = `bunadmin-plugin-${pluginPath}`
   }
 
   const Plugin = dynamic({
