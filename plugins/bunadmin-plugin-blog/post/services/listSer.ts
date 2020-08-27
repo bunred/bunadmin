@@ -31,7 +31,7 @@ export default async function listSer(query: Query<any>) {
     }
   })
 
-  const { count } = await request(`/${SchemaName}/count`, {
+  const count = await request(`/${SchemaName}/count`, {
     params,
     prefix: ENV.AUTH_URL,
     method: "GET",

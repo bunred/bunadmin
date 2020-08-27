@@ -1,6 +1,6 @@
 import Columns from "./columns"
 
-export const SchemaName = "category"
+export const SchemaName = "categories"
 
 export const SchemaLabel = "Categories"
 
