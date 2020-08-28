@@ -35,7 +35,6 @@
     "node_modules",
     "dist",
     "pages",
-    "pages/counter/*.tsx",
     "plugins"
   ],
   "include": [
