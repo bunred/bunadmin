@@ -5,7 +5,7 @@ import { CommonTableDefaultProps as DefaultProps } from "@/components/CommonTabl
 
 import CommonTable, { CommonTableHead } from "@/components/CommonTable"
 import tableIcons from "@/components/CommonTable/models/tableIcons"
-import rxSubscribe from "@/utils/database/rxSubscribe"
+import rxQuery from "@/utils/database/rxQuery"
 import { Columns } from "./columns"
 import { Schema } from "./schema"
 import { Collection } from "./collections"
@@ -18,7 +18,7 @@ export default function AuthInfoContainer() {
 
   React.useEffect(() => {
     ;(async () => {
-      await rxSubscribe({
+      await rxQuery({
         collection: Collection.name,
         sort: { name: "asc" },
         callback: data => setData(data)

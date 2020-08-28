@@ -5,7 +5,7 @@ import { CommonTableDefaultProps as DefaultProps } from "@/components/CommonTabl
 
 import CommonTable, { CommonTableHead } from "@/components/CommonTable"
 import tableIcons from "@/components/CommonTable/models/tableIcons"
-import rxSubscribe from "@/utils/database/rxSubscribe"
+import rxQuery from "@/utils/database/rxQuery"
 import { Columns } from "./columns"
 import { Schema } from "./schema"
 import { editableController } from "./controllers/editableController"
@@ -28,7 +28,7 @@ export default function LocalNoticeContainer() {
 
   React.useEffect(() => {
     ;(async () => {
-      await rxSubscribe({
+      await rxQuery({
         collection: Collection.name,
         sort: { created_at: "desc" },
         callback: data => setData(data)

@@ -5,7 +5,7 @@ import { CommonTableDefaultProps as DefaultProps } from "@/components/CommonTabl
 
 import CommonTable, { CommonTableHead } from "@/components/CommonTable"
 import tableIcons from "@/components/CommonTable/models/tableIcons"
-import rxSubscribe from "@/utils/database/rxSubscribe"
+import rxQuery from "@/utils/database/rxQuery"
 import { Columns } from "./columns"
 import { Primary, Schema } from "./schema"
 import { Collection } from "./collections"
@@ -32,7 +32,7 @@ export default function AuthInfoContainer() {
 
   useEffect(() => {
     ;(async () => {
-      await rxSubscribe({
+      await rxQuery({
         collection: Collection.name,
         sort: { updated_at: "desc" },
         callback: data => setData(data)
@@ -120,6 +120,7 @@ export default function AuthInfoContainer() {
                           value: rowData[Primary],
                           updated_at: Date.now()
                         })
+                        location.reload()
                       }}
                     >
                       Switch to {rowData[Primary]}

@@ -9,7 +9,7 @@ import rxDb from "@/utils/database/rxConnect"
 import Divider from "@material-ui/core/Divider"
 import { DynamicRoute, LocalDataRoute, UserRoute } from "@/utils/routes"
 import { useRouter } from "next/router"
-import rxSubscribe from "@/utils/database/rxSubscribe"
+import rxQuery from "@/utils/database/rxQuery"
 import { Primary } from "@/core/auth/schema"
 import { Trans, useTranslation } from "react-i18next"
 
@@ -29,7 +29,7 @@ export default function UserMenu() {
 
   useEffect(() => {
     ;(async () => {
-      await rxSubscribe({
+      await rxQuery({
         collection: Collection.name,
         where: { name: Primary },
         callback: data =>
