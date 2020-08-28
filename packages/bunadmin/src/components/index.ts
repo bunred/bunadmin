@@ -24,6 +24,8 @@ export { CommonTableDefaultProps } from "./CommonTable/models/defaultProps"
 export * from "./CommonTable/models/editable"
 export { default as tableIcons } from "./CommonTable/models/tableIcons"
 
+export * from "./FileExplorer"
+
 export { default as BunField } from "./Formik/BunField"
 export { default as CorePages } from "./CorePages"
 export { default as ProTip } from "./ProTip"
