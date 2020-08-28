@@ -8,7 +8,7 @@
     "dist"
   ],
   "dependencies": {
-    "@bunred/bunadmin": "^1.1.0-beta.1.1",
+    "@bunred/bunadmin": "^1.1.0-beta.1.2",
     "bunadmin-source-strapi": "^1.0.1-alpha.7.1"
   },
   "devDependencies": {
