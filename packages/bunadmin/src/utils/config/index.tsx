@@ -27,5 +27,5 @@ export const ENV: EnvTypes = {
   ON_SETTING: process.env.NEXT_PUBLIC_ON_SETTING === "true" || false,
   ON_DOC: process.env.NEXT_PUBLIC_ON_DOC === "true" || false,
   I18N_CODE: process.env.NEXT_PUBLIC_I18N_CODE || "en",
-  ON_MOCK: !!process.env.NEXT_PUBLIC_ON_MOCK || false
+  ON_MOCK: process.env.NEXT_PUBLIC_ON_MOCK === "true" || false
 }
