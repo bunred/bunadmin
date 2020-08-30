@@ -8,7 +8,8 @@ import { CommonTableProps } from "./models/types"
 import { CommonTableDefaultProps as DefaultProps } from "./models/defaultProps"
 import { useTranslation } from "react-i18next"
 import localization from "@/components/CommonTable/localization"
-import { ENV } from "@/utils/config"
+import { ENV, DynamicRoute } from "@/utils"
+import { useRouter } from "next/router"
 
 export function CommonTableHead({ title }: { title?: string }) {
   return (
@@ -24,6 +25,8 @@ export function CommonTableHead({ title }: { title?: string }) {
 export default function CommonTable(props: CommonTableProps<any>) {
   const { t } = useTranslation("table")
   const theme = useTheme()
+  const router = useRouter()
+  const { group: qGroup, name: qName } = router.query
 
   return (
     <MaterialTable
@@ -36,7 +39,14 @@ export default function CommonTable(props: CommonTableProps<any>) {
       // options
       options={{ ...DefaultProps.options, selection: false }}
       // actions
-      actions={[]}
+      actions={[
+        {
+          icon: "refresh",
+          tooltip: t("Refresh Data"),
+          isFreeAction: true,
+          onClick: () => router.push(DynamicRoute, `/${qGroup}/${qName}`)
+        }
+      ]}
       // more props
       {...props}
     />

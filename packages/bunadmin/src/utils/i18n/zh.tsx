@@ -87,6 +87,8 @@ const zh = {
     /**
      * material-table
      */
+    // actions
+    "Refresh Data": "刷新数据",
     // headers
     actions: "操作",
     // toolbar

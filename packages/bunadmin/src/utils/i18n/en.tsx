@@ -87,6 +87,8 @@ const en = {
     /**
      * material-table
      */
+    // actions
+    "Refresh Data": "Refresh Data",
     // headers
     actions: "Actions",
     // toolbar
