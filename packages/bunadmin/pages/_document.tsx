@@ -2,7 +2,6 @@ import React from "react"
 import Document, { Head, Main, NextScript } from "next/document"
 import { ServerStyleSheets } from "@material-ui/core/styles"
 import defaultTheme from "@/utils/themes/defaultTheme"
-// @ts-ignore
 import { resetServerContext } from "react-beautiful-dnd"
 import { ENV } from "@/utils/config"
 
@@ -11,6 +10,7 @@ export default class MyDocument extends Document {
     return (
       <html lang={ENV.I18N_CODE}>
         <Head>
+          <title>Dashboard</title>
           {/* PWA primary color */}
           <meta
             name="theme-color"
