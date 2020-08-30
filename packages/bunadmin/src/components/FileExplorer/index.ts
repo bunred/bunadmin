@@ -34,7 +34,7 @@ export default interface BunadminFileProps {
   prefix?: string
 
   onDrop?: UploaderOnDrop
-  onDel?: ({ file }: { file: any }) => Promise<void>
+  onDel?: UploaderOnDel
 
   cardStyle?: object
   mediaStyle?: object
@@ -47,5 +47,9 @@ export default interface BunadminFileProps {
 export type UploaderOnDrop = ({
   droppedFiles,
   prefix,
-  setImageUrl
+  setImageUrl,
+  rejectedFiles,
+  event
 }: OnDropProps) => Promise<void | null>
+
+export type UploaderOnDel = ({ file }: { file: any }) => Promise<void | null>

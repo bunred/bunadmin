@@ -5,15 +5,18 @@ import {
   CardMedia,
   CircularProgress
 } from "@material-ui/core"
-import DropZone from "react-dropzone"
+import DropZone, { DropEvent } from "react-dropzone"
 import FilePreview from "../FilePreview"
 import styles from "./styles"
-import BunadminFileProps from "../"
+import BunadminFileProps, { BunadminFileType } from "../"
 import CardBottomArea from "./CardBottomArea"
 import { Translation } from "react-i18next"
 
 export interface OnDropProps {
   droppedFiles: any[]
+  existedFile?: BunadminFileType
+  rejectedFiles: File[]
+  event: DropEvent
   prefix?: string
   setImageUrl?: Dispatch<SetStateAction<string>>
 }
@@ -57,10 +60,22 @@ export default function BunadminFile(props: BunadminFileProps) {
     ),
     [preview, setPreview] = useState(false)
 
-  const handleOnDrop = async (droppedFiles: any[]) => {
+  const handleOnDrop = async (
+    acceptedFiles: File[],
+    rejectedFiles: File[],
+    event: DropEvent,
+    existedFile?: BunadminFileType
+  ) => {
     setUploading(true)
     if (onDrop) {
-      await onDrop({ droppedFiles, prefix, setImageUrl })
+      await onDrop({
+        droppedFiles: acceptedFiles,
+        existedFile,
+        rejectedFiles,
+        event,
+        prefix,
+        setImageUrl
+      })
     }
     setUploading(false)
   }
@@ -119,7 +134,11 @@ export default function BunadminFile(props: BunadminFileProps) {
         }}
         onClick={() => id && viewMode && setPreview(true)}
       >
-        <DropZone onDrop={acceptedFiles => handleOnDrop(acceptedFiles)}>
+        <DropZone
+          onDrop={(acceptedFiles, rejectedFiles, event) =>
+            handleOnDrop(acceptedFiles, rejectedFiles, event, file)
+          }
+        >
           {({
             getRootProps,
             getInputProps
@@ -132,12 +151,14 @@ export default function BunadminFile(props: BunadminFileProps) {
                 <CardActionArea disabled={viewMode && !id}>
                   {!viewMode && (
                     <div {...getRootProps()} className={classes.DropZone}>
-                      <div className={classes.UploadText}>
-                        {!hideUploadTip &&
-                          (!id
-                            ? uploadText || <UploadText />
-                            : replaceText || <ReplaceText />)}
-                      </div>
+                      {width && width >= 100 && (
+                        <div className={classes.UploadText}>
+                          {!hideUploadTip &&
+                            (!id
+                              ? uploadText || <UploadText />
+                              : replaceText || <ReplaceText />)}
+                        </div>
+                      )}
                       <input {...getInputProps()} />
                     </div>
                   )}

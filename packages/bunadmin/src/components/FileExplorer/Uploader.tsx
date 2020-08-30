@@ -15,7 +15,8 @@ import {
   BunadminFileType,
   FileDrawer,
   useFilesStyles,
-  UploaderOnDrop
+  UploaderOnDrop,
+  UploaderOnDel
 } from "./"
 
 export default function Uploader({
@@ -26,7 +27,10 @@ export default function Uploader({
   buttonTitlePreview,
   buttonTitleUpdate,
   onDrop,
-  onDragSort
+  onDel,
+  onDragSort,
+  noDrawer,
+  width
 }: {
   t: TFunction
   files: BunadminFileType[]
@@ -36,7 +40,10 @@ export default function Uploader({
   buttonTitleUpdate?: string
   editProps?: EditComponentProps<any>
   onDrop?: UploaderOnDrop
+  onDel?: UploaderOnDel
   onDragSort(result: DropResult, provided: ResponderProvided): void
+  noDrawer?: boolean
+  width?: number
 }) {
   const classes = useFilesStyles()
 
@@ -75,10 +82,11 @@ export default function Uploader({
                         htmlAttributes={{
                           itemID: item.id
                         }}
-                        width={135}
+                        width={width || 100}
                         viewMode={viewMode}
                         prefix={prefix}
-                        // onDel={handleOnDel}
+                        onDrop={onDrop}
+                        onDel={onDel}
                         file={item}
                       />
                     </div>
@@ -97,7 +105,7 @@ export default function Uploader({
   const UploadArea = () => (
     <BunadminFile
       className="upload-files"
-      width={135}
+      width={width || 100}
       prefix={prefix}
       onDrop={onDrop}
       // onDel={handleOnDel}
@@ -113,6 +121,7 @@ export default function Uploader({
       UploadArea={UploadArea}
       buttonTitlePreview={buttonTitlePreview}
       buttonTitleUpdate={buttonTitleUpdate || "Upload Files"}
+      noDrawer={noDrawer}
     />
   )
 }

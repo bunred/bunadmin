@@ -6,14 +6,20 @@ export const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "center"
     },
+    filesNoDrawer: {
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "flex-start"
+    },
     filesItem: {
-      marginRight: theme.spacing(4.5)
+      marginRight: theme.spacing(3)
     },
     // draggable
     draggableList: {
       borderColor: theme.palette.primary.main,
       borderStyle: "dashed",
-      display: "flex"
+      display: "flex",
+      flexWrap: "wrap"
       // overflow: "auto",
       // overflowX: "auto"
     },

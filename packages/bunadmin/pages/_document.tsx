@@ -10,7 +10,6 @@ export default class MyDocument extends Document {
     return (
       <html lang={ENV.I18N_CODE}>
         <Head>
-          <title>Dashboard</title>
           {/* PWA primary color */}
           <meta
             name="theme-color"

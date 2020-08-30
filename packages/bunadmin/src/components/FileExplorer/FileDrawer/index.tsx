@@ -16,6 +16,7 @@ interface Props {
   FilesList: () => JSX.Element
   sortingFiles?: (filesElement: HTMLElement) => void
   UploadArea: () => JSX.Element
+  noDrawer?: boolean
 }
 
 export default function FileDrawer(props: Props) {
@@ -30,7 +31,8 @@ export default function FileDrawer(props: Props) {
     files,
     FilesList,
     sortingFiles,
-    UploadArea
+    UploadArea,
+    noDrawer
   } = props
 
   async function handleOnOpen({
@@ -52,6 +54,17 @@ export default function FileDrawer(props: Props) {
       sortingFiles(filesElement)
     }
   }
+
+  if (noDrawer)
+    return (
+      <div className={classes.filesNoDrawer}>
+        {/*@ts-ignore*/}
+        <FilesList />
+
+        {/* Upload new file */}
+        {!viewMode && files.length + 1 <= maximum && <UploadArea />}
+      </div>
+    )
 
   return (
     <div>
