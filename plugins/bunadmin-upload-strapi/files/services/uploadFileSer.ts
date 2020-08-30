@@ -1,0 +1,32 @@
+import request from "umi-request"
+import { ENV, storedToken } from "@bunred/bunadmin"
+import { IFile } from "archievepack-erp-bunadmin-plugin/utils/types"
+
+type Resp = IFile[]
+
+type Options = {
+  url?: string
+  prefix?: string
+  method?: string
+  headers?: any
+}
+
+export default async function uploadFileSer(
+  data: any,
+  options?: Options
+): Promise<Resp> {
+  const token = await storedToken()
+
+  let prefix = (options && options.prefix) || ENV.MAIN_URL
+  if (prefix) prefix = prefix.replace("/api/v1", "")
+
+  // `upload request` use `umi-request` directly
+  return await request((options && options.url) || "/upload", {
+    prefix: prefix,
+    method: (options && options.method) || "post",
+    headers: (options && options.headers) || {
+      Authorization: `Bearer ${token}`
+    },
+    data: data
+  })
+}

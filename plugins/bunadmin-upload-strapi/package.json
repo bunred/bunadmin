@@ -1,0 +1,22 @@
+{
+  "name": "bunadmin-upload-strapi",
+  "version": "1.0.0-alpha.5.1",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "npm explore @bunred/bunadmin -- next dev -p 1911",
+    "pack": "rm -rf dist & tsc && npm pack"
+  },
+  "dependencies": {
+    "@bunred/bunadmin": "^1.1.0-beta.1.2",
+    "react-dropzone": "^10.2.1"
+  },
+  "devDependencies": {
+    "prettier": "1.19.1",
+    "typescript": "^3.9.3"
+  }
+}
