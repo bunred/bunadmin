@@ -1,6 +1,6 @@
 import request from "umi-request"
 import { BunadminFileType, ENV, storedToken } from "@bunred/bunadmin"
-import { IFile } from "archievepack-erp-bunadmin-plugin/utils/types"
+import { IFile } from "../../utils/types/file"
 
 type Resp = IFile[]
 
