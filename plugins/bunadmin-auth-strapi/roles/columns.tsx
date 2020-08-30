@@ -9,7 +9,7 @@ export default ({ t }: { t: TFunction }) =>
       field: "id",
       editable: "never"
     },
-    { title: t("Name"), field: "name", width: 135 },
-    { title: t("Description"), field: "description", width: 135 },
-    { title: t("Type"), field: "type", width: 135 }
+    { title: t("Name"), field: "name" },
+    { title: t("Description"), field: "description" },
+    { title: t("Type"), field: "type" }
   ] as Column<Type>[]
