@@ -13,7 +13,10 @@ function Plugins({ team, group, name, hideLoading }: Props) {
   let pluginPath = `${team}-${group}/${name}`
 
   // bunadmin-blog/category -> bunadmin-plugin-blog/category
-  if (pluginPath.indexOf("bunadmin-auth") < 0) {
+  if (
+    pluginPath.indexOf("bunadmin-auth") < 0 &&
+    pluginPath.indexOf("bunadmin-upload") < 0
+  ) {
     pluginPath = pluginPath.replace("bunadmin-", "")
     pluginPath = `bunadmin-plugin-${pluginPath}`
   }

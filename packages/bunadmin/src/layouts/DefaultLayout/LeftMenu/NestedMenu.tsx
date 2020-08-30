@@ -65,11 +65,6 @@ export default function NestedList({ data }: Props): any {
     if (slug !== undefined && slug !== "") {
       const isUrl = new RegExp("^http.*").test(slug)
 
-      if (slug.indexOf("/auth-") > -1) {
-        // /auth-buncms/users -> /auth/users
-        slug = slug.replace(/auth-.*\/.*?/, "auth/")
-      }
-
       if (!isUrl) {
         if (router.route === DynamicDocRoute) {
           return router.push(DynamicDocRoute, slug).then(_r => {})
@@ -92,12 +87,28 @@ export default function NestedList({ data }: Props): any {
     return Number(b.rank) - Number(a.rank)
   })
 
+  // handling slug (upload-*, auth-*): /auth-buncms/users -> /auth/users
+  function handleSlug(slug: string) {
+    if (slug.indexOf("/auth-") > -1) {
+      slug = slug.replace(/auth-.*\/.*?/, "auth/")
+    }
+
+    if (slug.indexOf("/upload-") > -1) {
+      slug = slug.replace(/upload-.*\/.*?/, "upload/")
+    }
+
+    return slug
+  }
+
   return (
     <>
       {data
         .filter(item => item.parent === "")
         .map(item => {
-          const { name, label, slug, icon, icon_type } = item
+          const { name, label, icon, icon_type } = item
+          let { slug } = item
+          if (slug) slug = handleSlug(slug)
+
           return (
             <List key={name} component="nav" className={classes.root}>
               <ListItem
@@ -130,7 +141,10 @@ export default function NestedList({ data }: Props): any {
                   {data
                     .filter(item => item.parent === name)
                     .map(item => {
-                      const { name, label, slug } = item
+                      const { name, label } = item
+                      let { slug } = item
+                      if (slug) slug = handleSlug(slug)
+
                       return (
                         <ListItem
                           key={name}

@@ -55,6 +55,11 @@ export default function CommonSchema({ isAuthPath }: Props) {
           itemGroup = itemGroup.replace(/auth-.*/, "auth")
         }
 
+        if (itemGroup.indexOf("upload-") > -1) {
+          // upload-buncms -> upload
+          itemGroup = itemGroup.replace(/upload-.*/, "upload")
+        }
+
         return itemGroup === group && item.name === name
       })
 
