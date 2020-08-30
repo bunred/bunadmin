@@ -13,12 +13,12 @@ interface Props {
   buttonTitleUpdate?: string
   listFiles?: () => void
   files: any[]
-  FilesList: () => JSX.Element[]
+  FilesList: () => JSX.Element
   sortingFiles?: (filesElement: HTMLElement) => void
   UploadArea: () => JSX.Element
 }
 
-export default function UploadFiles(props: Props) {
+export default function FileDrawer(props: Props) {
   const classes = useStyles()
   const {
     t,
@@ -69,7 +69,8 @@ export default function UploadFiles(props: Props) {
         contentClassName={classes.files}
         {...props}
       >
-        {FilesList}
+        {/*@ts-ignore*/}
+        <FilesList />
 
         {/* Upload new file */}
         {!viewMode && files.length + 1 <= maximum && <UploadArea />}

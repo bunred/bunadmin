@@ -8,17 +8,17 @@ import {
 import DropZone from "react-dropzone"
 import FilePreview from "../FilePreview"
 import styles from "./styles"
-import Props from "./types"
+import BunadminFileProps from "../"
 import CardBottomArea from "./CardBottomArea"
 import { Translation } from "react-i18next"
 
 export interface OnDropProps {
-  files: any[]
+  droppedFiles: any[]
   prefix?: string
   setImageUrl?: Dispatch<SetStateAction<string>>
 }
 
-export default function BunadminFile(props: Props) {
+export default function BunadminFile(props: BunadminFileProps) {
   const {
       fileKey,
       className,
@@ -29,7 +29,6 @@ export default function BunadminFile(props: Props) {
       replaceText,
 
       file,
-      title,
       width,
       prefix,
       onDrop,
@@ -43,25 +42,25 @@ export default function BunadminFile(props: Props) {
     default_image = "/p/default.jpg"
 
   let id: string | undefined,
-    file_name: string | undefined,
-    media_name: string | undefined
+    display_name: string | undefined,
+    url: string | undefined
   if (file) {
     id = file.id
-    file_name = file.file_name
-    media_name = file.media_name
+    display_name = file.display_name
+    url = file.url
   }
 
   const classes = styles({ id, width })
   const [uploading, setUploading] = React.useState(false),
     [imageUrl, setImageUrl] = React.useState(
-      id && file_name ? `${prefix}/${file_name}` : default_image
+      url ? (prefix ? prefix + url : url) : default_image
     ),
     [preview, setPreview] = useState(false)
 
-  const handleOnDrop = async (acceptedFiles: any[]) => {
+  const handleOnDrop = async (droppedFiles: any[]) => {
     setUploading(true)
     if (onDrop) {
-      await onDrop({ files: acceptedFiles, prefix, setImageUrl })
+      await onDrop({ droppedFiles, prefix, setImageUrl })
     }
     setUploading(false)
   }
@@ -88,7 +87,7 @@ export default function BunadminFile(props: Props) {
   useEffect(() => {
     multipleUpload &&
       console.log(multipleUpload, "Multiple Upload not supported yet")
-  }, [media_name])
+  }, [display_name])
 
   const UploadText = () => (
     <Translation ns="table">{t => t("Choose or drag")}</Translation>
@@ -108,9 +107,8 @@ export default function BunadminFile(props: Props) {
       <FilePreview
         preview={preview}
         setPreview={setPreview}
-        title={title}
         file={file}
-        url={imageUrl}
+        prefix={prefix}
       />
 
       <Card
