@@ -9,11 +9,13 @@ interface Props extends OnDropProps {
   uploadPrefix?: string
   setFiles?: Dispatch<SetStateAction<BunadminFileType[]>>
   files?: BunadminFileType[]
+  existedFile?: BunadminFileType
 }
 
 export default async function uploadMediaCtrl({
   editProps,
   droppedFiles,
+  existedFile,
   files = [],
   setFiles,
   prefix,
@@ -25,7 +27,11 @@ export default async function uploadMediaCtrl({
   droppedFiles.map((file: string | Blob) => formMedia.append("files", file))
 
   // strapi upload
-  const res = await uploadFileSer(formMedia, { prefix: uploadPrefix })
+  const res = await uploadFileSer(
+    formMedia,
+    { prefix: uploadPrefix },
+    existedFile
+  )
 
   if (res[0]) {
     if (res.length === 1) {

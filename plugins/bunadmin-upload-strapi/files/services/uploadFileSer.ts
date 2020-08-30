@@ -1,5 +1,5 @@
 import request from "umi-request"
-import { ENV, storedToken } from "@bunred/bunadmin"
+import { BunadminFileType, ENV, storedToken } from "@bunred/bunadmin"
 import { IFile } from "archievepack-erp-bunadmin-plugin/utils/types"
 
 type Resp = IFile[]
@@ -13,15 +13,20 @@ type Options = {
 
 export default async function uploadFileSer(
   data: any,
-  options?: Options
+  options?: Options,
+  existedFile?: BunadminFileType
 ): Promise<Resp> {
   const token = await storedToken()
 
   let prefix = (options && options.prefix) || ENV.MAIN_URL
   if (prefix) prefix = prefix.replace("/api/v1", "")
 
+  const url = !existedFile
+    ? (options && options.url) || "/upload"
+    : (options && options.url) || `/upload/?id=${existedFile.id}`
+
   // `upload request` use `umi-request` directly
-  return await request((options && options.url) || "/upload", {
+  return await request(url, {
     prefix: prefix,
     method: (options && options.method) || "post",
     headers: (options && options.headers) || {

@@ -1,7 +1,7 @@
-import React, { useState } from "react"
+import React, { useState, RefObject } from "react"
 import { TFunction } from "i18next"
 import { ENV, BunadminFileType, Uploader, OnDropProps } from "@bunred/bunadmin"
-import { EditComponentProps } from "material-table"
+import { EditComponentProps, rxMtUpdateField } from "material-table"
 import { DropResult } from "react-beautiful-dnd"
 import { IFile } from "../../utils/types/file"
 import uploadMediaCtrl from "../controllers/uploadMediaCtrl"
@@ -13,15 +13,18 @@ export default function FileUploader({
   data = [],
   buttonTitlePreview,
   buttonTitleUpdate,
-  editProps
+  editProps,
+  noDrawer
 }: {
   t: TFunction
+  tableRef?: RefObject<any>
   viewMode?: boolean
   prefix?: string
   data?: IFile[]
   buttonTitlePreview?: string
   buttonTitleUpdate?: string
   editProps?: EditComponentProps<any>
+  noDrawer?: boolean
 }) {
   const [files, setFiles] = useState<BunadminFileType[]>([])
   const [ready, setReady] = useState(false)
@@ -43,15 +46,34 @@ export default function FileUploader({
     setReady(true)
   }
 
-  async function onDrop({ droppedFiles, prefix, setImageUrl }: OnDropProps) {
+  async function onDrop({
+    droppedFiles,
+    prefix,
+    setImageUrl,
+    existedFile
+  }: OnDropProps) {
     await uploadMediaCtrl({
       editProps: editProps,
       droppedFiles,
+      existedFile,
       prefix,
       setImageUrl,
       files,
       setFiles
     })
+  }
+
+  async function onDel({ file }: { file: BunadminFileType }) {
+    const tmp: BunadminFileType[] = []
+    files.map(item => {
+      if (item.id !== file.id) tmp.push(item)
+    })
+    setFiles(tmp)
+    // Insert to MUI Table Field
+    if (!editProps) return
+    editProps.rowData.files = tmp
+    // @ts-ignore
+    await rxMtUpdateField({ name: "files", value: tmp || [] })
   }
 
   function onDragSort(result: DropResult) {
@@ -68,7 +90,10 @@ export default function FileUploader({
       buttonTitlePreview={buttonTitlePreview}
       buttonTitleUpdate={buttonTitleUpdate || "Upload Files"}
       onDrop={onDrop}
+      onDel={onDel}
       onDragSort={onDragSort}
+      noDrawer={noDrawer}
+      width={80}
     />
   )
 }
