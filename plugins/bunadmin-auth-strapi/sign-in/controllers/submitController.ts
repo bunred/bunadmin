@@ -7,7 +7,8 @@ import {
   Auth,
   AuthPrimary as Primary,
   DynamicRoute,
-  notice
+  notice,
+  SettingNames
 } from "@bunred/bunadmin"
 import { NextRouter } from "next/router"
 import { TFunction } from "i18next"
@@ -46,6 +47,12 @@ const submitController = async ({
     await db[Setting.name].upsert({
       name: Primary,
       value: res.user.username,
+      updated_at: Date.now()
+    })
+    // update role in setting
+    await db[Setting.name].upsert({
+      name: SettingNames.role,
+      value: res.user.role.name,
       updated_at: Date.now()
     })
     // show notice
