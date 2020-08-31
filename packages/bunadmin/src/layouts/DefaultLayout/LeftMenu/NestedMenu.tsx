@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
@@ -12,6 +12,8 @@ import { DynamicRoute, DynamicDocRoute } from "@/utils/routes"
 import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
 import { useTranslation } from "react-i18next"
+import { Collection as Setting, SettingNames } from "@/core/setting/collections"
+import rxDb from "@/utils/database/rxConnect"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,7 +42,8 @@ export default function NestedList({ data }: Props): any {
   const router = useRouter()
   let { group: qGroup, name: qName } = router.query
   const classes = useStyles()
-  const [open, setOpen] = React.useState({} as { [key: string]: boolean })
+  const [open, setOpen] = useState({} as { [key: string]: boolean })
+  const [currentRole, setCurrentRole] = useState("")
 
   if (router.route === DynamicDocRoute) {
     qGroup = "doc/" + router.query.category
@@ -52,6 +55,18 @@ export default function NestedList({ data }: Props): any {
     if (typeof qGroup !== "string") return
     const parent = qGroup.replace("doc/", "")
     handleOpen({ name: parent })
+    ;(async () => {
+      // query role from bunadmin_setting
+      const setting = Setting.name
+      const db = await rxDb()
+      const settingRes = await db[setting]
+        .findOne()
+        .where("name")
+        .eq(SettingNames.role)
+        .exec()
+      const role = (settingRes && settingRes.value) || ""
+      setCurrentRole(role)
+    })()
   }, [])
 
   const handleOpen = ({ name }: { name: string }) => {
@@ -87,6 +102,27 @@ export default function NestedList({ data }: Props): any {
     return Number(b.rank) - Number(a.rank)
   })
 
+  // handing role
+  function isAllowedRole(currentRole: string, allowedRole: string): boolean {
+    const currentRoles: string[] = currentRole.split(",")
+    const allowedRoles: string[] = allowedRole.split(",")
+
+    for (let i = 0; i < currentRoles.length; i++) {
+      // both are Array
+      if (allowedRoles.includes(currentRoles[i])) return true
+      // currentRole is Array, allowedRole is String
+      if (allowedRole === currentRoles[i]) return true
+    }
+
+    // currentRole is String, allowedRole is Array
+    if (allowedRoles.includes(currentRole)) return true
+
+    // both are String
+    if (allowedRole && allowedRole !== currentRole) return false
+
+    return false
+  }
+
   // handling slug (upload-*, auth-*): /auth-buncms/users -> /auth/users
   function handleSlug(slug: string) {
     if (slug.indexOf("/auth-") > -1) {
@@ -105,7 +141,11 @@ export default function NestedList({ data }: Props): any {
       {data
         .filter(item => item.parent === "")
         .map(item => {
-          const { name, label, icon, icon_type } = item
+          const { name, label, icon, icon_type, role } = item
+
+          // Check the role
+          if (role && !isAllowedRole(currentRole, role)) return null
+
           let { slug } = item
           if (slug) slug = handleSlug(slug)
 
