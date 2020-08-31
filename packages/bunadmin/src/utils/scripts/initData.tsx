@@ -97,7 +97,8 @@ async function initPluginData(initData: InitData) {
             team: item.team,
             customized: item.customized,
             columns: item.columns,
-            created_at: Date.now()
+            created_at: Date.now(),
+            role: item.role
           })
         // @ts-ignore
         const menuItem: MenuType = item
@@ -112,7 +113,8 @@ async function initPluginData(initData: InitData) {
             parent: menuItem.parent || "",
             rank: menuItem.rank || "0",
             icon_type: menuItem.icon_type,
-            icon: menuItem.icon
+            icon: menuItem.icon,
+            role: menuItem.role
           })
       }
     })
