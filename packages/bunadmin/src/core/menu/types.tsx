@@ -11,4 +11,5 @@ export interface Type {
   parent: string | ""
   rank?: string
   ignore_menu?: boolean
+  role?: string
 }

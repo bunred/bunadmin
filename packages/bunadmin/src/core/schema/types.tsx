@@ -9,4 +9,5 @@ export interface Type {
   customized?: boolean
   columns?: string // Column<any>[] (JsonStr)
   ignore_schema?: boolean
+  role?: string
 }
