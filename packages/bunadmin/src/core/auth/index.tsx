@@ -9,7 +9,7 @@ import rxQuery from "@/utils/database/rxQuery"
 import { Columns } from "./columns"
 import { Primary, Schema } from "./schema"
 import { Collection } from "./collections"
-import { Collection as Setting } from "../setting/collections"
+import { Collection as Setting, SettingNames } from "../setting/collections"
 import ConfirmDialog from "@/components/CommonDialog/ConfirmDialog"
 import rxDb from "@/utils/database/rxConnect"
 import dynamic from "next/dynamic"
@@ -115,9 +115,16 @@ export default function AuthInfoContainer() {
                       color="primary"
                       onClick={async () => {
                         const db = await rxDb()
+                        // Insert to setting: username
                         await db[Setting.name].upsert({
                           name: Primary,
                           value: rowData[Primary],
+                          updated_at: Date.now()
+                        })
+                        // Insert to setting: role
+                        await db[Setting.name].upsert({
+                          name: SettingNames.role,
+                          value: rowData["role"],
                           updated_at: Date.now()
                         })
                         location.reload()
