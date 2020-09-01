@@ -8,9 +8,10 @@ import {
 import { useTheme } from "@material-ui/core/styles"
 
 import { SchemaLabel, SchemaColumns } from "./plugin"
-import dataCtrl from "./controllers/dataCtrl"
 import editableCtrl from "./controllers/editableCtrl"
 import { useTranslation } from "@bunred/bunadmin"
+import { dataCtrl } from "bunadmin-source-strapi"
+import listSer from "./services/listSer"
 
 export default function() {
   const { t } = useTranslation("table")
@@ -36,7 +37,13 @@ export default function() {
           selection: false
         }}
         // data
-        data={async query => await dataCtrl(query)}
+        data={async tableQuery =>
+          await dataCtrl({
+            t,
+            tableQuery,
+            listService: () => listSer(tableQuery)
+          })
+        }
       />
     </>
   )

@@ -8,9 +8,10 @@ import {
 import { useTheme } from "@material-ui/core/styles"
 
 import { SchemaLabel, SchemaColumns } from "./plugin"
-import dataCtrl from "./controllers/dataCtrl"
 import editableCtrl from "./controllers/editableCtrl"
 import { useTranslation } from "react-i18next"
+import { dataCtrl } from "bunadmin-source-strapi"
+import { SchemaName } from "./plugin"
 
 export default function media() {
   const { t } = useTranslation("table")
@@ -34,7 +35,9 @@ export default function media() {
           filtering: true
         }}
         // data
-        data={async query => await dataCtrl(query)}
+        data={async tableQuery =>
+          await dataCtrl({ t, tableQuery, path: `upload/${SchemaName}` })
+        }
       />
     </>
   )

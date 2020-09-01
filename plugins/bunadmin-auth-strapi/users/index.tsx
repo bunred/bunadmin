@@ -7,10 +7,10 @@ import {
 } from "@bunred/bunadmin"
 import { useTheme } from "@material-ui/core/styles"
 
-import { SchemaLabel, SchemaColumns } from "./plugin"
-import dataCtrl from "./controllers/dataCtrl"
+import { SchemaLabel, SchemaColumns, SchemaName } from "./plugin"
 import editableCtrl from "./controllers/editableCtrl"
 import { useTranslation } from "@bunred/bunadmin"
+import { dataCtrl } from "bunadmin-source-strapi"
 
 export default function() {
   const { t } = useTranslation("table")
@@ -35,7 +35,15 @@ export default function() {
           filtering: true
         }}
         // data
-        data={async query => await dataCtrl(query)}
+        data={async tableQuery =>
+          await dataCtrl({
+            t,
+            tableQuery,
+            path: SchemaName,
+            searchField: "username",
+            skipCount: true
+          })
+        }
       />
     </>
   )

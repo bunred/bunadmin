@@ -39,7 +39,9 @@ export default function() {
           }
         }}
         // data
-        data={async query => await dataCtrl({ query, SchemaName })}
+        data={async tableQuery =>
+          await dataCtrl({ t, tableQuery, path: SchemaName })
+        }
       />
     </>
   )
