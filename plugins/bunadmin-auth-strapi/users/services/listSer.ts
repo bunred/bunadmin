@@ -21,6 +21,6 @@ export default async function listSer(query: Query<any>) {
   return {
     data,
     totalCount: data.length,
-    errors: data.status >= 400 ? "Fetch error" : undefined
+    errors: data.error ? data.error : undefined
   }
 }

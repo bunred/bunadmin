@@ -42,6 +42,6 @@ export default async function listSer({ query, SchemaName }: DataCtrl) {
   return {
     data,
     totalCount: count,
-    errors: data.status >= 400 ? "Fetch error" : undefined
+    errors: data.error ? data.error : undefined
   }
 }
