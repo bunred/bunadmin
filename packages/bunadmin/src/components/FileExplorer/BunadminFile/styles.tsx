@@ -45,6 +45,9 @@ export default function styles({ id, width }: Props) {
         height: 21,
         color: theme.palette.primary.light
       },
+      DefaultUpload: {
+        padding: 10
+      },
       UploadText: {
         color: "#FFF",
         fontSize: 12,

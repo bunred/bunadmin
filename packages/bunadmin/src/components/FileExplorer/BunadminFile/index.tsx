@@ -12,6 +12,9 @@ import BunadminFileProps, { BunadminFileType } from "../"
 import CardBottomArea from "./CardBottomArea"
 import { Translation } from "react-i18next"
 
+export const upload_image = "/p/upload.svg"
+export const default_file = "/p/default_file.svg"
+
 export interface OnDropProps {
   droppedFiles: any[]
   existedFile?: BunadminFileType
@@ -23,26 +26,25 @@ export interface OnDropProps {
 
 export default function BunadminFile(props: BunadminFileProps) {
   const {
-      fileKey,
-      className,
-      ariaAttributes,
-      htmlAttributes,
+    fileKey,
+    className,
+    ariaAttributes,
+    htmlAttributes,
 
-      uploadText,
-      replaceText,
+    uploadText,
+    replaceText,
 
-      file,
-      width,
-      prefix,
-      onDrop,
-      onDel,
-      cardStyle,
-      mediaStyle = {},
-      viewMode,
-      multipleUpload,
-      hideUploadTip
-    } = props,
-    default_image = "/p/default.jpg"
+    file,
+    width,
+    prefix,
+    onDrop,
+    onDel,
+    cardStyle,
+    mediaStyle = {},
+    viewMode,
+    multipleUpload,
+    hideUploadTip
+  } = props
 
   let id: string | undefined,
     display_name: string | undefined,
@@ -56,7 +58,7 @@ export default function BunadminFile(props: BunadminFileProps) {
   const classes = styles({ id, width })
   const [uploading, setUploading] = React.useState(false),
     [imageUrl, setImageUrl] = React.useState(
-      url ? (prefix ? prefix + url : url) : default_image
+      url ? (prefix ? prefix + url : url) : upload_image
     ),
     [preview, setPreview] = useState(false)
 
@@ -84,7 +86,7 @@ export default function BunadminFile(props: BunadminFileProps) {
     setUploading(true)
     if (onDel) {
       await onDel({ file })
-      setImageUrl(default_image)
+      setImageUrl(upload_image)
     }
     setUploading(false)
   }
@@ -163,9 +165,14 @@ export default function BunadminFile(props: BunadminFileProps) {
                     </div>
                   )}
                   <CardMedia
+                    className={
+                      imageUrl === upload_image
+                        ? classes.DefaultUpload
+                        : undefined
+                    }
                     style={{ ...mediaStyle, width, height: width || undefined }}
                     component="img"
-                    image={imageUrl}
+                    image={handleImage(imageUrl)}
                   />
                   {!id && viewMode && <BottomComp />}
                 </CardActionArea>
@@ -191,5 +198,17 @@ export default function BunadminFile(props: BunadminFileProps) {
         {!viewMode && (id || uploading) && <BottomComp />}
       </Card>
     </div>
+  )
+}
+
+export function handleImage(url: string): string {
+  if (!isImage(url)) return default_file
+
+  return url
+}
+
+export function isImage(url: string): boolean {
+  return /.*(apng|bmp|gif|ico|cur|jpg|jpeg|jfif|pjpeg|pjp|png|svg|webp)/gim.test(
+    url
   )
 }

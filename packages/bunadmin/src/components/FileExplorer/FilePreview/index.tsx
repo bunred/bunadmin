@@ -12,8 +12,14 @@ import {
 import CloseIcon from "@material-ui/icons/Close"
 import ZoomInIcon from "@material-ui/icons/ZoomIn"
 import ZoomOutIcon from "@material-ui/icons/ZoomOut"
+import DownloadIcon from "@material-ui/icons/GetApp"
 import { useStyles } from "./styles"
 import { BunadminFileType } from "@/components"
+import {
+  default_file,
+  handleImage,
+  isImage
+} from "@/components/FileExplorer/BunadminFile"
 
 interface Props {
   preview: boolean
@@ -33,8 +39,11 @@ export default function FilePreview({
   if (!file) return null
 
   const classes = useStyles()
-  const { created_at, display_name, file_name, url } = file
+  const { created_at, display_name, file_name } = file
   const [state, setState] = useState({ fullScreen: fullScreen })
+
+  let { url = default_file } = file
+  if (prefix) url = prefix + url
 
   function handleFullWidthChange() {
     setState({ ...state, fullScreen: !state.fullScreen })
@@ -58,7 +67,7 @@ export default function FilePreview({
               <CardMedia
                 style={{ width: "max-content" }}
                 component="img"
-                image={prefix ? prefix + url : url}
+                image={handleImage(url)}
                 alt={display_name || file_name}
                 title={display_name || file_name}
                 onClick={handleClose}
@@ -71,9 +80,17 @@ export default function FilePreview({
             {display_name || created_at}
           </Button>
 
-          <IconButton aria-label="Preview" onClick={handleFullWidthChange}>
-            {!state.fullScreen ? <ZoomInIcon /> : <ZoomOutIcon />}
-          </IconButton>
+          {isImage(url) && (
+            <IconButton aria-label="Preview" onClick={handleFullWidthChange}>
+              {!state.fullScreen ? <ZoomInIcon /> : <ZoomOutIcon />}
+            </IconButton>
+          )}
+
+          <a href={url} target="_blank">
+            <IconButton aria-label="Download">
+              <DownloadIcon />
+            </IconButton>
+          </a>
 
           <IconButton aria-label="Close" onClick={handleClose}>
             <CloseIcon />
