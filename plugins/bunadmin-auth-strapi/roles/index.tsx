@@ -33,8 +33,10 @@ export default function() {
         // options
         options={{
           ...DefaultProps.options,
-          filtering: true,
-          selection: false
+          filtering: false,
+          selection: false,
+          sorting: false,
+          search: false
         }}
         // data
         data={async tableQuery =>

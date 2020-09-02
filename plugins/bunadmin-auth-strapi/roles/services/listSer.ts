@@ -5,8 +5,13 @@ import { Query } from "material-table"
 import { ENV, request, storedToken } from "@bunred/bunadmin"
 import { SchemaName } from "../plugin"
 
-export default async function listSer(query: Query<any>) {
-  const { page, pageSize } = query
+export default async function listSer(query?: Query<any>) {
+  let page = 100,
+    pageSize = 0
+  if (query) {
+    page = query.page
+    pageSize = query.pageSize
+  }
   const token = await storedToken()
 
   const data = await request(`/users-permissions/${SchemaName}`, {

@@ -11,5 +11,5 @@ export default ({ t }: { t: TFunction }) =>
     },
     { title: t("Name"), field: "name" },
     { title: t("Description"), field: "description" },
-    { title: t("Type"), field: "type" }
+    { title: t("Type"), field: "type", hidden: true }
   ] as Column<Type>[]
