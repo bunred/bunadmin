@@ -1,7 +1,7 @@
 /**
  * Remote data controller
  */
-import { ENV, request, storedToken } from "@bunred/bunadmin"
+import { ENV, request, storedToken, store, TableState } from "@bunred/bunadmin"
 import { ListService } from "../types"
 
 const operatorRex = new RegExp(/=|<=|>=|<|>|_.*=/)
@@ -28,16 +28,32 @@ export default async function listSer({
     if (!column.field) return
     const field = column.field.toString()
 
+    const state = store.getState()
+    const table: TableState = state.table
+    let filterField = field
+
+    const extraFilter = table.filters?.find(
+      item => item.column?.field === field
+    )
+
+    if (extraFilter && extraFilter.filterField) {
+      filterField = extraFilter.filterField
+    }
+
+    if (extraFilter && typeof extraFilter.filterOperator === "string") {
+      suffix = extraFilter.filterOperator
+    }
+
     if (typeof filterValue === "object") {
       suffix = "" // eq
-      const filterKey = field + suffix
+      const filterKey = filterField + suffix
       return (filtersObj[filterKey] = filterValue)
     }
 
     const isOperator = filterValue.replace(operatorRex, "") === ""
     if (isOperator) return
 
-    suffix = handleValueSuffix(filterValue)
+    if (suffix !== "") suffix = handleValueSuffix(filterValue)
 
     // handling numeric column
     if (column.type === "numeric") suffix = "" // eq
@@ -49,7 +65,7 @@ export default async function listSer({
       if (filterValue === "unchecked") filterValue = "false"
     }
 
-    const filterKey = field + suffix
+    const filterKey = filterField + suffix
 
     filtersObj[filterKey] = filterValue.replace(operatorRex, "")
   })
