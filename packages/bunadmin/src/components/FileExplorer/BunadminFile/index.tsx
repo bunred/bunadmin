@@ -18,8 +18,8 @@ export const default_file = "/p/default_file.svg"
 export interface OnDropProps {
   droppedFiles: any[]
   existedFile?: BunadminFileType
-  rejectedFiles: File[]
-  event: DropEvent
+  rejectedFiles?: File[]
+  event?: DropEvent
   prefix?: string
   setImageUrl?: Dispatch<SetStateAction<string>>
 }

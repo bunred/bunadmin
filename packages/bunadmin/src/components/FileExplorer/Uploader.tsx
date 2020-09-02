@@ -30,7 +30,8 @@ export default function Uploader({
   onDel,
   onDragSort,
   noDrawer,
-  width
+  width,
+  maximum
 }: {
   t: TFunction
   files: BunadminFileType[]
@@ -44,6 +45,7 @@ export default function Uploader({
   onDragSort(result: DropResult, provided: ResponderProvided): void
   noDrawer?: boolean
   width?: number
+  maximum?: number
 }) {
   const classes = useFilesStyles()
 
@@ -122,6 +124,7 @@ export default function Uploader({
       buttonTitlePreview={buttonTitlePreview}
       buttonTitleUpdate={buttonTitleUpdate || "Upload Files"}
       noDrawer={noDrawer}
+      maximum={maximum}
     />
   )
 }

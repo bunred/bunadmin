@@ -10,21 +10,23 @@ export default function FileUploader({
   t,
   viewMode = true,
   prefix,
-  data = [],
+  data,
   buttonTitlePreview,
   buttonTitleUpdate,
   editProps,
-  noDrawer
+  noDrawer,
+  maximum
 }: {
   t: TFunction
   tableRef?: RefObject<any>
   viewMode?: boolean
   prefix?: string
-  data?: IFile[]
+  data?: IFile[] | IFile
   buttonTitlePreview?: string
   buttonTitleUpdate?: string
   editProps?: EditComponentProps<any>
   noDrawer?: boolean
+  maximum?: number
 }) {
   const [files, setFiles] = useState<BunadminFileType[]>([])
   const [ready, setReady] = useState(false)
@@ -33,14 +35,24 @@ export default function FileUploader({
 
   if (!ready) {
     const tmp: BunadminFileType[] = []
-    data?.map(item => {
-      tmp.push({
-        id: item.id,
-        file_name: item.name,
-        url: item.url,
-        display_name: item.name
+    if (Array.isArray(data)) {
+      data.map(item => {
+        tmp.push({
+          id: item.id,
+          file_name: item.name,
+          url: item.url,
+          display_name: item.name
+        })
       })
-    })
+    } else {
+      data &&
+        tmp.push({
+          id: data.id,
+          file_name: data.name,
+          url: data.url,
+          display_name: data.name
+        })
+    }
 
     setFiles(tmp)
     setReady(true)
@@ -71,9 +83,10 @@ export default function FileUploader({
     setFiles(tmp)
     // Insert to MUI Table Field
     if (!editProps) return
-    editProps.rowData.files = tmp
+    const field = editProps.columnDef.field
+    editProps.rowData[field] = tmp
     // @ts-ignore
-    await rxMtUpdateField({ name: "files", value: tmp || [] })
+    await rxMtUpdateField({ name: field, value: tmp || [] })
   }
 
   function onDragSort(result: DropResult) {
@@ -94,6 +107,7 @@ export default function FileUploader({
       onDragSort={onDragSort}
       noDrawer={noDrawer}
       width={80}
+      maximum={maximum}
     />
   )
 }

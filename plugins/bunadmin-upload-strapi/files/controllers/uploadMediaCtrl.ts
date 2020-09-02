@@ -54,9 +54,10 @@ export default async function uploadMediaCtrl({
 
     // Insert to MUI Table Field
     if (!editProps) return
-    editProps.rowData.files = files
+    const field = editProps.columnDef.field
+    editProps.rowData[field] = files
     // @ts-ignore
-    await rxMtUpdateField({ name: "files", value: files || [] })
+    await rxMtUpdateField({ name: field, value: files || [] })
   } else {
     const errors = (res as unknown) as {
       error: string
