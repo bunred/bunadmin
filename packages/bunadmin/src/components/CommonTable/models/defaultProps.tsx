@@ -30,7 +30,9 @@ export const CommonTableDefaultProps: MaterialTableProps<any> = {
   options: {
     addRowPosition: "first",
     draggable: false,
-    selection: true
+    selection: true,
+    pageSize: 10,
+    pageSizeOptions: [10, 25, 50, 100]
   },
   // actions
   actions: [
