@@ -9,6 +9,7 @@ import { ThunkMiddlewareFor } from "@reduxjs/toolkit/src/getDefaultMiddleware"
 import noticeReducer from "../slices/noticeSlice"
 import nestedMenuReducer from "../slices/nestedMenuSlice"
 import schemaReducer from "../slices/schemaSlice"
+import tableReducer from "../slices/tableSlice"
 
 export const store: EnhancedStore<
   any,
@@ -18,7 +19,8 @@ export const store: EnhancedStore<
   reducer: {
     notice: noticeReducer,
     nestedMenu: nestedMenuReducer,
-    schema: schemaReducer
+    schema: schemaReducer,
+    table: tableReducer
   }
 })
 
