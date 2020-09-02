@@ -9,7 +9,7 @@ export default async function deleteSer({ oldData, SchemaName }: Props<any>) {
   const token = await storedToken()
 
   const res = await request(`/${SchemaName}/${oldData.id}`, {
-    prefix: ENV.MAIN_URL,
+    prefix: ENV.AUTH_URL,
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`

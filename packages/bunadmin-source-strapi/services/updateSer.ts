@@ -14,7 +14,7 @@ export default async function updateSer({
   const token = await storedToken()
 
   const res = await request(`/${SchemaName}/${oldData.id}`, {
-    prefix: ENV.MAIN_URL,
+    prefix: ENV.AUTH_URL,
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`

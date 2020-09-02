@@ -8,8 +8,8 @@ interface Props<RowData> extends EditableCtrl {
 export default async function addSer({ newData, SchemaName }: Props<any>) {
   const token = await storedToken()
 
-  const res = await request(`/${SchemaName}.${SchemaName}`, {
-    prefix: ENV.MAIN_URL,
+  const res = await request(`/${SchemaName}`, {
+    prefix: ENV.AUTH_URL,
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`
