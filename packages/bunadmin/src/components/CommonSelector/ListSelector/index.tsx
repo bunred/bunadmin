@@ -2,7 +2,12 @@ import React, { useState } from "react"
 import TextField from "@material-ui/core/TextField"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import CircularProgress from "@material-ui/core/CircularProgress"
-import { EditComponentProps, Query, rxMtUpdateField } from "material-table"
+import {
+  Column,
+  EditComponentProps,
+  Query,
+  rxMtUpdateField
+} from "material-table"
 import { notice } from "@/core"
 
 interface OptionType {
@@ -10,31 +15,47 @@ interface OptionType {
   name: string
 }
 
-interface ListSelectProps extends EditComponentProps<any> {
+type Props = {
+  columnDef: Column<any>
+  // filterComponent
+  filterProps?: {
+    toLowerCase?: boolean
+    replaceSpace?: boolean // replace ' ' with '_'
+    onFilterChanged?: (rowId: string, value: any) => void
+    onFilterField?: string
+  }
+  // editComponent
+  editProps?: EditComponentProps<any>
+  // ListSelector Props
   width?: number | string
   label?: string
-  shortName: string
-  schemaName: string
   querySer: (query: Query<any>) => Promise<any>
-  customKey?: string
+  dataField?: string
+  optionField?: string
 }
 
 export default function ListSelector({
   columnDef,
-  rowData,
-  onChange,
+  editProps,
   width,
   label,
-  shortName,
-  schemaName,
   querySer,
-  customKey
-}: ListSelectProps) {
+  dataField,
+  optionField
+}: Props) {
   const [open, setOpen] = React.useState(false)
   const [options, setOptions] = React.useState<OptionType[]>([])
-  const [name, setName] = React.useState("")
-  const [selected, setSelected] = useState(rowData[shortName])
+  const [search, setSearch] = React.useState("")
   const loading = open && options.length === 0
+
+  let rowData = []
+  if (editProps) {
+    rowData = editProps.rowData
+  }
+
+  let resField = dataField ? dataField : columnDef.field || "id"
+
+  const [selected, setSelected] = useState(rowData[resField])
 
   React.useEffect(() => {
     if (!loading) {
@@ -54,7 +75,7 @@ export default function ListSelector({
 
   async function dataCtrl() {
     const { data: res, errors } = await querySer({
-      search: name,
+      search: search,
       page: 0,
       pageSize: 30
     } as Query<any>)
@@ -67,37 +88,51 @@ export default function ListSelector({
       })
     }
 
-    const resList: any[] = res && res[schemaName]
+    let resList: any[] = res
+
+    if (columnDef.field) {
+      if (res && res[columnDef.field]) resList = res[columnDef.field]
+    }
 
     const options: OptionType[] = []
     resList.map(item => {
-      const nameObj = customKey
-        ? { [customKey]: item[customKey] }
+      if (item.name) {
+        return console.warn("item.name is null, use {optionField} instead!")
+      }
+
+      const nameObj = optionField
+        ? { [optionField]: item[optionField] }
         : { name: item.name }
       options.push({ id: item.id, name: "", ...nameObj })
     })
+
     setOptions(options)
   }
 
-  async function handleChange(e: {
+  async function handleSearch(e: {
     target: { value: React.SetStateAction<string> }
   }) {
-    setName(e.target.value)
+    setSearch(e.target.value)
     await dataCtrl()
   }
 
   async function handleSelect(_e: React.ChangeEvent<{}>, value: any) {
-    onChange(value ? value.id : null)
     setSelected(value)
+
+    if (editProps) {
+      editProps.onChange(value ? value.id : null)
+    }
+
+    if (!columnDef.field) return
     await rxMtUpdateField({
-      name: columnDef.field,
+      name: columnDef.field.toString(),
       value: value ? value.id : null
     })
   }
 
   return (
     <Autocomplete
-      id={`list-selector-${shortName}`}
+      id={`list-selector-${dataField}`}
       style={{ width: width ? width : 135 }}
       open={open}
       onOpen={() => {
@@ -108,7 +143,9 @@ export default function ListSelector({
       }}
       onChange={handleSelect}
       getOptionSelected={option => option.id === (selected && selected.id)}
-      getOptionLabel={option => (customKey ? option[customKey] : option.name)}
+      getOptionLabel={option =>
+        optionField ? option[optionField] : option.name
+      }
       value={selected}
       options={options}
       loading={loading}
@@ -117,7 +154,7 @@ export default function ListSelector({
           {...params}
           label={label || undefined}
           variant="outlined"
-          onChange={handleChange}
+          onChange={handleSearch}
           InputProps={{
             ...params.InputProps,
             endAdornment: (
