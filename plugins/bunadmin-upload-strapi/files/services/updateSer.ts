@@ -1,17 +1,21 @@
 import Type from "../types"
-import { SchemaName } from "../plugin"
-import { ENV, request, storedToken, notice } from "@bunred/bunadmin"
+import { ENV, storedToken, notice } from "@bunred/bunadmin"
+import request from "umi-request"
 
 export default async function updateSer(newData: Type, oldData: Type) {
   const token = await storedToken()
 
-  const res = await request(`/upload/${SchemaName}/${oldData.id}`, {
+  const formData = new FormData()
+  formData.append("fileInfo", JSON.stringify(newData))
+
+  // "multipart/form-data" use `umi-request` directly
+  const res = await request(`/upload?id=${oldData.id}`, {
     prefix: ENV.AUTH_URL,
-    method: "PUT",
+    method: "POST",
     headers: {
       Authorization: `Bearer ${token}`
     },
-    data: newData
+    data: formData
   })
 
   if (res.error) {

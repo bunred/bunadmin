@@ -8,15 +8,22 @@ const prefix = ENV.UPLOAD_URL
 
 export default ({ t }: any) =>
   [
-    { title: t("Id"), field: "id", editable: "never", width: 80 },
-    { title: t("Type"), field: "mime", width: 115 },
+    {
+      title: t("Id"),
+      field: "id",
+      type: "numeric",
+      editable: "never",
+      width: 100
+    },
     {
       title: t("Preview"),
       field: "file_name",
       width: 180,
+      filtering: false,
+      editable: false,
       render: rowData => (
         <BunadminFile
-          width={135}
+          width={80}
           viewMode={true}
           prefix={prefix}
           file={rowData}
@@ -24,17 +31,20 @@ export default ({ t }: any) =>
       )
     },
     { title: t("Name"), field: "name", width: 115 },
+    { title: t("Size"), field: "size", width: 100, editable: false },
+    { title: t("Type"), field: "mime", width: 115, editable: false },
     {
       title: t("User"),
-      field: "author",
-      width: 80,
+      field: "created_by.username",
+      width: 100,
+      editable: false,
       render: r => r.created_by?.username
     },
-    { title: t("Size"), field: "size", width: 80 },
     {
       title: t("File URL"),
-      field: "file_name",
+      field: "url",
       width: 115,
+      editable: false,
       render: r => (
         <Tooltip title={r.url} placement="top" arrow>
           <Button>Show</Button>
@@ -47,6 +57,7 @@ export default ({ t }: any) =>
       editable: "never",
       grouping: false,
       defaultSort: "desc",
+      filtering: false,
       render: r => r && new Date(r.created_at).toLocaleString()
     },
     {
@@ -54,6 +65,7 @@ export default ({ t }: any) =>
       field: "updated_at",
       editable: "never",
       grouping: false,
+      filtering: false,
       render: r => (r ? new Date(r.updated_at).toLocaleString() : "")
     }
   ] as Column<Type>[]
