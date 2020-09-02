@@ -8,13 +8,15 @@ export type DataCtrl = {
   path?: ListService["path"]
   skipCount?: ListService["skipCount"]
   searchField?: ListService["searchField"]
+  searchSuffix?: ListService["searchSuffix"]
 }
 
 export type ListService = {
   tableQuery: Query<any>
   path: string
   skipCount?: boolean
-  searchField?: "name_contains" | string
+  searchField?: "name" | string
+  searchSuffix?: "_contains" | string
 }
 
 export type ListServiceRes = {

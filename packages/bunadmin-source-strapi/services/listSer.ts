@@ -10,7 +10,8 @@ export default async function listSer({
   tableQuery,
   path,
   skipCount,
-  searchField
+  searchField = "name",
+  searchSuffix = "_contains"
 }: ListService) {
   const {
     search: searchWords,
@@ -70,13 +71,13 @@ export default async function listSer({
     filtersObj[filterKey] = filterValue.replace(operatorRex, "")
   })
 
-  searchField = searchField ? `${searchField}_contains` : "name_contains"
+  const searchKey = searchField + searchSuffix
 
   const orderByField =
     (orderBy && orderBy.field && orderBy.field.toString()) || "created_at"
 
   const params = {
-    [searchField]: searchWords || "",
+    [searchKey]: searchWords || "",
     _limit: pageSize,
     _sort: orderBy ? `${orderByField}:${orderDirection}` : undefined,
     _start: page * pageSize,
