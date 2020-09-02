@@ -48,7 +48,7 @@ export default function SingleSelector(props: Props) {
   let defaultName = ""
   if (editProps && columnDef.field) {
     const { rowData } = editProps
-    defaultName = rowData[columnDef.field].id
+    if (rowData[columnDef.field]) defaultName = rowData[columnDef.field].id
   }
   const [selectedName, setSelectedName] = React.useState<string>(defaultName)
 
