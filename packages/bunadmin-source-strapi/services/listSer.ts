@@ -14,7 +14,7 @@ export default async function listSer({
 }: ListService) {
   const {
     search: searchWords,
-    filters,
+    filters = [],
     orderBy,
     orderDirection,
     page,
