@@ -43,6 +43,16 @@ module.exports = () => {
     jsonStr = JSON.stringify(newArr)
   }
 
+  // handling ignored plugins
+  const ignoredArr = process.env.IGNORED_PLUGINS
+    ? process.env.IGNORED_PLUGINS.split(/[ ,]+/)
+    : []
+  ignoredArr.map(item => {
+    const ignoredRegx = new RegExp(`"${item}.*?",?`, "g")
+    jsonStr = jsonStr.replace(ignoredRegx, "")
+  })
+  jsonStr = jsonStr.replace(",]", "]")
+
   const name = "pluginsData.json"
   const savePath = path.resolve(pluginsPath, name)
   fs.writeFile(savePath, jsonStr, "utf8", () => {

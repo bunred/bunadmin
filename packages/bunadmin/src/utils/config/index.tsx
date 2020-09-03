@@ -15,6 +15,7 @@ interface EnvTypes {
   ON_DOC: boolean
   I18N_CODE: string
   ON_MOCK: boolean
+  IGNORED_PLUGINS?: string[]
 }
 
 export const ENV: EnvTypes = {
@@ -32,5 +33,6 @@ export const ENV: EnvTypes = {
   ON_SETTING: process.env.NEXT_PUBLIC_ON_SETTING === "true" || false,
   ON_DOC: process.env.NEXT_PUBLIC_ON_DOC === "true" || false,
   I18N_CODE: process.env.NEXT_PUBLIC_I18N_CODE || "en",
-  ON_MOCK: process.env.NEXT_PUBLIC_ON_MOCK === "true" || false
+  ON_MOCK: process.env.NEXT_PUBLIC_ON_MOCK === "true" || false,
+  IGNORED_PLUGINS: strToArr(process.env.IGNORED_PLUGINS)
 }
