@@ -4,8 +4,8 @@ export const Mock = mockjs
 
 export * from "./types"
 export { store } from "./store"
-export { ENV } from "./config"
-export { DynamicRoute, UserRoute } from "./routes"
+export * from "./config"
+export * from "./routes"
 
 export { default as rxDb } from "./database/rxConnect"
 export { default as rxQuery } from "./database/rxQuery"

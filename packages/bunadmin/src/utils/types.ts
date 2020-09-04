@@ -1,6 +1,8 @@
 import { MenuType, SchemaType } from "@/core"
 import { TFunction } from "i18next"
 import { RefObject } from "react"
+import { NextRouter } from "next/router"
+import { DocsData } from "@/utils/database/rxInitData/initDocsData"
 
 export interface IPluginData {
   id: SchemaType["id"]
@@ -22,4 +24,27 @@ export interface IPluginData {
 export type PluginColumns = {
   t: TFunction
   tableRef: RefObject<any>
+}
+
+export type AuthProps = {
+  router: NextRouter
+  authResponseKey?: IAuthPlugin["authResponseKey"]
+  authRequestUrl?: IAuthPlugin["authRequestUrl"]
+  authRequestMethod?: IAuthPlugin["authRequestMethod"]
+}
+
+export interface IAuthPlugin {
+  initData?: InitData
+  authResponseKey?: string
+  authRequestUrl?: string
+  authRequestMethod?: string
+}
+
+export type InitData = {
+  plugin: string
+  list?: {
+    name: string
+    data: any
+  }[]
+  data?: DocsData[]
 }
