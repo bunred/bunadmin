@@ -3,7 +3,9 @@ function strToArr(str?: string) {
   return str.split(/[ ,]+/)
 }
 
-interface EnvTypes {
+export const DEFAULT_AUTH_PLUGIN = "bunadmin-auth-buncms"
+
+type EnvTypes = {
   AUTH_PLUGIN: string
   MAIN_URL?: string
   AUTH_URL?: string
@@ -19,7 +21,7 @@ interface EnvTypes {
 }
 
 export const ENV: EnvTypes = {
-  AUTH_PLUGIN: process.env.NEXT_PUBLIC_AUTH_PLUGIN || "bunadmin-auth-buncms",
+  AUTH_PLUGIN: process.env.NEXT_PUBLIC_AUTH_PLUGIN || DEFAULT_AUTH_PLUGIN,
   MAIN_URL: process.env.NEXT_PUBLIC_MAIN_URL,
   AUTH_URL:
     process.env.NEXT_PUBLIC_AUTH_URL || process.env.NEXT_PUBLIC_MAIN_URL,
