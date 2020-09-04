@@ -6,6 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/out" />
       <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin/.next" />
       <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin/out" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
