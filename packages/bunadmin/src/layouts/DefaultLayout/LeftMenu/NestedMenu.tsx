@@ -40,7 +40,7 @@ interface Props {
 export default function NestedList({ data }: Props): any {
   const { t } = useTranslation("plugins")
   const router = useRouter()
-  let { group: qGroup, name: qName } = router.query
+  let { group: qGroup = "", name: qName } = router.query
   const classes = useStyles()
   const [open, setOpen] = useState({} as { [key: string]: boolean })
   const [currentRole, setCurrentRole] = useState("")
@@ -52,7 +52,7 @@ export default function NestedList({ data }: Props): any {
 
   useEffect(() => {
     // set default opened parent
-    if (typeof qGroup !== "string") return
+    if (typeof qGroup === "object") return
     const parent = qGroup.replace("doc/", "")
     handleOpen({ name: parent })
     ;(async () => {
