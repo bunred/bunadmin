@@ -16,24 +16,40 @@ import initData from "@/utils/scripts/initData"
 import { Collection as Setting, SettingNames } from "@/core/setting/collections"
 import { Provider, useSelector } from "react-redux"
 import { store } from "@/utils/store"
-import { selectSchema } from "../src/slices/schemaSlice"
+import { selectSchema } from "@/slices"
+import { useRouter } from "next/router"
+import CubeSpinner from "@/components/CommonBgs/CubeSpinner"
+import CommonError from "@/components/CommonError"
+import { UserRoute } from "@/utils"
+import { ParsedUrlQuery } from "querystring"
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { i18n } = useTranslation()
+  const router = useRouter()
+  const { group } = router.query as ParsedUrlQuery
+  const { asPath } = router
   const [ready, setReady] = useState(false)
+  const [error, setError] = useState(false)
+  const [errorMsg, setErrorMsg] = useState("")
 
   useEffect(() => {
     ;(async () => {
-      // Init Data
-      await initData()
-
       const jssStyles = document.querySelector("#jss-server-side")
       if (jssStyles) {
         // @ts-ignore
         jssStyles.parentElement.removeChild(jssStyles)
       }
+
+      // Paths isIgnored initData
+      if (asPath.indexOf(UserRoute.signIn) > -1) {
+        setReady(true)
+        return
+      }
+
+      // Init Data
+      await initData({ router, setReady, setError, setErrorMsg })
     })()
-  }, [])
+  }, [group])
 
   const AddSources = () => {
     ;(async () => {
@@ -65,11 +81,16 @@ const App = ({ Component, pageProps }: AppProps) => {
           addResource({ i18n, team, group })
         }
       })
-
-      setReady(true)
     })()
     return null
   }
+
+  if (error)
+    return (
+      <CommonError statusCode={403} hasLayout={false} message={`${errorMsg}`} />
+    )
+
+  if (!ready) return <CubeSpinner />
 
   return (
     <>
