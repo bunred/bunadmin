@@ -65,7 +65,7 @@ export default function UserMenu() {
     })
 
     handleClose({})
-    location.reload()
+    await router.push(UserRoute.signIn)
   }
 
   return (
