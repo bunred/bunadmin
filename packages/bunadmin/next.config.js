@@ -28,6 +28,17 @@ module.exports = () => {
   jsonStr = jsonStr.replace(/\\\\/g, "/")
   jsonStr = jsonStr.replace(/".*?\/plugins\/(.*?)"/gm, `"$1"`)
 
+  // check NEXT_PUBLIC_AUTH_PLUGIN
+  if (process.env.NEXT_PUBLIC_AUTH_PLUGIN) {
+    let specifiedAuthPluginExists
+    try {
+      specifiedAuthPluginExists = require(process.env.NEXT_PUBLIC_AUTH_PLUGIN + '/package.json').version
+    } catch (e) {
+      console.log(chalk.red("AUTH_PLUGIN specified but not exists: " + process.env.NEXT_PUBLIC_AUTH_PLUGIN))
+    }
+    if (!specifiedAuthPluginExists) return
+  }
+
   // handling duplicate auth plugins (keep one)
   const countAuth = (jsonStr.match(/bunadmin-auth-/g) || []).length
   if (countAuth > 1) {
