@@ -1,27 +1,47 @@
 import rxInitData from "@/utils/database/rxInitData"
 import { Collection as Setting, SettingNames } from "@/core/setting/collections"
-import initDocsData, {
-  DocsData
-} from "@/utils/database/rxInitData/initDocsData"
 import requirePlugins from "@/utils/scripts/requirePlugins"
 import rxDb from "@/utils/database/rxConnect"
 import { Primary as AuthPrimary } from "@/core/auth/schema"
-import { ENV } from "@/utils/config"
+import { DEFAULT_AUTH_PLUGIN, ENV } from "@/utils/config"
 import { MenuType, SchemaType } from "@/core"
-import { store } from "@/utils"
+import { IAuthPlugin, InitData, store } from "@/utils"
 import { setNestedMenu } from "@/slices/nestedMenuSlice"
 import { setSchema } from "@/slices/schemaSlice"
+import { Dispatch, SetStateAction } from "react"
+import { NextRouter } from "next/dist/next-server/lib/router/router"
+import authorization from "@/utils/scripts/authorization"
+import initDocsData from "@/utils/database/rxInitData/initDocsData"
 
-interface InitData {
-  plugin: string
-  list?: {
-    name: string
-    data: any
-  }[]
-  data?: DocsData[]
+type Props = {
+  router: NextRouter
+  setReady: Dispatch<SetStateAction<boolean>>
+  setError: Dispatch<SetStateAction<boolean>>
+  setErrorMsg: Dispatch<SetStateAction<string>>
 }
 
-export default async function initData() {
+export default async function initData({ router, setReady }: Props) {
+  const authPluginName =
+    process.env.NEXT_PUBLIC_AUTH_PLUGIN || DEFAULT_AUTH_PLUGIN
+
+  // @ts-ignore
+  const {
+    initData,
+    authResponseKey,
+    authRequestUrl,
+    authRequestMethod
+  } = (await import(`@plugins/${authPluginName}`)) as IAuthPlugin
+
+  // Init Auth Plugin Data
+  initData && (await initPluginData(initData))
+
+  await authorization({
+    router,
+    authResponseKey,
+    authRequestUrl,
+    authRequestMethod
+  })
+
   const db = await rxDb()
 
   // Init Core Setting Data
@@ -58,26 +78,21 @@ export default async function initData() {
       })
   })
 
-  // Init Auth Plugin Data
-  try {
-    // @ts-ignore
-    let { initData: authInitData } = await import(`@plugins/${ENV.AUTH_PLUGIN}`)
-    initData && (await initPluginData(authInitData))
-  } catch (e) {
-    console.warn(`initData required '@plugins/${ENV.AUTH_PLUGIN}'`)
-  }
-
   // Init Plugins Data
   const pluginsData = require("@plugins/pluginsData")
-  pluginsData.map(async (path: string) => {
+  for (let i = 0; i < pluginsData.length; i++) {
+    const path: string = pluginsData[i]
     const fileContent: any = requirePlugins(path)
 
-    if (!fileContent) return
+    if (!fileContent) continue
 
     const initData: InitData = fileContent.default
 
     await initPluginData(initData)
-  })
+  }
+
+  // Main page ready
+  setReady(true)
 }
 
 async function initPluginData(initData: InitData) {
