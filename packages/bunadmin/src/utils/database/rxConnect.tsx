@@ -16,17 +16,11 @@ const _create = async () => {
     queryChangeDetection: false, // <- queryChangeDetection (optional, default: false)
     ignoreDuplicate: true
   })
-  console.log("DatabaseService: created database")
-
-  // show flash icon in title
-  db.waitForLeadership().then(() => {
-    console.log("isLeader now")
-    document.title = "⚡" + document.title
-  })
+  // console.log("DatabaseService: created database")
 
   // create collections
   await Promise.all(rxCollections.map(collObj => db.collection(collObj)))
-  console.log("DatabaseService: create collections")
+  // console.log("DatabaseService: create collections")
 
   return db
 }
