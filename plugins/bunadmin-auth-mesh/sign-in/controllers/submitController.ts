@@ -1,5 +1,6 @@
 import { Values } from "../types"
 import userSignInService from "../services/signInService"
+import profileService from "../services/profileService"
 
 import {
   rxDb,
@@ -11,7 +12,6 @@ import {
 } from "@bunred/bunadmin"
 import { NextRouter } from "next/router"
 import { TFunction } from "i18next"
-import verify from "../../utils/verify"
 
 interface Props {
   t: TFunction
@@ -31,8 +31,8 @@ const submitController = async ({
   // Sign-in successfully
   if (res && res.token) {
     const token = res.token
-    res = await verify(token)
-    console.log(res, "res me")
+    res = await profileService(token)
+
     // store user profile
     const primary = Primary
     const updated_at = Date.now()

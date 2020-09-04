@@ -1,10 +1,10 @@
 import { request, storedToken, ENV } from "@bunred/bunadmin"
 
-async function verify(): Promise<any> {
-  const token = await storedToken()
+async function profileService(token?: string): Promise<any> {
+  if (!token) token = await storedToken()
 
   // query remote user with token
-  return request("/users/me", {
+  return request("/auth/me", {
     prefix: ENV.AUTH_URL,
     method: "GET",
     headers: {
@@ -13,4 +13,4 @@ async function verify(): Promise<any> {
   })
 }
 
-export default verify
+export default profileService
