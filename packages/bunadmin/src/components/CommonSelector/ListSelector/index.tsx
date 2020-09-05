@@ -15,6 +15,12 @@ interface OptionType {
   name: string
 }
 
+export type ListSelectorOnSelectProps = {
+  selected: any
+  options: OptionType[]
+  index?: number
+}
+
 type Props = {
   columnDef: Column<any>
   // filterComponent
@@ -27,21 +33,27 @@ type Props = {
   // editComponent
   editProps?: EditComponentProps<any>
   // ListSelector Props
+  index?: number
+  defaultSelected?: any
   width?: number | string
   label?: string
   querySer: (query: Query<any>) => Promise<any>
   dataField?: string
   optionField?: string
+  onSelect?: ({ selected, options, index }: ListSelectorOnSelectProps) => void
 }
 
-export default function ListSelector({
+export function ListSelector({
   columnDef,
   editProps,
+  index,
+  defaultSelected,
   width,
   label,
   querySer,
   dataField,
-  optionField
+  optionField,
+  onSelect
 }: Props) {
   const [open, setOpen] = React.useState(false)
   const [options, setOptions] = React.useState<OptionType[]>([])
@@ -54,8 +66,9 @@ export default function ListSelector({
   }
 
   let resField = dataField ? dataField : columnDef.field || "id"
+  if (!defaultSelected && resField) defaultSelected = rowData[resField]
 
-  const [selected, setSelected] = useState(rowData[resField])
+  const [selected, setSelected] = useState(defaultSelected)
 
   React.useEffect(() => {
     if (!loading) {
@@ -96,9 +109,9 @@ export default function ListSelector({
 
     const options: OptionType[] = []
     resList.map(item => {
-      if (item.name) {
-        return console.warn("item.name is null, use {optionField} instead!")
-      }
+      // if (!item.name) {
+      //   return console.warn("item.name is null, use {optionField} instead!")
+      // }
 
       const nameObj = optionField
         ? { [optionField]: item[optionField] }
@@ -118,6 +131,9 @@ export default function ListSelector({
 
   async function handleSelect(_e: React.ChangeEvent<{}>, value: any) {
     setSelected(value)
+    if (onSelect) {
+      onSelect({ selected: value, options, index })
+    }
 
     if (editProps) {
       editProps.onChange(value ? value.id : null)
@@ -132,7 +148,7 @@ export default function ListSelector({
 
   return (
     <Autocomplete
-      id={`list-selector-${dataField}`}
+      id={`list-selector-${dataField}${index}`}
       style={{ width: width ? width : 135 }}
       open={open}
       onOpen={() => {

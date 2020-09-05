@@ -1,5 +1,5 @@
 export { default as FilterListSelector } from "./FilterListSelector"
-export { default as ListSelector } from "./ListSelector"
+export * from "./ListSelector"
 export { default as ParentSelector } from "./ParentSelector"
 export { default as MultipleSelector } from "./MultipleSelector"
 export { default as SingleSelector } from "./SingleSelector"
