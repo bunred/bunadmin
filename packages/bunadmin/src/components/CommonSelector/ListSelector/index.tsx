@@ -114,9 +114,9 @@ export function ListSelector({
       // }
 
       const nameObj = optionField
-        ? { [optionField]: item[optionField] }
+        ? { [optionField.toString()]: item[optionField].toString() }
         : { name: item.name }
-      options.push({ id: item.id, name: "", ...nameObj })
+      options.push({ id: item.id.toString(), name: "", ...nameObj })
     })
 
     setOptions(options)

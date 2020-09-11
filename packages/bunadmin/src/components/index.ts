@@ -27,6 +27,7 @@ export { default as tableIcons } from "./CommonTable/models/tableIcons"
 export * from "./FileExplorer"
 
 export { default as BunField } from "./Formik/BunField"
+export { default as Repeater } from "./Repeater"
 export { default as CorePages } from "./CorePages"
 export { default as ProTip } from "./ProTip"
 
