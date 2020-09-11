@@ -1,6 +1,6 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
-import { useTheme } from "@material-ui/core/styles"
+import { createStyles, makeStyles, useTheme } from "@material-ui/core/styles"
 import { CommonTableDefaultProps as DefaultProps } from "@/components/CommonTable/models/defaultProps"
 
 import CommonTable, { CommonTableHead } from "@/components/CommonTable"
@@ -14,6 +14,8 @@ import ConfirmDialog from "@/components/CommonDialog/ConfirmDialog"
 import rxDb from "@/utils/database/rxConnect"
 import { Type } from "./types"
 import { useTranslation } from "react-i18next"
+import NoticeTabs from "./components/NoticeTabs"
+import { ENV } from "@/utils"
 
 export default function LocalNoticeContainer() {
   const { t } = useTranslation("table")
@@ -25,64 +27,95 @@ export default function LocalNoticeContainer() {
     title: "",
     msg: ""
   })
+  const [CustomNotification, setCustomNotification] = useState()
+  const [tab, setTab] = useState(0)
 
-  React.useEffect(() => {
+  const useStyles = makeStyles(() =>
+    createStyles({
+      root: {
+        "& .MTableToolbar-title": {
+          display: "none"
+        }
+      }
+    })
+  )
+  const classes = useStyles()
+
+  useEffect(() => {
     ;(async () => {
       await rxQuery({
         collection: Collection.name,
         sort: { created_at: "desc" },
         callback: data => setData(data)
       })
+      try {
+        const customNotificationPath = ENV.NOTIFICATION_PLUGIN
+        const { NotificationTable, notificationCount } = await import(
+          `@plugins/${customNotificationPath}`
+        )
+        if (!NotificationTable) return
+        // @ts-ignore
+        setCustomNotification(<NotificationTable />)
+
+        if (!notificationCount) return
+        const count = await notificationCount()
+
+        setTab(count > 0 ? 1 : 0)
+      } catch (e) {}
     })()
   }, [])
 
   return (
-    <>
+    <div className={CustomNotification && classes.root}>
       <>
         <CommonTableHead title={t(Schema.title)} />
-        <CommonTable
-          title={t(Schema.title)}
-          columns={Columns({ t })}
-          editable={editableController()}
-          data={data}
-          // style
-          style={DefaultProps.style}
-          // icons
-          icons={tableIcons({ theme })}
-          // options
-          options={{ ...DefaultProps.options, filtering: true }}
-          // actions
-          actions={[
-            {
-              tooltip: "Remove All Selected Notices",
-              icon: "delete",
-              onClick: (_evt, data) => {
-                data = data as Type[]
-                const msg = "Do you want to delete " + data.length + " rows ?"
-                setModalState({
-                  title: "Bulk delete",
-                  open: modalState.open + 1,
-                  msg
-                })
-                setSelData(data)
+        {CustomNotification && <NoticeTabs t={t} tab={tab} setTab={setTab} />}
+        {tab === 0 && (
+          <CommonTable
+            title={t(Schema.title)}
+            columns={Columns({ t })}
+            editable={editableController()}
+            data={data}
+            // style
+            style={DefaultProps.style}
+            // icons
+            icons={tableIcons({ theme })}
+            // options
+            options={{ ...DefaultProps.options, filtering: true }}
+            // actions
+            actions={[
+              {
+                tooltip: "Remove All Selected Notices",
+                icon: "delete",
+                onClick: (_evt, data) => {
+                  data = data as Type[]
+                  const msg = "Do you want to delete " + data.length + " rows ?"
+                  setModalState({
+                    title: "Bulk delete",
+                    open: modalState.open + 1,
+                    msg
+                  })
+                  setSelData(data)
+                }
               }
-            }
-          ]}
-          // detailPanel
-          detailPanel={rowData => {
-            return (
-              <div
-                style={{
-                  color: "white",
-                  backgroundColor: theme.bunadmin.iconColor,
-                  padding: "10px 30px"
-                }}
-              >
-                {rowData.content || "CONTENT IS EMPTY"}
-              </div>
-            )
-          }}
-        />
+            ]}
+            // detailPanel
+            detailPanel={rowData => {
+              return (
+                <div
+                  style={{
+                    color: "white",
+                    backgroundColor: theme.bunadmin.iconColor,
+                    padding: "10px 30px"
+                  }}
+                >
+                  {rowData.content || "CONTENT IS EMPTY"}
+                </div>
+              )
+            }}
+          />
+        )}
+        {tab === 1 && CustomNotification && CustomNotification}
       </>
       {/* ConfirmDialog */}
       <ConfirmDialog
@@ -109,6 +142,6 @@ export default function LocalNoticeContainer() {
           }
         }}
       />
-    </>
+    </div>
   )
 }

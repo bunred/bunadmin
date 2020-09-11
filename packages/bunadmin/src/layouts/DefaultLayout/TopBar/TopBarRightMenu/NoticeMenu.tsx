@@ -1,16 +1,64 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import IconButton from "@material-ui/core/IconButton"
 import { useRouter } from "next/router"
 import EvaIcon from "react-eva-icons"
 import { useTheme } from "@material-ui/core/styles"
 import { DynamicRoute, LocalDataRoute } from "@/utils/routes"
+import Badge from "@material-ui/core/Badge"
+import { ENV } from "@/utils"
 
 export default function NoticeMenu() {
   const theme = useTheme()
   const router = useRouter()
-  const handleMenu = (_event: React.MouseEvent<HTMLElement>) => {
-    router.push(DynamicRoute, LocalDataRoute.notice).then(_r => {})
+
+  const [intervalID, setIntervalID] = useState<NodeJS.Timeout>()
+  const ref = React.useRef()
+  const [count, setCount] = useState(0)
+
+  const handleMenu = async (_event: React.MouseEvent<HTMLElement>) => {
+    await router.push(DynamicRoute, LocalDataRoute.notice)
   }
+
+  async function queryCount() {
+    try {
+      const customNotificationPath = ENV.NOTIFICATION_PLUGIN
+      const { notificationCount } = await import(
+        `@plugins/${customNotificationPath}`
+      )
+
+      if (!notificationCount) return
+      const count = await notificationCount()
+      setCount(count)
+    } catch (e) {
+      // console.error(e)
+    }
+  }
+
+  useEffect(() => {
+    ;(async () => {
+      await queryCount()
+    })()
+  }, [])
+
+  useEffect(() => {
+    ;(async () => {
+      const customNotificationPath = ENV.NOTIFICATION_PLUGIN
+      const { notificationCount } = await import(
+        `@plugins/${customNotificationPath}`
+      )
+
+      if (!notificationCount) return
+    })()
+
+    if (intervalID) return () => clearInterval(intervalID)
+
+    const id = setInterval(async () => {
+      await queryCount()
+    }, 3000)
+
+    // cache intervalID
+    setIntervalID(id)
+  }, [ref.current])
 
   return (
     // Notice Icon
@@ -22,11 +70,13 @@ export default function NoticeMenu() {
         onClick={handleMenu}
         color="inherit"
       >
-        <EvaIcon
-          name="bell-outline"
-          size="large"
-          fill={theme.bunadmin.iconColor}
-        />
+        <Badge badgeContent={count} color="primary">
+          <EvaIcon
+            name="bell-outline"
+            size="large"
+            fill={theme.bunadmin.iconColor}
+          />
+        </Badge>
       </IconButton>
     </div>
   )
