@@ -47,6 +47,7 @@
     "babel-loader": "^8.1.0",
     "bunadmin-auth-buncms": "^1.0.0-alpha.1",
     "clsx": "^1.1.1",
+    "dotenv": "^8.2.0",
     "filehound": "^1.17.4",
     "formik": "^2.1.4",
     "formik-material-ui": "^2.0.0-beta.1",

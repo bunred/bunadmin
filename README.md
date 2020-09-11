@@ -17,6 +17,14 @@ A simple graphql admin dashboard(Front-End Only). Easy to expand with the flexib
 ## Quick Start
 
 ```shell script
+git clone https://github.com/bunred/bunadmin.git
+yarn && cd packages/bunadmin
+cp e.g./env-*.env env-dev.env
+ENV_PATH=env-dev.env yarn dev
+```
+
+or
+```shell script
 yarn create react-app my-admin --template bunadmin
 cd my-admin
 yarn update-plugins && yarn dev

@@ -1,3 +1,4 @@
+require("dotenv").config({ path: process.env.ENV_PATH })
 const path = require("path")
 const FileHound = require("filehound")
 const fs = require("fs")
@@ -32,9 +33,15 @@ module.exports = () => {
   if (process.env.NEXT_PUBLIC_AUTH_PLUGIN) {
     let specifiedAuthPluginExists
     try {
-      specifiedAuthPluginExists = require(process.env.NEXT_PUBLIC_AUTH_PLUGIN + '/package.json').version
+      specifiedAuthPluginExists = require(process.env.NEXT_PUBLIC_AUTH_PLUGIN +
+        "/package.json").version
     } catch (e) {
-      console.log(chalk.red("AUTH_PLUGIN specified but not exists: " + process.env.NEXT_PUBLIC_AUTH_PLUGIN))
+      console.log(
+        chalk.red(
+          "AUTH_PLUGIN specified but not exists: " +
+            process.env.NEXT_PUBLIC_AUTH_PLUGIN
+        )
+      )
     }
     if (!specifiedAuthPluginExists) return
   }
