@@ -12,7 +12,8 @@ export default {
       customized: true,
       icon_type: "eva",
       icon: "cloud-upload-outline",
-      rank: "100"
+      rank: "100",
+      role: process.env.NEXT_PUBLIC_UPLOAD_STRAPI_ROLE
     }
   ] as IPluginData[]
 }
