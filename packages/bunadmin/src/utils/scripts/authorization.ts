@@ -16,6 +16,8 @@ export default async function authorization({
 }: AuthProps): Promise<boolean> {
   const { asPath } = router
 
+  if (ENV.PATHS_WITHOUT_AUTH?.includes(asPath)) return true
+
   const response = await authService()
   const isVerified = response && response[authResponseKey]
 

@@ -19,6 +19,8 @@ type EnvTypes = {
   ON_MOCK: boolean
   IGNORED_PLUGINS?: string[]
   NOTIFICATION_PLUGIN?: string
+  PATHS_WITHOUT_LAYOUT?: string[]
+  PATHS_WITHOUT_AUTH?: string[]
 }
 
 export const ENV: EnvTypes = {
@@ -38,5 +40,7 @@ export const ENV: EnvTypes = {
   I18N_CODE: process.env.NEXT_PUBLIC_I18N_CODE || "en",
   ON_MOCK: process.env.NEXT_PUBLIC_ON_MOCK === "true" || false,
   IGNORED_PLUGINS: strToArr(process.env.IGNORED_PLUGINS),
-  NOTIFICATION_PLUGIN: process.env.NEXT_PUBLIC_NOTIFICATION_PLUGIN
+  NOTIFICATION_PLUGIN: process.env.NEXT_PUBLIC_NOTIFICATION_PLUGIN,
+  PATHS_WITHOUT_LAYOUT: strToArr(process.env.NEXT_PUBLIC_PATHS_WITHOUT_LAYOUT),
+  PATHS_WITHOUT_AUTH: strToArr(process.env.NEXT_PUBLIC_PATHS_WITHOUT_AUTH)
 }

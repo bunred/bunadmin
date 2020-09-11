@@ -4,6 +4,7 @@ import DefaultLayout from "@/layouts/DefaultLayout"
 import { useRouter } from "next/router"
 import CorePages from "@/components/CorePages"
 import { ParsedUrlQuery } from "querystring"
+import { ENV } from "@/utils"
 
 const ModulePage = () => {
   const router = useRouter()
@@ -30,6 +31,9 @@ const ModulePage = () => {
     default:
       render = <CommonSchema />
   }
+
+  const path = `/${group}/${name}`
+  if (ENV.PATHS_WITHOUT_LAYOUT?.includes(path)) return render
 
   return <DefaultLayout>{render}</DefaultLayout>
 }

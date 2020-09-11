@@ -5,7 +5,13 @@ import rxDb from "@/utils/database/rxConnect"
 import { Primary as AuthPrimary } from "@/core/auth/schema"
 import { DEFAULT_AUTH_PLUGIN, ENV } from "@/utils/config"
 import { MenuType, SchemaType } from "@/core"
-import { IAuthPlugin, InitData, store } from "@/utils"
+import {
+  DynamicDocRoute,
+  DynamicRoute,
+  IAuthPlugin,
+  InitData,
+  store
+} from "@/utils"
 import { setNestedMenu } from "@/slices/nestedMenuSlice"
 import { setSchema } from "@/slices/schemaSlice"
 import { Dispatch, SetStateAction } from "react"
@@ -21,10 +27,12 @@ type Props = {
 }
 
 export default async function initData({ router, setReady }: Props) {
+  const { asPath } = router
+  if (asPath === DynamicRoute || asPath === DynamicDocRoute) return
+
   const authPluginName =
     process.env.NEXT_PUBLIC_AUTH_PLUGIN || DEFAULT_AUTH_PLUGIN
 
-  // @ts-ignore
   const {
     initData,
     authResponseKey,
