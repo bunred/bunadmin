@@ -27,4 +27,5 @@ export type ListServiceRes = {
 
 export interface EditableCtrl {
   SchemaName: string
+  disableAdd?: boolean
 }
