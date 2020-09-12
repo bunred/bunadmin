@@ -20,14 +20,12 @@ import { selectSchema } from "@/slices"
 import { useRouter } from "next/router"
 import CubeSpinner from "@/components/CommonBgs/CubeSpinner"
 import CommonError from "@/components/CommonError"
-import { UserRoute } from "@/utils"
 import { ParsedUrlQuery } from "querystring"
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { i18n } = useTranslation()
   const router = useRouter()
   const { group } = router.query as ParsedUrlQuery
-  const { asPath } = router
   const [ready, setReady] = useState(false)
   const [error, setError] = useState(false)
   const [errorMsg, setErrorMsg] = useState("")
@@ -38,12 +36,6 @@ const App = ({ Component, pageProps }: AppProps) => {
       if (jssStyles) {
         // @ts-ignore
         jssStyles.parentElement.removeChild(jssStyles)
-      }
-
-      // Paths isIgnored initData
-      if (asPath.indexOf(UserRoute.signIn) > -1) {
-        setReady(true)
-        return
       }
 
       // Init Data
