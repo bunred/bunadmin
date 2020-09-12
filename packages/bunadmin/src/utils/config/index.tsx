@@ -17,10 +17,10 @@ type EnvTypes = {
   ON_DOC: boolean
   I18N_CODE: string
   ON_MOCK: boolean
-  IGNORED_PLUGINS?: string[]
+  IGNORED_PLUGINS: string[]
   NOTIFICATION_PLUGIN?: string
-  PATHS_WITHOUT_LAYOUT?: string[]
-  PATHS_WITHOUT_AUTH?: string[]
+  PATHS_WITHOUT_LAYOUT: string[]
+  PATHS_WITHOUT_AUTH: string[]
 }
 
 export const ENV: EnvTypes = {

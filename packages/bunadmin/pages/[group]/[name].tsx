@@ -33,7 +33,11 @@ const ModulePage = () => {
   }
 
   const path = `/${group}/${name}`
-  if (ENV.PATHS_WITHOUT_LAYOUT?.includes(path)) return render
+  for (let i = 0; i < ENV.PATHS_WITHOUT_LAYOUT.length; i++) {
+    const item = ENV.PATHS_WITHOUT_LAYOUT[i]
+    const itemRegx = new RegExp(`${item}.*`, "g")
+    if (itemRegx.test(path)) return render
+  }
 
   return <DefaultLayout>{render}</DefaultLayout>
 }
