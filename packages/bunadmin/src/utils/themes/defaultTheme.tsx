@@ -98,7 +98,7 @@ const defaultTheme = createMuiTheme({
           "-webkit-box-shadow": "inset 0 0 6px rgba(0,0,0,0.00)"
         },
         "*::-webkit-scrollbar-thumb": {
-          background: "#e4e9f2",
+          background: iconColor,
           cursor: "pointer",
           borderRadius: ".15625rem"
         }, // scrollbar end
