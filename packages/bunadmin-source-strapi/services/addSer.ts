@@ -29,4 +29,6 @@ export default async function addSer({ newData, SchemaName }: Props<any>) {
       severity: "success"
     })
   }
+
+  return res
 }

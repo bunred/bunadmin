@@ -28,4 +28,6 @@ export default async function deleteSer({ oldData, SchemaName }: Props<any>) {
       severity: "success"
     })
   }
+
+  return res
 }

@@ -34,4 +34,6 @@ export default async function updateSer({
       severity: "success"
     })
   }
+
+  return res
 }
