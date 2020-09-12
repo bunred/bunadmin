@@ -3,13 +3,11 @@ import clsx from "clsx"
 import Drawer from "@material-ui/core/Drawer"
 import Box from "@material-ui/core/Box"
 import { useTheme } from "@material-ui/core/styles"
-import { defaultLayoutStyles } from "./styles"
+import styles from "./styles"
 import DefaultHead from "@/components/DefaultHead"
 import LeftMenu, { LeftMenuProps } from "./LeftMenu"
 import TopBar from "./TopBar"
-import { Container, Fade } from "@material-ui/core"
-
-const useStyles = defaultLayoutStyles
+import { Container, Fade, useMediaQuery } from "@material-ui/core"
 
 interface DefaultLayoutProps {
   children?: any
@@ -19,9 +17,11 @@ interface DefaultLayoutProps {
 // ResponsiveDrawer
 export default function DefaultLayout(props: DefaultLayoutProps) {
   const { children, leftMenu } = props
-  const classes = useStyles()
   const theme = useTheme()
   const [open, setOpen] = React.useState(true)
+  const phoneVertical = useMediaQuery("(max-width:640px)")
+
+  const classes = styles({ drawerOpen: open, phoneVertical })
 
   const handleDrawerToggle = () => {
     setOpen(!open)
