@@ -62,8 +62,8 @@ module.exports = () => {
   }
 
   // handling ignored plugins
-  const ignoredArr = process.env.IGNORED_PLUGINS
-    ? process.env.IGNORED_PLUGINS.split(/[ ,]+/)
+  const ignoredArr = process.env.NEXT_PUBLIC_IGNORED_PLUGINS
+    ? process.env.NEXT_PUBLIC_IGNORED_PLUGINS.split(/[ ,]+/)
     : []
   ignoredArr.map(item => {
     const ignoredRegx = new RegExp(`"${item}.*?",?`, "g")

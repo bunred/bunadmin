@@ -41,6 +41,11 @@ export default function NoticeMenu() {
   }, [])
 
   useEffect(() => {
+    if (ENV.OFF_NOTIFICATION_INTERVAL_COUNT) {
+      // Disabling interval counting is helpful for debugging or reducing server load
+      return
+    }
+
     ;(async () => {
       const customNotificationPath = ENV.NOTIFICATION_PLUGIN
       const { notificationCount } = await import(
