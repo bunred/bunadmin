@@ -1,4 +1,4 @@
-import React, { useState, RefObject } from "react"
+import React, { useState, useEffect, RefObject } from "react"
 import { TFunction } from "i18next"
 import { ENV, BunadminFileType, Uploader, OnDropProps } from "@bunred/bunadmin"
 import { EditComponentProps, rxMtUpdateField } from "material-table"
@@ -29,11 +29,9 @@ export default function FileUploader({
   maximum?: number
 }) {
   const [files, setFiles] = useState<BunadminFileType[]>([])
-  const [ready, setReady] = useState(false)
-
   if (!prefix && !ENV.ON_MOCK) prefix = ENV.UPLOAD_URL
 
-  if (!ready) {
+  useEffect(() => {
     const tmp: BunadminFileType[] = []
     if (Array.isArray(data)) {
       data.map(item => {
@@ -55,8 +53,7 @@ export default function FileUploader({
     }
 
     setFiles(tmp)
-    setReady(true)
-  }
+  }, [data])
 
   async function onDrop({
     droppedFiles,
