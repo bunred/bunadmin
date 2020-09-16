@@ -20,6 +20,7 @@ import {
   handleImage,
   isImage
 } from "@/components/FileExplorer/BunadminFile"
+import { ENV } from "@/utils"
 
 interface Props {
   preview: boolean
@@ -43,7 +44,13 @@ export default function FilePreview({
   const [state, setState] = useState({ fullScreen: fullScreen })
 
   let { url = default_file } = file
-  if (prefix) url = prefix + url
+  const previewUrl = ENV.FILE_PREVIEW_URL
+  url =
+    typeof previewUrl === "string"
+      ? previewUrl + url
+      : prefix
+      ? prefix + url
+      : url
 
   function handleFullWidthChange() {
     setState({ ...state, fullScreen: !state.fullScreen })

@@ -11,6 +11,7 @@ type EnvTypes = {
   MAIN_URL?: string
   AUTH_URL?: string
   UPLOAD_URL?: string
+  FILE_PREVIEW_URL?: string
   SITE_URLS: string[]
   ON_I18N: boolean
   ON_SETTING: boolean
@@ -34,6 +35,7 @@ export const ENV: EnvTypes = {
     process.env.NEXT_PUBLIC_UPLOAD_URL ||
     process.env.NEXT_PUBLIC_AUTH_URL ||
     process.env.NEXT_PUBLIC_MAIN_URL,
+  FILE_PREVIEW_URL: process.env.NEXT_PUBLIC_FILE_PREVIEW_URL,
   SITE_URLS: strToArr(process.env.NEXT_PUBLIC_SITE_URLS),
   ON_I18N: process.env.NEXT_PUBLIC_ON_I18N === "true" || false,
   ON_SETTING: process.env.NEXT_PUBLIC_ON_SETTING === "true" || false,

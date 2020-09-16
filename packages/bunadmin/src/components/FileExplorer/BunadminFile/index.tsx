@@ -11,6 +11,7 @@ import styles from "./styles"
 import BunadminFileProps, { BunadminFileType } from "../"
 import CardBottomArea from "./CardBottomArea"
 import { Translation } from "react-i18next"
+import { ENV } from "@/utils"
 
 export const upload_image = "/p/upload.svg"
 export const default_file = "/p/default_file.svg"
@@ -56,9 +57,16 @@ export default function BunadminFile(props: BunadminFileProps) {
   }
 
   const classes = styles({ id, width })
+  const previewUrl = ENV.FILE_PREVIEW_URL
   const [uploading, setUploading] = React.useState(false),
     [imageUrl, setImageUrl] = React.useState(
-      url ? (prefix ? prefix + url : url) : upload_image
+      url
+        ? typeof previewUrl === "string"
+          ? previewUrl + url
+          : prefix
+          ? prefix + url
+          : url
+        : upload_image
     ),
     [preview, setPreview] = useState(false)
 
