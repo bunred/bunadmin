@@ -6,7 +6,6 @@ EXPOSE 1912
 ARG STAGING
 ENV STAGING=${STAGING}
 
-COPY out out
+COPY . .
 
-RUN yarn global add serve
-CMD serve -s out -l 1912
+CMD yarn && npm run start
