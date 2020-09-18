@@ -34,6 +34,8 @@ type Props = {
   editProps?: EditComponentProps<any>
   // ListSelector Props
   index?: number
+  multiple?: boolean
+  variant?: "filled" | "outlined" | "standard"
   defaultSelected?: any
   width?: number | string
   label?: string
@@ -47,8 +49,10 @@ export function ListSelector({
   columnDef,
   editProps,
   index,
+  multiple,
+  variant,
   defaultSelected,
-  width,
+  width = "100%",
   label,
   querySer,
   dataField,
@@ -66,102 +70,35 @@ export function ListSelector({
   }
 
   let resField = dataField ? dataField : columnDef.field || "id"
-  if (!defaultSelected && resField) defaultSelected = rowData[resField]
+
+  if (!defaultSelected && resField && rowData[resField]) {
+    defaultSelected = rowData[resField]
+  }
 
   const [selected, setSelected] = useState(defaultSelected)
 
   React.useEffect(() => {
-    if (!loading) {
-      return undefined
-    }
-
+    if (!loading) return undefined
     ;(async () => {
-      await dataCtrl()
+      await queryOptions()
     })()
   }, [loading])
 
   React.useEffect(() => {
-    if (!open) {
-      setOptions([])
-    }
+    if (!open) setOptions([])
   }, [open])
-
-  async function dataCtrl() {
-    const { data: res, errors } = await querySer({
-      search: search,
-      page: 0,
-      pageSize: 30
-    } as Query<any>)
-
-    if (errors) {
-      return await notice({
-        title: "Fetch error",
-        severity: "error",
-        content: JSON.stringify(errors)
-      })
-    }
-
-    let resList: any[] = res
-
-    if (columnDef.field) {
-      if (res && res[columnDef.field]) resList = res[columnDef.field]
-    }
-
-    const options: OptionType[] = []
-    resList.map(item => {
-      // if (!item.name) {
-      //   return console.warn("item.name is null, use {optionField} instead!")
-      // }
-
-      const nameObj = optionField
-        ? { [optionField.toString()]: item[optionField].toString() }
-        : { name: item.name }
-      options.push({ id: item.id.toString(), name: "", ...nameObj })
-    })
-
-    setOptions(options)
-  }
-
-  async function handleSearch(e: {
-    target: { value: React.SetStateAction<string> }
-  }) {
-    setSearch(e.target.value)
-    await dataCtrl()
-  }
-
-  async function handleSelect(_e: React.ChangeEvent<{}>, value: any) {
-    setSelected(value)
-    if (onSelect) {
-      onSelect({ selected: value, options, index })
-    }
-
-    if (editProps) {
-      editProps.onChange(value ? value.id : null)
-    }
-
-    if (!columnDef.field) return
-    await rxMtUpdateField({
-      name: columnDef.field.toString(),
-      value: value ? value.id : null
-    })
-  }
 
   return (
     <Autocomplete
       id={`list-selector-${dataField}${index}`}
-      style={{ width: width ? width : 135 }}
+      style={{ width }}
+      multiple={multiple}
       open={open}
-      onOpen={() => {
-        setOpen(true)
-      }}
-      onClose={() => {
-        setOpen(false)
-      }}
+      onOpen={() => setOpen(true)}
+      onClose={() => setOpen(false)}
       onChange={handleSelect}
       getOptionSelected={option => option.id === (selected && selected.id)}
-      getOptionLabel={option =>
-        optionField ? option[optionField] : option.name
-      }
+      getOptionLabel={getOptionLabel}
       value={selected}
       options={options}
       loading={loading}
@@ -169,7 +106,7 @@ export function ListSelector({
         <TextField
           {...params}
           label={label || undefined}
-          variant="outlined"
+          variant={variant}
           onChange={handleSearch}
           InputProps={{
             ...params.InputProps,
@@ -186,4 +123,71 @@ export function ListSelector({
       )}
     />
   )
+
+  function getOptionLabel(option: any) {
+    if (!option) return undefined
+
+    return optionField ? option[optionField] : option.name
+  }
+
+  async function queryOptions() {
+    const { data: remoteData, errors } = await querySer({
+      search: search,
+      page: 0,
+      pageSize: 30
+    } as Query<any>)
+
+    if (errors) {
+      return await notice({
+        title: "Fetch error",
+        severity: "error",
+        content: JSON.stringify(errors)
+      })
+    }
+
+    let tmpArr: any[] = remoteData
+
+    if (columnDef.field) {
+      if (remoteData && remoteData[columnDef.field])
+        tmpArr = remoteData[columnDef.field]
+    }
+
+    const options: OptionType[] = []
+    tmpArr.map(item => {
+      const nameObj = optionField
+        ? { [optionField.toString()]: item[optionField].toString() }
+        : { name: item.name }
+      options.push({ id: item.id.toString(), name: "", ...nameObj })
+    })
+
+    setOptions(options)
+  }
+
+  async function handleSearch(e: {
+    target: { value: React.SetStateAction<string> }
+  }) {
+    setSearch(e.target.value)
+    await queryOptions()
+  }
+
+  async function handleSelect(_e: React.ChangeEvent<{}>, value: any) {
+    setSelected(value)
+    if (onSelect) {
+      onSelect({ selected: value, options, index })
+    }
+
+    if (!multiple) {
+      value = value ? value.id : null
+    }
+
+    if (editProps) {
+      editProps.onChange(value)
+    }
+
+    if (!columnDef.field) return
+    await rxMtUpdateField({
+      name: columnDef.field.toString(),
+      value
+    })
+  }
 }
