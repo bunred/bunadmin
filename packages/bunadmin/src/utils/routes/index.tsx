@@ -1,5 +1,5 @@
 export const DynamicRoute = "/[group]/[name]"
-export const DynamicDocRoute = "/doc/[category]/[slug]"
+export const DynamicDocRoute = "/docs/[category]/[slug]"
 
 const userPrefix = "/auth"
 

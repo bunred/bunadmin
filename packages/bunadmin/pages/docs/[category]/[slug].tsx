@@ -8,10 +8,55 @@ import TableSkeleton from "@/components/CommonTable/components/TableSkeleton"
 import Head from "next/head"
 import { MDXProvider } from "@mdx-js/react"
 import Highlight, { defaultProps } from "prism-react-renderer"
+import { ParsedUrlQuery } from "querystring";
+import { useRouter } from "next/router";
+import { ENV } from "@/utils";
 // import theme from "prism-react-renderer/themes/vsDark"
 
-export default function PostTemplate({ category, slug }: any) {
+export default function DocCategorySlug() {
+  const router = useRouter()
+  const { category, slug } = router.query as ParsedUrlQuery
+
   const [menuData, setMenuData] = useState<Type[]>([])
+
+  const bunadminDocPath = "bunadmin-docs"
+
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const content = await import(`@plugins/${bunadminDocPath}/menus`)
+        const menuData = content && (content.default as Type[])
+        setMenuData(menuData)
+      } catch (e) {}
+    })()
+  }, [])
+
+  const DocComponent = dynamic({
+    loader: () => import(`@plugins/${bunadminDocPath}/${category}/${slug}.mdx`),
+    loading: () => <TableSkeleton title={`${slug} loading...`} />
+  })
+
+  const pCss = "/assets/css/prism.css"
+
+  return (
+    <>
+      <Head>
+        <title>{slug} - {category} - {ENV.SITE_NAME}</title>
+        {<link rel="stylesheet" href={pCss} />}
+      </Head>
+      <DefaultLayout leftMenu={{ data: menuData, offLeftSetting: true }}>
+        {slug ? (
+          <Box p={3} pt={1}>
+            <MDXProvider components={{ code: Code }}>
+              <DocComponent />
+            </MDXProvider>
+          </Box>
+        ) : (
+          <CommonError statusCode={404} hasLayout={false} />
+        )}
+      </DefaultLayout>
+    </>
+  )
 
   function Code({ children, className }: any) {
     if (!className) return null
@@ -37,62 +82,4 @@ export default function PostTemplate({ category, slug }: any) {
       </Highlight>
     )
   }
-
-  const mdComponents = {
-    code: Code
-  }
-
-  const bunadminDocPath = "bunadmin-doc"
-
-  useEffect(() => {
-    ;(async () => {
-      try {
-        const content = await import(`@plugins/${bunadminDocPath}/menus`)
-        const menuData = content && (content.default as Type[])
-        setMenuData(menuData)
-      } catch (e) {}
-    })()
-  }, [])
-
-  const DocComponent = dynamic({
-    loader: () => import(`@plugins/${bunadminDocPath}/${category}/${slug}.mdx`),
-    loading: () => <TableSkeleton title={`${slug} loading...`} />
-  })
-
-  const pCss = "/assets/css/prism.css"
-
-  return (
-    <>
-      <Head>
-        <title>Login</title>
-        {<link rel="stylesheet" href={pCss} />}
-      </Head>
-      <DefaultLayout leftMenu={{ data: menuData, offLeftSetting: true }}>
-        {slug ? (
-          <Box p={3} pt={1}>
-            <MDXProvider components={mdComponents}>
-              <DocComponent />
-            </MDXProvider>
-          </Box>
-        ) : (
-          <CommonError statusCode={404} hasLayout={false} />
-        )}
-      </DefaultLayout>
-    </>
-  )
-}
-
-export async function getStaticPaths(_props: any) {
-  return {
-    paths: [{ params: { category: "components", slug: "drawer" } }],
-    fallback: false
-  }
-}
-
-export async function getStaticProps(context: {
-  params: { category: any; slug: any }
-}) {
-  const { category, slug } = context.params
-
-  return { props: { category, slug } }
 }

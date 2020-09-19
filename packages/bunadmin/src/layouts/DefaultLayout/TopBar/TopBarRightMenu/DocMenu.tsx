@@ -23,7 +23,7 @@ export default function DocMenu({ isDoc }: { isDoc: boolean }) {
         aria-controls="menu-appbar"
         aria-haspopup="true"
         onClick={() =>
-          handleRoute({ route: isDoc ? "/" : "/doc/guide/get-started" })
+          handleRoute({ route: isDoc ? "/" : "/docs/guide/get-started" })
         }
         color="inherit"
       >

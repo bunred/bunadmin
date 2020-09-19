@@ -46,14 +46,14 @@ export default function NestedList({ data }: Props): any {
   const [currentRole, setCurrentRole] = useState("")
 
   if (router.route === DynamicDocRoute) {
-    qGroup = "doc/" + router.query.category
+    qGroup = "docs/" + router.query.category
     qName = router.query.slug
   }
 
   useEffect(() => {
     // set default opened parent
     if (typeof qGroup === "object") return
-    const parent = qGroup.replace("doc/", "")
+    const parent = qGroup.replace("docs/", "")
     handleOpen({ name: parent })
     ;(async () => {
       // query role from bunadmin_setting
