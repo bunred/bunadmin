@@ -19,16 +19,11 @@ import { store } from "@/utils/store"
 import { selectSchema } from "@/slices"
 import { useRouter } from "next/router"
 import CubeSpinner from "@/components/CommonBgs/CubeSpinner"
-import CommonError from "@/components/CommonError"
-import { ParsedUrlQuery } from "querystring"
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { i18n } = useTranslation()
   const router = useRouter()
-  const { group } = router.query as ParsedUrlQuery
   const [ready, setReady] = useState(false)
-  const [error, setError] = useState(false)
-  const [errorMsg, setErrorMsg] = useState("")
 
   useEffect(() => {
     ;(async () => {
@@ -39,48 +34,9 @@ const App = ({ Component, pageProps }: AppProps) => {
       }
 
       // Init Data
-      await initData({ router, setReady, setError, setErrorMsg })
+      await initData({ router, setReady })
     })()
-  }, [group])
-
-  const AddSources = () => {
-    ;(async () => {
-      if (ready) return
-      let schemas = useSelector(selectSchema)
-      schemas = schemas.map((item: Type) => ({ ...item }))
-      // Load setting i18n_code
-      let db
-      try {
-        db = await rxDb()
-      } catch (e) {
-        // console.error(e)
-      }
-
-      if (!db) return
-      const setting = db[Setting.name]
-      const resI18nCode = await setting
-        .findOne({ name: { $eq: SettingNames.i18n_code } })
-        .exec()
-      if (resI18nCode) i18n.changeLanguage(resI18nCode.value).then()
-
-      // Add i18n resource
-      let pathObj: any
-      schemas.map(({ team, group }: SchemaType) => {
-        if (!pathObj) pathObj = {}
-        // continue when plugin path added
-        if (!pathObj[team + group]) {
-          pathObj[team + group] = true
-          addResource({ i18n, team, group })
-        }
-      })
-    })()
-    return null
-  }
-
-  if (error)
-    return (
-      <CommonError statusCode={403} hasLayout={false} message={`${errorMsg}`} />
-    )
+  }, [])
 
   if (!ready) return <CubeSpinner />
 
@@ -118,6 +74,40 @@ const App = ({ Component, pageProps }: AppProps) => {
       </Provider>
     </>
   )
+
+  function AddSources() {
+    ;(async () => {
+      if (ready) return
+      let schemas = useSelector(selectSchema)
+      schemas = schemas.map((item: Type) => ({ ...item }))
+      // Load setting i18n_code
+      let db
+      try {
+        db = await rxDb()
+      } catch (e) {
+        // console.error(e)
+      }
+
+      if (!db) return
+      const setting = db[Setting.name]
+      const resI18nCode = await setting
+        .findOne({ name: { $eq: SettingNames.i18n_code } })
+        .exec()
+      if (resI18nCode) i18n.changeLanguage(resI18nCode.value).then()
+
+      // Add i18n resource
+      let pathObj: any
+      schemas.map(({ team, group }: SchemaType) => {
+        if (!pathObj) pathObj = {}
+        // continue when plugin path added
+        if (!pathObj[team + group]) {
+          pathObj[team + group] = true
+          addResource({ i18n, team, group })
+        }
+      })
+    })()
+    return null
+  }
 }
 
 export default App
