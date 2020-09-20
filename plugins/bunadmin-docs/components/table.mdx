@@ -1,0 +1,134 @@
+import { CommonTableDefaultProps as DefaultProps, CommonTable, CommonTableHead } from "@bunred/bunadmin";
+const editableCtrl = {
+  // isEditable: rowData => rowData.not_editable === true, // only name(a) rows would be editable
+  // isDeletable: rowData => rowData.not_deletable === true, // only name(a) rows would be deletable
+  onRowAdd: newData => console.log(newData),
+  onRowUpdate: (newData, oldData) => console.log(newData, oldData),
+  onRowDelete: oldData => console.log(oldData)
+}
+
+# Table
+### Data management: browse (filter, sort, search), edit, create, delete, etc.
+
+<div>
+  <CommonTableHead title={"Page Title: Users"} />
+  <CommonTable
+    title={"Users"}
+    editable={editableCtrl}
+    columns={[
+      {
+        title: "Avatar",
+        field: "avatar",
+        render: rowData => (
+          <img
+            style={{ width: 36, height: 36, borderRadius: "50%" }}
+            src={rowData.avatar}
+          />
+        )
+      },
+      { title: "Id", field: "id" },
+      { title: "First Name", field: "first_name" },
+      { title: "Last Name", field: "last_name" }
+    ]}
+    style={DefaultProps.style}
+    // options
+    options={{
+      ...DefaultProps.options,
+      filtering: true
+    }}
+    // data
+    data={query =>
+      new Promise((resolve, reject) => {
+        let url = "https://reqres.in/api/users?";
+        url += "per_page=" + query.pageSize;
+        url += "&page=" + (query.page + 1);
+        fetch(url)
+          .then(response => response.json())
+          .then(result => {
+            resolve({
+              data: result.data,
+              page: result.page - 1,
+              totalCount: result.total
+            });
+          });
+      })
+    }
+    // actions, `undefined` to disable refresh button
+    actions={undefined}
+  />
+</div>
+
+```tsx
+import { CommonTableDefaultProps as DefaultProps, CommonTable, CommonTableHead } from "@bunred/bunadmin";
+const editableCtrl = {
+  // isEditable: rowData => rowData.not_editable === true, // only name(a) rows would be editable
+  // isDeletable: rowData => rowData.not_deletable === true, // only name(a) rows would be deletable
+  onRowAdd: newData => console.log(newData),
+  onRowUpdate: (newData, oldData) => console.log(newData, oldData),
+  onRowDelete: oldData => console.log(oldData)
+}
+//...
+<div>
+  <CommonTableHead title={"Title"} />
+  <CommonTable
+    title={"Title2"}
+    editable={editableCtrl}
+    columns={[
+      {
+        title: "Avatar",
+        field: "avatar",
+        render: rowData => (
+          <img
+            style={{ width: 36, height: 36, borderRadius: "50%" }}
+            src={rowData.avatar}
+          />
+        )
+      },
+      { title: "Id", field: "id" },
+      { title: "First Name", field: "first_name" },
+      { title: "Last Name", field: "last_name" }
+    ]}
+    style={DefaultProps.style}
+    // options
+    options={{
+      ...DefaultProps.options,
+      filtering: true
+    }}
+    // data
+    data={query =>
+      new Promise((resolve, reject) => {
+        let url = "https://reqres.in/api/users?";
+        url += "per_page=" + query.pageSize;
+        url += "&page=" + (query.page + 1);
+        fetch(url)
+          .then(response => response.json())
+          .then(result => {
+            resolve({
+              data: result.data,
+              page: result.page - 1,
+              totalCount: result.total
+            });
+          });
+      })
+    }
+    // actions, `undefined` to disable refresh button
+    actions={undefined}
+  />
+</div>
+```
+
+## Update values
+###  (fix the fixed column updating)
+``` ts
+import { rxMtUpdateField } from "material-table"
+//...
+    await rxMtUpdateField({
+      name: string,
+      value: value ? string : null
+    })
+```
+
+## Props
+
+### See more on [material-table](https://material-table.com/)
+```
