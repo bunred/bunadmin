@@ -6,7 +6,13 @@ import EvaIcon from "react-eva-icons"
 import { useTheme } from "@material-ui/core/styles"
 import { DynamicDocRoute } from "@/utils/routes"
 
-export default function DocMenu({ isDoc }: { isDoc: boolean }) {
+export default function DocMenu({
+  isDoc,
+  docsHome
+}: {
+  isDoc: boolean
+  docsHome: string
+}) {
   const theme = useTheme()
   const router = useRouter()
 
@@ -23,7 +29,9 @@ export default function DocMenu({ isDoc }: { isDoc: boolean }) {
         aria-controls="menu-appbar"
         aria-haspopup="true"
         onClick={() =>
-          handleRoute({ route: isDoc ? "/" : "/docs/guide/get-started" })
+          handleRoute({
+            route: isDoc ? "/" : docsHome
+          })
         }
         color="inherit"
       >

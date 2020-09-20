@@ -28,6 +28,7 @@ export default function TopBar(props: TopBarProps) {
   const theme = useTheme()
   const router = useRouter()
   const isDoc = router.route === DynamicDocRoute
+  const docsHome = "/docs/getting-started/introduction"
 
   return (
     <AppBar
@@ -38,22 +39,24 @@ export default function TopBar(props: TopBarProps) {
     >
       <Toolbar className={classes.toolbar}>
         <div className={classes.leftBlock}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={menuClick}
-            className={classes.menuButton}
-          >
-            <EvaIcon
-              name="menu-2-outline"
-              size="xlarge"
-              fill={theme.bunadmin.iconColor}
-            />
-          </IconButton>
-          <Link href="/">
+          {!isDoc && (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={menuClick}
+              className={classes.menuButton}
+            >
+              <EvaIcon
+                name="menu-2-outline"
+                size="xlarge"
+                fill={theme.bunadmin.iconColor}
+              />
+            </IconButton>
+          )}
+          <Link href={!isDoc ? "/" : docsHome}>
             <Typography variant="h6" noWrap>
-              {ENV.SITE_NAME}
+              {!isDoc ? ENV.SITE_NAME : ENV.SITE_NAME + " DOCS"}
             </Typography>
           </Link>
         </div>
@@ -67,7 +70,7 @@ export default function TopBar(props: TopBarProps) {
             </>
           )}
           {ENV.ON_I18N && <I18nMenu />}
-          {ENV.ON_DOC && <DocMenu isDoc={isDoc} />}
+          {ENV.ON_DOC && <DocMenu isDoc={isDoc} docsHome={docsHome} />}
         </div>
       </Toolbar>
     </AppBar>
