@@ -9,6 +9,7 @@ const operatorRex = new RegExp(/=|<=|>=|<|>|_.*=/)
 export default async function listSer({
   tableQuery,
   path,
+  prefix,
   skipCount,
   searchField = "name",
   searchSuffix = "_contains"
@@ -88,7 +89,7 @@ export default async function listSer({
 
   const data = await request(`/${path}`, {
     params,
-    prefix: ENV.AUTH_URL,
+    prefix: prefix || ENV.AUTH_URL,
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`
@@ -99,7 +100,7 @@ export default async function listSer({
   if (!skipCount)
     count = await request(`/${path}/count`, {
       params,
-      prefix: ENV.AUTH_URL,
+      prefix: prefix || ENV.AUTH_URL,
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`

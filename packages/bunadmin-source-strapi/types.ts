@@ -2,10 +2,11 @@ import { TFunction } from "i18next"
 import { Query } from "material-table"
 
 export type DataCtrl = {
-  t: TFunction
+  t?: TFunction
   listService?: () => Promise<ListServiceRes>
   tableQuery: ListService["tableQuery"]
   path?: ListService["path"]
+  prefix?: ListService["prefix"]
   skipCount?: ListService["skipCount"]
   searchField?: ListService["searchField"]
   searchSuffix?: ListService["searchSuffix"]
@@ -14,6 +15,7 @@ export type DataCtrl = {
 export type ListService = {
   tableQuery: Query<any>
   path: string
+  prefix?: string
   skipCount?: boolean
   searchField?: "name" | string
   searchSuffix?: "_contains" | string

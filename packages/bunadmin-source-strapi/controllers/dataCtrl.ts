@@ -19,7 +19,9 @@ export default async function dataCtrl({
 
   if (listService && path) {
     await notice({
-      title: t("Only one of listService or path is needed"),
+      title: t
+        ? t("Only one of listService or path is needed")
+        : "Only one of listService or path is needed",
       severity: "error"
     })
     return {
@@ -31,7 +33,9 @@ export default async function dataCtrl({
 
   if (!listService && !path) {
     await notice({
-      title: t("One of the listService or path is required"),
+      title: t
+        ? t("One of the listService or path is required")
+        : "One of the listService or path is required",
       severity: "error"
     })
     return {
@@ -62,7 +66,7 @@ export default async function dataCtrl({
 
   if (errors) {
     await notice({
-      title: t("Request Failed"),
+      title: t ? t("Request Failed") : "Request Failed",
       severity: "error",
       content: JSON.stringify(errors)
     })
