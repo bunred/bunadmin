@@ -42,13 +42,20 @@ const MenuProps = {
 type Props = {
   columnDef?: Column<any>
   onFilterChanged?: (rowId: string, value: any) => void
+  valueToLowerCase?: boolean
+  valueReplaceSpaces?: boolean
 }
 
 export default function MultipleSelector(props: Props) {
   const classes = useStyles()
   const [selectedName, setSelectedName] = React.useState<string[]>([])
 
-  const { columnDef, onFilterChanged } = props
+  const {
+    columnDef,
+    onFilterChanged,
+    valueToLowerCase = true,
+    valueReplaceSpaces = true
+  } = props
   let names: string[] = []
 
   if (columnDef) {
@@ -64,10 +71,14 @@ export default function MultipleSelector(props: Props) {
       const replacedValues: string[] = []
       selectedValues.map(v => {
         // lowercase and space to _
-        replacedValues.push(v.toLowerCase().replace(/ /g, "_"))
+        if (valueToLowerCase) v.toLowerCase()
+        if (valueReplaceSpaces) v = v.replace(/ /g, "_")
+        replacedValues.push(v)
       })
-      // @ts-ignore
-      onFilterChanged(columnDef.tableData.id, replacedValues)
+      const rowId =
+        // @ts-ignore
+        (columnDef && columnDef.tableData && columnDef.tableData.id) || ""
+      onFilterChanged(rowId, replacedValues)
     }
   }
 
