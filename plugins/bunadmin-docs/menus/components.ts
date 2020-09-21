@@ -35,6 +35,13 @@ const menus = [
     label: "Drawer",
     slug: "/docs/components/drawer",
     parent: "components"
+  },
+  {
+    id: "comp_multiple-selector",
+    name: "multiple-selector",
+    label: "Multiple Selector",
+    slug: "/docs/components/multiple-selector",
+    parent: "components"
   }
 ] as Type[]
 
