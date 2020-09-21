@@ -2,6 +2,8 @@ import { MenuType as Type } from "@bunred/bunadmin"
 import gettingStarted from "./getting_started"
 import core from "./core"
 import components from "./components"
+import plugins from "./plugins"
+import utils from "./utils"
 
 const menus = [
   {
@@ -32,7 +34,7 @@ const menus = [
     icon: "layers-outline"
   },
   {
-    id: "plugin",
+    id: "plugins",
     name: "plugins",
     label: "Plugins",
     parent: "",
@@ -40,9 +42,20 @@ const menus = [
     icon_type: "eva",
     icon: "attach-outline"
   },
+  {
+    id: "utils",
+    name: "utils",
+    label: "Utils",
+    parent: "",
+    rank: "100",
+    icon_type: "eva",
+    icon: "browser-outline"
+  },
   ...gettingStarted,
   ...core,
-  ...components
+  ...components,
+  ...plugins,
+  ...utils
 ] as Type[]
 
 export default menus
