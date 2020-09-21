@@ -44,6 +44,8 @@ export default function NestedList({ data }: Props): any {
   const classes = useStyles()
   const [open, setOpen] = useState({} as { [key: string]: boolean })
   const [currentRole, setCurrentRole] = useState("")
+  const [parentMenus, setParentMenus] = useState<string[]>([])
+  const [selectedRootName, setSelectedRootName] = useState<string>()
 
   if (router.route === DynamicDocRoute) {
     qGroup = "docs/" + router.query.category
@@ -67,6 +69,21 @@ export default function NestedList({ data }: Props): any {
       const role = (settingRes && settingRes.value) || ""
       setCurrentRole(role)
     })()
+    // mapping menu data
+    const parentTmp: string[] = []
+    data.map(item => {
+      if (item.parent && item.parent !== "" && !parentTmp.includes(item.parent))
+        parentTmp.push(item.parent)
+    })
+    setParentMenus(parentTmp)
+
+    // Open the root menu of the selected submenu
+    if (selectedRootName) {
+      setOpen({
+        ...open,
+        [selectedRootName]: true
+      })
+    }
   }, [])
 
   const handleOpen = ({ name }: { name: string }) => {
@@ -77,6 +94,10 @@ export default function NestedList({ data }: Props): any {
   }
 
   const handleClick = ({ name, slug }: { name: string; slug?: string }) => {
+    if (parentMenus.includes(name)) {
+      return handleOpen({ name })
+    }
+
     if (slug !== undefined && slug !== "") {
       const isUrl = new RegExp("^http.*").test(slug)
 
@@ -183,16 +204,20 @@ export default function NestedList({ data }: Props): any {
                   {data
                     .filter(item => item.parent === name)
                     .map(item => {
-                      const { name, label } = item
+                      const { name, label, parent } = item
                       let { slug } = item
                       if (slug) slug = handleSlug(slug)
+                      const isSelected = slug === `/${qGroup}/${qName}`
+
+                      if (isSelected && !selectedRootName)
+                        setSelectedRootName(parent)
 
                       return (
                         <ListItem
                           key={name}
                           button
                           className={classes.nested}
-                          selected={slug === `/${qGroup}/${qName}`}
+                          selected={isSelected}
                           onClick={() => handleClick({ name, slug })}
                         >
                           <ListItemText primary={t(label || name)} />
