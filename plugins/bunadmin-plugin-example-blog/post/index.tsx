@@ -7,10 +7,9 @@ import {
 } from "@bunred/bunadmin"
 import { useTheme } from "@material-ui/core/styles"
 
-import { SchemaLabel, SchemaColumns } from "./plugin"
-import dataCtrl from "./controllers/dataCtrl"
-import editableCtrl from "./controllers/editableCtrl"
-import { useTranslation } from "react-i18next"
+import { SchemaLabel, SchemaColumns, SchemaName } from "./plugin"
+import { useTranslation } from "@bunred/bunadmin"
+import { dataCtrl, editableCtrl } from "bunadmin-source-strapi"
 
 export default function() {
   const { t } = useTranslation("table")
@@ -24,7 +23,7 @@ export default function() {
         tableRef={tableRef}
         title={t(SchemaLabel)}
         columns={SchemaColumns({ t, tableRef })}
-        editable={editableCtrl({})}
+        editable={editableCtrl({ SchemaName })}
         // style
         style={DefaultProps.style}
         // icons
@@ -32,14 +31,17 @@ export default function() {
         // options
         options={{
           ...DefaultProps.options,
-          filtering: true,
-          fixedColumns: {
-            left: 0,
-            right: 1
-          }
+          filtering: true
         }}
         // data
-        data={async query => await dataCtrl(query)}
+        data={async tableQuery =>
+          await dataCtrl({
+            t,
+            tableQuery,
+            path: SchemaName,
+            searchField: "name"
+          })
+        }
       />
     </>
   )

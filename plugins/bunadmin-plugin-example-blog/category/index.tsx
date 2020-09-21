@@ -9,8 +9,7 @@ import { useTheme } from "@material-ui/core/styles"
 
 import { SchemaName, SchemaLabel, SchemaColumns } from "./plugin"
 import { useTranslation } from "react-i18next"
-import editableCtrl from "./controllers/editableCtrl"
-import { dataCtrl } from "bunadmin-source-strapi"
+import { dataCtrl, editableCtrl } from "bunadmin-source-strapi"
 
 export default function() {
   const { t } = useTranslation("table")
@@ -32,11 +31,7 @@ export default function() {
         // options
         options={{
           ...DefaultProps.options,
-          filtering: true,
-          fixedColumns: {
-            left: 0,
-            right: 1
-          }
+          filtering: true
         }}
         // data
         data={async tableQuery =>

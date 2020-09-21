@@ -6,6 +6,13 @@ import { TFunction } from "i18next"
 export default ({ t }: { t: TFunction; tableRef?: RefObject<any> }) =>
   [
     {
+      title: t("Id"),
+      field: "id",
+      editable: "never",
+      type: "numeric",
+      width: 100
+    },
+    {
       title: t("Status"),
       field: "status",
       width: 135,
@@ -21,27 +28,17 @@ export default ({ t }: { t: TFunction; tableRef?: RefObject<any> }) =>
       title: t("Created At"),
       field: "created_at",
       editable: "never",
-
       defaultSort: "desc",
       width: 135,
-      render: r => r && new Date(r.created_at).toLocaleString()
+      type: "datetime",
+      filtering: false
     },
     {
       title: t("Updated At"),
       field: "updated_at",
       editable: "never",
       width: 135,
-      render: r => (r ? new Date(r.updated_at).toLocaleString() : "")
-    },
-    {
-      title: t("ID"),
-      field: "id",
-      hidden: true // for fixed columns
-    },
-    {
-      title: t("Id"),
-      field: "id",
-      editable: "never",
-      width: 135
+      type: "datetime",
+      filtering: false
     }
   ] as Column<Type>[]

@@ -27,6 +27,12 @@ async function queryParent(rowData: Type) {
 
 export default ({ t, tableRef }: { t: TFunction; tableRef: RefObject<any> }) =>
   [
+    {
+      title: t("Id"),
+      field: "id",
+      editable: "never",
+      width: 80
+    },
     { title: t("Name"), field: "name", width: 115 },
     {
       title: t("Parent"),
@@ -69,14 +75,20 @@ export default ({ t, tableRef }: { t: TFunction; tableRef: RefObject<any> }) =>
       render: r => (r ? new Date(r.updated_at).toLocaleString() : "")
     },
     {
-      title: t("ID"),
-      field: "id",
-      hidden: true // for fixed columns
+      title: t("Created At"),
+      field: "created_at",
+      editable: "never",
+      defaultSort: "desc",
+      width: 135,
+      type: "datetime",
+      filtering: false
     },
     {
-      title: t("Id"),
-      field: "id",
+      title: t("Updated At"),
+      field: "updated_at",
       editable: "never",
-      width: 135
+      width: 135,
+      type: "datetime",
+      filtering: false
     }
   ] as Column<Type>[]
