@@ -10,8 +10,7 @@ const data: IPluginData[] = [
     label: "Sign-in",
     team: "bunadmin",
     customized: true,
-    ignore_menu: true,
-    role: "Admin,Super Admin"
+    ignore_menu: true
   },
   {
     id: "bunadmin_auth_strapi_users",
@@ -23,7 +22,7 @@ const data: IPluginData[] = [
     icon_type: "eva",
     icon: "person-outline",
     rank: "100",
-    role: "Admin,Super Admin"
+    role: process.env.NEXT_PUBLIC_AUTH_STRAPI_ROLE
   },
   {
     id: "bunadmin_auth_strapi_roles",
@@ -35,7 +34,7 @@ const data: IPluginData[] = [
     icon_type: "eva",
     icon: "people-outline",
     rank: "100",
-    role: "Admin,Super Admin"
+    role: process.env.NEXT_PUBLIC_AUTH_STRAPI_ROLE
   }
 ]
 
