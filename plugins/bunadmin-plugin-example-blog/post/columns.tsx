@@ -1,10 +1,12 @@
 import React from "react"
 import { Column } from "material-table"
 import Type from "./types"
-import { PluginColumns, MultipleSelector } from "@bunred/bunadmin"
+import { PluginColumns, MultipleSelector, ListSelector } from "@bunred/bunadmin"
 import { Chip } from "@material-ui/core"
 import { ENUM_STATUS } from "./plugin"
 import { FileUploader } from "bunadmin-upload-strapi"
+import { dataCtrl } from "bunadmin-source-strapi"
+import { SchemaName } from "../category/plugin"
 
 export default ({ t }: PluginColumns): Column<Type>[] => [
   {
@@ -12,7 +14,8 @@ export default ({ t }: PluginColumns): Column<Type>[] => [
     field: "id",
     editable: "never",
     type: "numeric",
-    width: 100
+    width: 80,
+    defaultSort: "desc"
   },
   {
     title: t("Status"),
@@ -48,13 +51,28 @@ export default ({ t }: PluginColumns): Column<Type>[] => [
       rowData && <FileUploader data={rowData.albums} t={t} noDrawer={true} />
   },
   {
-    title: t("Created At"),
-    field: "created_at",
-    editable: "never",
-    defaultSort: "desc",
-    width: 135,
-    type: "datetime",
-    filtering: false
+    title: t("Category"),
+    field: "category",
+    initialEditValue: "",
+    grouping: false,
+    width: 200,
+    render: r => r.category && r.category.name,
+    editComponent: props => (
+      <ListSelector
+        width={150}
+        columnDef={props.columnDef}
+        editProps={props}
+        optionField={"name"}
+        querySer={tableQuery =>
+          dataCtrl({
+            t,
+            tableQuery,
+            path: SchemaName,
+            searchField: "name"
+          })
+        }
+      />
+    )
   },
   {
     title: t("Updated At"),

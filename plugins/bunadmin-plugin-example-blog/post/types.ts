@@ -1,4 +1,5 @@
 import { IFile } from "bunadmin-upload-strapi"
+import ICategory from "../category/types"
 
 export default interface Type {
   id: string
@@ -8,6 +9,7 @@ export default interface Type {
   user_id: boolean
   name: string
   content: string
+  category: ICategory
   cover: IFile
   albums: IFile[]
 }
