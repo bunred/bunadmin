@@ -1,3 +1,5 @@
+import { IFile } from "bunadmin-upload-strapi"
+
 export default interface Type {
   id: string
   created_at: number
@@ -6,4 +8,6 @@ export default interface Type {
   user_id: boolean
   name: string
   content: string
+  cover: IFile
+  albums: IFile[]
 }

@@ -4,6 +4,7 @@ import Type from "./types"
 import { PluginColumns, MultipleSelector } from "@bunred/bunadmin"
 import { Chip } from "@material-ui/core"
 import { ENUM_STATUS } from "./plugin"
+import { FileUploader } from "bunadmin-upload-strapi"
 
 export default ({ t }: PluginColumns): Column<Type>[] => [
   {
@@ -29,6 +30,23 @@ export default ({ t }: PluginColumns): Column<Type>[] => [
     )
   },
   { title: t("Name"), field: "name", width: 115 },
+  {
+    title: t("Albums"),
+    field: "albums",
+    filtering: false,
+    width: 300,
+    editComponent: editProps => (
+      <FileUploader
+        t={t}
+        viewMode={false}
+        noDrawer={true}
+        editProps={editProps}
+        data={editProps.rowData.albums}
+      />
+    ),
+    render: (rowData: Type) =>
+      rowData && <FileUploader data={rowData.albums} t={t} noDrawer={true} />
+  },
   {
     title: t("Created At"),
     field: "created_at",
