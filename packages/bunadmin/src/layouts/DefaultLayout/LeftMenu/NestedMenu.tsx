@@ -123,12 +123,14 @@ export default function NestedList({ data }: Props): any {
     return false
   }
 
-  // handling slug (upload-*, auth-*): /auth-buncms/users -> /auth/users
+  // handling slug (upload-*, auth-*)
   function handleSlug(slug: string) {
+    // /auth-buncms/users -> /auth/users
     if (slug.indexOf("/auth-") > -1) {
       slug = slug.replace(/auth-.*\/.*?/, "auth/")
     }
 
+    // /upload-buncms/files -> /upload/files
     if (slug.indexOf("/upload-") > -1) {
       slug = slug.replace(/upload-.*\/.*?/, "upload/")
     }
