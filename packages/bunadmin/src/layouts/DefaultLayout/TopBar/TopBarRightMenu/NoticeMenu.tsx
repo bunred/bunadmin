@@ -21,6 +21,7 @@ export default function NoticeMenu() {
 
   async function queryCount() {
     try {
+      if (!ENV.NOTIFICATION_PLUGIN) return
       const customNotificationPath = ENV.NOTIFICATION_PLUGIN
       const { notificationCount } = await import(
         `@plugins/${customNotificationPath}`
@@ -41,12 +42,13 @@ export default function NoticeMenu() {
   }, [])
 
   useEffect(() => {
-    if (ENV.OFF_NOTIFICATION_INTERVAL_COUNT) {
+    if (!ENV.ON_NOTIFICATION_INTERVAL_COUNT) {
       // Disabling interval counting is helpful for debugging or reducing server load
       return
     }
 
     ;(async () => {
+      if (!ENV.NOTIFICATION_PLUGIN) return
       const customNotificationPath = ENV.NOTIFICATION_PLUGIN
       const { notificationCount } = await import(
         `@plugins/${customNotificationPath}`

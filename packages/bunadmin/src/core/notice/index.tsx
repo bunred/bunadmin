@@ -49,6 +49,7 @@ export default function LocalNoticeContainer() {
         callback: data => setData(data)
       })
       try {
+        if (!ENV.NOTIFICATION_PLUGIN) return
         const customNotificationPath = ENV.NOTIFICATION_PLUGIN
         const { NotificationTable, notificationCount } = await import(
           `@plugins/${customNotificationPath}`
