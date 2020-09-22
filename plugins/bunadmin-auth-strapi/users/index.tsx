@@ -56,11 +56,7 @@ export default function() {
         // options
         options={{
           ...DefaultProps.options,
-          filtering: true,
-          fixedColumns: {
-            left: 1,
-            right: 0
-          }
+          filtering: true
         }}
         // data
         data={async tableQuery =>
