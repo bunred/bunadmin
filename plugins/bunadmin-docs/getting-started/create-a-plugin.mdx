@@ -11,12 +11,14 @@ In this tutorial, we will:
 ------
 
 ## Create a plugin directory
+Create a new command line window, enter the bunadmin **root directory** ***(bunadmin-tutorial)***. **!NOT** ~~***packages/bunadmin***~~
 
 ``` shell
+# cd ../..
 mkdir plugins/bunadmin-plugin-myteam-blog
 ```
 
-*Folders starting with `bunadmin-plugin-` in the `plugins/` directory will be automatically recognized.*
+*Folders starting with `bunadmin-plugin-` in the `plugins` directory will be automatically recognized as plugins.*
 
 
 ## Create an initialization data file
@@ -28,7 +30,7 @@ touch utils/initData.ts
 
 *File `utils/initData.ts` will automatically activate the plugin, and it will automatically generate multi-level menus and table columns.*
 
-Replace the content of `utils/initData.ts` with the following:
+Replace the content of `utils/initData.ts` ***(bunadmin-tutorial/plugins/bunadmin-plugin-myteam-blog/utils/initData.ts)*** with the following:
 ``` ts
 import { IPluginData } from "@bunred/bunadmin"
 
@@ -166,10 +168,12 @@ export default function() {
 
 ## Query data through activated plugin
 
-Head back to [http://localhost:1911](http://localhost:1911), refresh the page and click the `Post` menu.
+Open [http://localhost:1911/blog/post](http://localhost:1911/blog/post)
 
 You can now query local data, test filtering and sorting, but you can’t modify the data yet, we will complete this in the next tutorial.
 
 ![Blog Post](https://gblobscdn.gitbook.com/assets%2F-M1ZbjnBaWO_NJOdj8_A%2F-MHfe3l6qmtBikzv9V28%2F-MHfedSDcseBrb_aue5G%2Fblog-post.png)
 
-*If you see the screenshot page, it means that the plugin has been created and successfully activated, otherwise please check the steps above.*
+*If you see the screenshot page, it means that the plugin has been created and successfully activated, otherwise please check the steps above or try to restart bunadmin.*
+
+## [Sample code](https://github.com/bunred/bunadmin-example-plugin-tutorial)

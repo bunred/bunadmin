@@ -1,3 +1,5 @@
+import { SignIn } from "bunadmin-auth-strapi"
+
 # Introductory Tutorial
 
 **Bunadmin** is a scaffold to quickly build a `React` background management system. It is easy to use and can help you build a powerful background management panel. Techniques that need to be familiar **only include** `Material-UI` and `Material-Table`, if you have not used it before, don’t worry, you can spend very little time learning in actual use later.
@@ -8,9 +10,23 @@ Bunadmin hopes to achieve as many function reuse as possible through simple deve
 
 ### Let's start a short tutorial.
 
+Install the packages and enter the bunadmin running path ***(packages/bunadmin)***
 ``` shell
-git clone https://github.com/bunred/bunadmin.git
-cd bunadmin
-yarn
-yarn start
+git clone https://github.com/bunred/bunadmin.git bunadmin-tutorial
+$_ && yarn install
+cd packages/bunadmin
 ```
+
+Prepare environment variables
+``` shell
+cp e.g./env-*.env env-dev.env
+```
+
+Start BunAdmin
+``` shell
+ENV_PATH=env-dev.env yarn dev
+```
+
+***Now open `http://localhost:1911/` and you can see a login page like the following, if you use bunadmin for the first time, please continue to the next tutorial***
+
+<SignIn />
