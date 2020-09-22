@@ -16,9 +16,16 @@ import initDocsData from "@/utils/database/rxInitData/initDocsData"
 type Props = {
   router: NextRouter
   setReady: Dispatch<SetStateAction<boolean>>
+  initialized: boolean
+  setInitialized: Dispatch<SetStateAction<boolean>>
 }
 
-export default async function initData({ router, setReady }: Props) {
+export default async function initData({
+  router,
+  setReady,
+  initialized,
+  setInitialized
+}: Props) {
   const authPluginName =
     process.env.NEXT_PUBLIC_AUTH_PLUGIN || DEFAULT_AUTH_PLUGIN
 
@@ -29,8 +36,11 @@ export default async function initData({ router, setReady }: Props) {
     authRequestMethod
   } = (await import(`@plugins/${authPluginName}`)) as IAuthPlugin
 
-  // Init Auth Plugin Data
-  initData && (await initPluginData(initData))
+  // Avoid repeated initialization
+  if (!initialized) {
+    // Init Auth Plugin Data
+    initData && (await initPluginData(initData))
+  }
 
   // Authenticate the current user, fail to execute redirect
   await authorization({
@@ -39,6 +49,9 @@ export default async function initData({ router, setReady }: Props) {
     authRequestUrl,
     authRequestMethod
   })
+
+  // Avoid repeated initialization
+  if (initialized) return
 
   const db = await rxDb()
 
@@ -89,6 +102,7 @@ export default async function initData({ router, setReady }: Props) {
     await initPluginData(initData)
   }
 
+  setInitialized(true)
   // Main page ready
   setReady(true)
 }

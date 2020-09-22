@@ -19,11 +19,14 @@ import { store } from "@/utils/store"
 import { selectSchema } from "@/slices"
 import { useRouter } from "next/router"
 import CubeSpinner from "@/components/CommonBgs/CubeSpinner"
+import { DynamicDocRoute, DynamicRoute } from "@/utils"
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { i18n } = useTranslation()
   const router = useRouter()
+  const { asPath } = router
   const [ready, setReady] = useState(false)
+  const [initialized, setInitialized] = useState(false)
 
   useEffect(() => {
     ;(async () => {
@@ -32,11 +35,17 @@ const App = ({ Component, pageProps }: AppProps) => {
         // @ts-ignore
         jssStyles.parentElement.removeChild(jssStyles)
       }
-
-      // Init Data
-      await initData({ router, setReady })
     })()
   }, [])
+
+  useEffect(() => {
+    // Waiting for dynamic route
+    if (asPath === DynamicRoute || asPath === DynamicDocRoute) return
+    ;(async () => {
+      // Init Data
+      await initData({ router, setReady, initialized, setInitialized })
+    })()
+  }, [asPath])
 
   if (!ready) return <CubeSpinner />
 
