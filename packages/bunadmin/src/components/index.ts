@@ -8,7 +8,10 @@ import { ErrorProps as ErrorPropsType } from "./CommonError/models/types"
 export type ErrorProps = ErrorPropsType
 export { default as errorMessages } from "./CommonError/models/errorMessages"
 
-export { default as CommonSchema, default as Schema } from "./CommonSchema"
+export {
+  default as CommonSchema,
+  default as SchemaContainer
+} from "./CommonSchema"
 export { default as columnsController } from "./CommonSchema/controllers/columnsController"
 export { default as dataController } from "./CommonSchema/controllers/dataController"
 export * from "./CommonSchema/controllers/editableController"
