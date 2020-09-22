@@ -3,7 +3,7 @@
 
 container=bunadmin
 version=1.0.0
-port=1912:1912
+port=1912
 
 env=PROD
 label="traefik.http.routers.${container}-prod.rule=Host(\`www.${container}.com\`)"
@@ -13,7 +13,7 @@ if [[ "$1" == "1" ]]; then
   label="traefik.http.routers.${container}-stag.rule=Host(\`stag.${container}.com\`)"
 fi
 
-STAGING=$1 yarn build
+STAGING=$1 ENV_PATH=env-prod.env yarn build
 next export
 
 docker volume create ${container}

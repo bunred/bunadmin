@@ -8,4 +8,6 @@ ENV STAGING=${STAGING}
 
 COPY . .
 
-CMD yarn && npm run start
+RUN yarn
+
+CMD npm run start
