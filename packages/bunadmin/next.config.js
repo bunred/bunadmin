@@ -1,4 +1,3 @@
-require("dotenv").config({ path: process.env.ENV_PATH })
 const path = require("path")
 const FileHound = require("filehound")
 const fs = require("fs")

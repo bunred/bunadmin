@@ -7,6 +7,13 @@ const utils = [
     label: "Request",
     slug: "/docs/utils/request",
     parent: "utils"
+  },
+  {
+    id: "environment-variables",
+    name: "environment-variables",
+    label: "Environment Variables",
+    slug: "/docs/utils/environment-variables",
+    parent: "utils"
   }
 ] as Type[]
 

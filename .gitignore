@@ -24,7 +24,7 @@ out
 .vscode/*
 
 # BunAdmin START
-/packages/bunadmin/env*.env
+/packages/bunadmin/.env*.*
 /packages/bunadmin/deploy*.sh
 
 dist

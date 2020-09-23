@@ -6,27 +6,30 @@ import { SignIn } from "bunadmin-auth-strapi"
 
 Bunadmin hopes to achieve as many function reuse as possible through simple development methods, so in each bunadmin project, **common functions have been built**, such as dynamic routing, multi-level menus, **permission control, data management**, search filtering and sorting, CRUD, **file management, message notification**, documenting your code, etc. You only need to build your own plugin to call it, and the bunadmin plugin is also easy to learn and use.
 
-*For long-term maintenance, the bunadmin core library uses TypeScript. It is also recommended that you use TypeScript to create plugins. Of course, you can still use JavaScript.*
+_For long-term maintenance, the bunadmin core library uses TypeScript. It is also recommended that you use TypeScript to create plugins. Of course, you can still use JavaScript._
 
 ### Let's start a short tutorial.
 
-Install the packages and enter the bunadmin running path ***(packages/bunadmin)***
-``` shell
+Install the packages and enter the bunadmin running path **_(packages/bunadmin)_**
+
+```shell
 git clone https://github.com/bunred/bunadmin.git bunadmin-tutorial
 $_ && yarn install
 cd packages/bunadmin
 ```
 
 Prepare environment variables
-``` shell
-cp e.g./env-*.env env-dev.env
+
+```shell
+cp e.g./.env .env.development
 ```
 
 Start BunAdmin
-``` shell
-ENV_PATH=env-dev.env yarn dev
+
+```shell
+yarn dev
 ```
 
-***Now open `http://localhost:1911/` and you can see a login page like the following, if you use bunadmin for the first time, please continue to the next tutorial***
+**_Now open `http://localhost:1911/` and you can see a login page like the following, if you use bunadmin for the first time, please continue to the next tutorial_**
 
 <SignIn />

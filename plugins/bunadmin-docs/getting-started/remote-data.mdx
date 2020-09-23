@@ -1,28 +1,33 @@
 # Manage remote data
+
 In this tutorial, we will:
 
 1. Create a completed plugin by creating [200 lines of code](https://github.com/bunred/bunadmin/tree/master/plugins/bunadmin-plugin-example-blog/post).
 2. Learn how to use/~~create~~ auth plugin, upload plugin and remote data source.
-4. Learn how to use the components: ListSelector, Uploader, Notice, MultipleSelector.
+3. Learn how to use the components: ListSelector, Uploader, Notice, MultipleSelector.
 
-***The tutorial is still in preparation, currently using the sample plugin instead. [`bunadmin-plugin-example-blog`](https://github.com/bunred/bunadmin/tree/master/plugins/bunadmin-plugin-example-blog)***
+**_The tutorial is still in preparation, currently using the sample plugin instead. [`bunadmin-plugin-example-blog`](https://github.com/bunred/bunadmin/tree/master/plugins/bunadmin-plugin-example-blog)_**
 
 ![Blog Post](https://gblobscdn.gitbook.com/assets%2F-M1ZbjnBaWO_NJOdj8_A%2F-MHlKrSo5A7uYDJDV45k%2F-MHlKxF4-lohTzN3gsiA%2Fblog-post-strapi.png)
 
 ## Online demo
+
 [http://blog.eg.bunadmin.com/](http://blog.eg.bunadmin.com/blog/post)
 
-***It takes less time but has restricted permissions, and the test data will be reset from time to time***
+**_It takes less time but has restricted permissions, and the test data will be reset from time to time_**
 
 Login with any user below (different menus)
+
 - Username: `admin`, `reviewer`, `user`
 - Password: `bunadmin`
 
 ## Local test
-***It takes more time, but the data and permissions are completely controlled by yourself***
+
+**_It takes more time, but the data and permissions are completely controlled by yourself_**
 
 1.Start Strapi service
-``` shell
+
+```shell
 cd [Test folder]
 git clone https://github.com/bunred/bunadmin-example-strapi.git bunadmin-example-strapi-service
 $_ && yarn install
@@ -30,21 +35,21 @@ yarn develop
 ```
 
 2.Preset BunAdmin
-``` shell
+
+```shell
 cd [Test folder]
 git clone https://github.com/bunred/bunadmin.git bunadmin-example-strapi
 $_ && yarn install
 
 cd packages/bunadmin
-cp e.g./env-*.env env-dev.env
+cp e.g./.env .env.development
 ```
 
 3.Use environment variables
 
-Replace the content of `env-dev.env` ***(bunadmin-example-strapi/packages/bunadmin/env-dev.env)*** with the following:
-``` shell
-# ENV_PATH=/absolute/path/to/env-demo.env yarn dev
+Replace the content of `.env.development` **_(bunadmin-example-strapi/packages/bunadmin/.env.development)_** with the following:
 
+```shell
 # BunAdmin Core
 
 NEXT_PUBLIC_SITE_NAME=BunAdmin DEV
@@ -77,23 +82,26 @@ NEXT_PUBLIC_AUTH_STRAPI_ROLE=Admin
 
 4.Start BunAdmin
 
-Run in `bunadmin` path ***(bunadmin-example-strapi/packages/bunadmin/)***
+Run in `bunadmin` path **_(bunadmin-example-strapi/packages/bunadmin/)_**
+
 ```shell script
-ENV_PATH=env-dev.env yarn dev
+yarn dev
 ```
 
 Open [http://localhost:1911/](http://localhost:1911/)
 
 Login with any user below (different menus):
+
 - Username: `admin`, `reviewer`, `user`
 - Password: `bunadmin`
 
 Strapi super administrator:
+
 - Dashboard: [`http://localhost:1337/admin/`](http://localhost:1337/admin/)
 - Username: `bunadmin_example_strapi`
 - Password: `bunadmin`
 
-***Due to the security mechanism of Strapi, Strapi dashboard users and front-end users adopt different APIs. Therefore, in this example, the Strapi super administrator cannot login through bunadmin.***
+**_Due to the security mechanism of Strapi, Strapi dashboard users and front-end users adopt different APIs. Therefore, in this example, the Strapi super administrator cannot login through bunadmin._**
 
 ## Used plugins:
 
