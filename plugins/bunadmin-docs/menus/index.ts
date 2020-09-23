@@ -1,5 +1,5 @@
 import { MenuType as Type } from "@bunred/bunadmin"
-import gettingStarted from "./getting_started"
+import gettingStarted from "./getting-started"
 import core from "./core"
 import components from "./components"
 import plugins from "./plugins"

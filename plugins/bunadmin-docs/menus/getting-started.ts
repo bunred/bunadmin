@@ -21,6 +21,13 @@ const gettingStarted = [
     label: "Remote data",
     slug: "/docs/getting-started/remote-data",
     parent: "getting-started"
+  },
+  {
+    id: "deployment",
+    name: "deployment",
+    label: "Deployment",
+    slug: "/docs/getting-started/deployment",
+    parent: "getting-started"
   }
 ] as Type[]
 
