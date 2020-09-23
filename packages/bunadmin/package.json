@@ -29,7 +29,7 @@
     "build": "next build",
     "export": "next export",
     "prettier": "prettier --write  --no-semi src/** pages/** plugins/** test/**",
-    "start": "next start -p 1912",
+    "start": "next start",
     "test": "prettier --check --no-semi src/** pages/** test/** && jest",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
     "pack": "rm -rf dist & tsc && npm pack"
@@ -83,6 +83,7 @@
     "jest": "^25.5.4",
     "prettier": "1.19.1",
     "pretty-quick": "^2.0.1",
+    "serve-handler": "^6.1.3",
     "typescript": "^3.9.3"
   },
   "husky": {

@@ -1,15 +1,15 @@
-FROM node:alpine
+FROM node:12-alpine
 
-EXPOSE 1912
+WORKDIR /usr/src/app
 
-#ENV
-ARG STAGING
-ENV STAGING=${STAGING}
+EXPOSE 3000
 
-COPY . .
+RUN npm init -y
+RUN yarn add serve-handler
 
-RUN yarn
+# Environment variables in static service runtime are invalid,
+# Environment variables have been generated directly during `build`
+COPY ./out ./out
+COPY ./server.js ./
 
-RUN npm run build
-
-CMD npm run start
+CMD node server.js
