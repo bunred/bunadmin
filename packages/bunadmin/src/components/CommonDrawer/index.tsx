@@ -5,11 +5,11 @@ import React, {
   useRef,
   useState
 } from "react"
-import { Button, Drawer } from "@material-ui/core"
+import { Button, Drawer as MUIDrawer } from "@material-ui/core"
 import CSS from "csstype"
 import styles from "./styles"
 
-interface Props {
+export interface DrawerProps {
   width?: number | string
   height?: number | string
   direction?: "left" | "top" | "right" | "bottom"
@@ -30,7 +30,7 @@ interface Props {
   children: React.ReactNode
 }
 
-export default function CommonDrawer({
+export default function Drawer({
   width,
   height,
   direction,
@@ -46,7 +46,7 @@ export default function CommonDrawer({
   contentClassName,
   contentStyles,
   children
-}: Props) {
+}: DrawerProps) {
   const classes = styles({ width, height })
   const [state, setState] = useState({ open: false })
   const contentRef: MutableRefObject<any | undefined> = useRef()
@@ -79,7 +79,7 @@ export default function CommonDrawer({
           {buttonTitle}
         </Button>
       )}
-      <Drawer
+      <MUIDrawer
         className={classes.drawer}
         classes={{
           paper: classes.drawerPaper
@@ -95,7 +95,7 @@ export default function CommonDrawer({
         >
           {children}
         </div>
-      </Drawer>
+      </MUIDrawer>
     </>
   )
 }
