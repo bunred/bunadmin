@@ -23,17 +23,12 @@ export default function() {
         tableRef={tableRef}
         title={t(SchemaLabel)}
         columns={SchemaColumns({ t, tableRef })}
-        editable={editableCtrl({ SchemaName })}
-        // style
         style={DefaultProps.style}
-        // icons
         icons={tableIcons({ theme })}
-        // options
         options={{
           ...DefaultProps.options,
           filtering: true
         }}
-        // data
         data={async tableQuery =>
           await dataCtrl({
             t,
@@ -42,6 +37,7 @@ export default function() {
             searchField: "name"
           })
         }
+        editable={editableCtrl({ SchemaName })}
       />
     </>
   )

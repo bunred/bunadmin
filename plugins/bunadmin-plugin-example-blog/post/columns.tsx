@@ -7,6 +7,7 @@ import { ENUM_STATUS } from "./plugin"
 import { FileUploader } from "bunadmin-upload-strapi"
 import { dataCtrl } from "bunadmin-source-strapi"
 import { SchemaName } from "../category/plugin"
+import { RichTextEditor } from "bunadmin-rich-text-editor"
 
 export default ({ t }: PluginColumns): Column<Type>[] => [
   {
@@ -73,6 +74,12 @@ export default ({ t }: PluginColumns): Column<Type>[] => [
         }
       />
     )
+  },
+  {
+    title: t("content"),
+    field: "content",
+    editComponent: props => <RichTextEditor editProps={props} />,
+    render: data => <RichTextEditor previewValue={data.content} />
   },
   {
     title: t("Updated At"),
