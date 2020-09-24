@@ -8,6 +8,7 @@ export type DataCtrl = {
   path?: ListService["path"]
   prefix?: ListService["prefix"]
   skipCount?: ListService["skipCount"]
+  fixCount?: ListService["skipCount"]
   searchField?: ListService["searchField"]
   searchSuffix?: ListService["searchSuffix"]
 }
@@ -17,6 +18,7 @@ export type ListService = {
   path: string
   prefix?: string
   skipCount?: boolean
+  fixCount?: boolean // strapi core APIs (*/count) return number, plugins return { count: number }
   searchField?: "name" | string
   searchSuffix?: "_contains" | string
 }

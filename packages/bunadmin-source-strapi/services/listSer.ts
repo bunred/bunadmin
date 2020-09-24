@@ -11,6 +11,7 @@ export default async function listSer({
   path,
   prefix,
   skipCount,
+  fixCount,
   searchField = "name",
   searchSuffix = "_contains"
 }: ListService) {
@@ -109,7 +110,7 @@ export default async function listSer({
 
   return {
     data,
-    totalCount: count,
+    totalCount: fixCount ? count.count : count,
     errors: data.error ? data.error : undefined
   }
 }

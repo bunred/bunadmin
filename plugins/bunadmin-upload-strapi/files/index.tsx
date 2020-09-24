@@ -36,7 +36,12 @@ export default function media() {
         }}
         // data
         data={async tableQuery =>
-          await dataCtrl({ t, tableQuery, path: `upload/${SchemaName}` })
+          await dataCtrl({
+            t,
+            tableQuery,
+            path: `upload/${SchemaName}`,
+            fixCount: true
+          })
         }
       />
     </>
