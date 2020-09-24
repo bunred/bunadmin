@@ -117,15 +117,17 @@ const editableCtrl = {
 </div>
 ```
 
-## Update values
-###  (fix the fixed column updating)
+## Update values out of table
 ``` ts
-import { rxMtUpdateField } from "material-table"
-//...
-    await rxMtUpdateField({
-      name: string,
-      value: value ? string : null
-    })
+// Insert to MUI Table Field
+if (!editProps) return
+const field = editProps.columnDef.field
+
+editProps.onChange(files || [])
+editProps.onRowDataChange({
+  ...editProps.rowData,
+  [field]: files || []
+})
 ```
 
 ## Props

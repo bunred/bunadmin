@@ -1,9 +1,9 @@
 import React, { useState, useEffect, RefObject } from "react"
 import { TFunction } from "i18next"
 import { ENV, BunadminFileType, Uploader, OnDropProps } from "@bunred/bunadmin"
-import { EditComponentProps, rxMtUpdateField } from "material-table"
+import { EditComponentProps } from "material-table"
 import { DropResult } from "react-beautiful-dnd"
-import { IFile } from "../../utils/types/file"
+import { IFile } from "../.."
 import uploadMediaCtrl from "../controllers/uploadMediaCtrl"
 
 export default function FileUploader({
@@ -81,9 +81,12 @@ export default function FileUploader({
     // Insert to MUI Table Field
     if (!editProps) return
     const field = editProps.columnDef.field
-    editProps.rowData[field] = tmp
-    // @ts-ignore
-    await rxMtUpdateField({ name: field, value: tmp || [] })
+
+    editProps.onChange(tmp || [])
+    editProps.onRowDataChange({
+      ...editProps.rowData,
+      [field]: tmp || []
+    })
   }
 
   function onDragSort(result: DropResult) {

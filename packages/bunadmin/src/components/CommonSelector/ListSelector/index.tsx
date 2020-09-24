@@ -2,12 +2,7 @@ import React, { useState } from "react"
 import TextField from "@material-ui/core/TextField"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import CircularProgress from "@material-ui/core/CircularProgress"
-import {
-  Column,
-  EditComponentProps,
-  Query,
-  rxMtUpdateField
-} from "material-table"
+import { Column, EditComponentProps, Query } from "material-table"
 import { notice } from "@/core"
 
 interface OptionType {
@@ -180,14 +175,12 @@ export function ListSelector({
       value = value ? value.id : null
     }
 
-    if (editProps) {
-      editProps.onChange(value)
-    }
+    if (!editProps || !columnDef.field) return
 
-    if (!columnDef.field) return
-    await rxMtUpdateField({
-      name: columnDef.field.toString(),
-      value
+    editProps.onChange(value)
+    editProps.onRowDataChange({
+      ...editProps.rowData,
+      [columnDef.field]: value
     })
   }
 }

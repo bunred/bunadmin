@@ -3,7 +3,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import MenuItem from "@material-ui/core/MenuItem"
 import FormControl from "@material-ui/core/FormControl"
 import Select from "@material-ui/core/Select"
-import { Column, EditComponentProps, rxMtUpdateField } from "material-table"
+import { Column, EditComponentProps } from "material-table"
 import { store } from "@/utils"
 import { selectTable, setTable, TableFilter } from "@/slices/tableSlice"
 import { useSelector } from "react-redux"
@@ -65,9 +65,9 @@ export default function SingleSelector(props: Props) {
     // Insert to MUI Table Field
     if (editProps && columnDef.field) {
       const { rowData } = editProps
-      rowData[columnDef.field] = selValue
-      // @ts-ignore
-      await rxMtUpdateField({ name: columnDef.field, value: selValue })
+
+      editProps.onChange(selValue)
+      editProps.onRowDataChange({ ...rowData, [columnDef.field]: selValue })
       return
     }
 

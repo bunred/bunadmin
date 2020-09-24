@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react"
 import { BunadminFileType, notice, OnDropProps } from "@bunred/bunadmin"
 import uploadFileSer from "../services/uploadFileSer"
-import { EditComponentProps, rxMtUpdateField } from "material-table"
+import { EditComponentProps } from "material-table"
 
 interface Props extends OnDropProps {
   editProps?: EditComponentProps<any>
@@ -55,9 +55,12 @@ export default async function uploadMediaCtrl({
     // Insert to MUI Table Field
     if (!editProps) return
     const field = editProps.columnDef.field
-    editProps.rowData[field] = files
-    // @ts-ignore
-    await rxMtUpdateField({ name: field, value: files || [] })
+
+    editProps.onChange(files || [])
+    editProps.onRowDataChange({
+      ...editProps.rowData,
+      [field]: files || []
+    })
   } else {
     const errors = (res as unknown) as {
       error: string
