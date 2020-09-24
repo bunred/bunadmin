@@ -5,7 +5,7 @@ import { CommonTableDefaultProps as DefaultProps } from "@/components/CommonTabl
 
 import CommonTable, { CommonTableHead } from "@/components/CommonTable"
 import tableIcons from "@/components/CommonTable/models/tableIcons"
-import rxQuery from "@/utils/database/rxQuery"
+import rxSubscribe from "@/utils/database/rxSubscribe"
 import { Columns } from "./columns"
 import { Schema } from "./schema"
 import { editableController } from "./controllers/editableController"
@@ -43,7 +43,8 @@ export default function LocalNoticeContainer() {
 
   useEffect(() => {
     ;(async () => {
-      await rxQuery({
+      // Subscribe to keep real-time data when received or deleted local messages
+      await rxSubscribe({
         collection: Collection.name,
         sort: { created_at: "desc" },
         callback: data => setData(data)
