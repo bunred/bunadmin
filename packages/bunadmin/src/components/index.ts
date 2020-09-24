@@ -3,6 +3,8 @@ export { default as CubeSpinner } from "./CommonBgs/CubeSpinner"
 export { default as ConfirmDialog } from "./CommonDialog/ConfirmDialog"
 export { default as UploadConfirmDialog } from "./CommonDialog/UploadCustomDialog"
 export { default as CommonDrawer, default as Drawer } from "./CommonDrawer"
+import { DrawerProps as IDrawerProps } from "./CommonDrawer"
+export type DrawerProps = IDrawerProps
 export { default as CommonError, default as Error } from "./CommonError"
 import { ErrorProps as ErrorPropsType } from "./CommonError/models/types"
 export type ErrorProps = ErrorPropsType
@@ -35,7 +37,7 @@ export {
   CommonTableDefaultProps,
   CommonTableDefaultProps as TableDefaultProps
 } from "./CommonTable/models/defaultProps"
-export * from "./CommonTable/models/editable"
+export * from "./CommonTable/models/types"
 export { default as tableIcons } from "./CommonTable/models/tableIcons"
 
 export * from "./FileExplorer"

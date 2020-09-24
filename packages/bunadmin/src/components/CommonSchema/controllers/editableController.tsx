@@ -1,4 +1,4 @@
-import { EditableDataType } from "@/components/CommonTable/models/editable"
+import { EditableDataType } from "@/components/CommonTable/models/types"
 import { CoreGroupName } from "@/utils/routes"
 import { notice } from "@/core"
 
