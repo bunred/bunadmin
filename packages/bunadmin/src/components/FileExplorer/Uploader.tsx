@@ -62,7 +62,11 @@ export default function Uploader({
               {...provided.droppableProps}
             >
               {files.map((item: any, i) => (
-                <Draggable key={item.id} draggableId={item.id} index={i}>
+                <Draggable
+                  key={item.id}
+                  draggableId={item.id.toString()}
+                  index={i}
+                >
                   {(provided, snapshot) => (
                     <div
                       ref={provided.innerRef}
