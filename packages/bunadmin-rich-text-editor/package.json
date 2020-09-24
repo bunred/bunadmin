@@ -1,0 +1,18 @@
+{
+  "name": "bunadmin-rich-text-editor",
+  "version": "1.0.0-alpha.1",
+  "description": "Rich Text Editor for bunadmin",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bunadmin"
+  ],
+  "author": "bunred",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "draft-js-export-html": "^1.4.1",
+    "mui-rte": "^1.24.0"
+  }
+}
