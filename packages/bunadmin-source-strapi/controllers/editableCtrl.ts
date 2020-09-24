@@ -3,6 +3,7 @@ import deleteSer from "../services/deleteSer"
 import addSer from "../services/addSer"
 import { EditableCtrl } from "../types"
 import { EditableDataType } from "@bunred/bunadmin"
+import bulkUpdateSer from "../services/bulkUpdateSer"
 
 export default function editableCtrl({
   SchemaName,
@@ -16,6 +17,7 @@ export default function editableCtrl({
       : async newData => await addSer({ newData, SchemaName }),
     onRowUpdate: async (newData, oldData) =>
       await updateSer({ newData, oldData, SchemaName }),
+    onBulkUpdate: async changes => bulkUpdateSer({ SchemaName, changes }),
     onRowDelete: oldData => deleteSer({ oldData, SchemaName })
   }
 }
