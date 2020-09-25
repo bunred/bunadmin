@@ -1,40 +1,53 @@
 /**
  * Remote data controller
  */
-import graphqlSer from "../services/graphqlSer"
-import { DataCtrl } from "../types"
+import { QueryResult } from "material-table"
+import { notice } from "@bunred/bunadmin"
+import listSer from "../services/listSer"
+import { DataCtrl, ListService } from "../types"
 
 export default async function dataCtrl({
-  SchemaName,
-  tableQuery,
-  query
-}: DataCtrl) {
-  const { page, pageSize } = tableQuery
+  t,
+  listService,
+  ...sharedProps
+}: DataCtrl): Promise<QueryResult<any>> {
+  const { path, tableQuery } = sharedProps
 
-  const variables = {
-    limit: pageSize,
-    offset: pageSize * page
+  let data: any, errors, totalCount: number
+
+  if (listService) {
+    const resp = await listService()
+    data = resp.data
+    errors = resp.errors
+    totalCount = resp.totalCount
+  } else {
+    const listSerProps: ListService = {
+      path,
+      ...sharedProps
+    }
+
+    const resp = await listSer(listSerProps)
+    data = resp.data
+    errors = resp.errors
+    totalCount = resp.totalCount
   }
 
-  const { data: res, errors } = await graphqlSer({ query, variables })
-
   if (errors) {
+    await notice({
+      title: t ? t("Request Failed") : "Request Failed",
+      severity: "error",
+      content: JSON.stringify(errors)
+    })
     return {
-      page: page,
+      page: tableQuery.page,
       data: [],
       totalCount: 0
     }
   }
 
-  const data = res && res[SchemaName]
-  const totalCount =
-    res &&
-    res[`${SchemaName}_aggregate`] &&
-    res[`${SchemaName}_aggregate`]["aggregate"]["count"]
-
   return {
-    page: page,
-    data: data,
+    page: tableQuery.page,
+    data,
     totalCount: totalCount
   }
 }
