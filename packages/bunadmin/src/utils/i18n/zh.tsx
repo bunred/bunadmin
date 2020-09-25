@@ -1,3 +1,15 @@
+const Notification = {
+  "Request Failed": "请求失败",
+  Created: "已创建",
+  Saved: "已保存",
+  "Changes Saved": "修改已保存",
+  Deleted: "已删除",
+  "Create Failed": "创建失败",
+  "Save Failed": "保存失败",
+  "Batch Request Completed": "批量请求完成",
+  "Delete Failed": "删除失败"
+}
+
 const zh = {
   core: {
     // LeftMenu/SettingMenu
@@ -13,6 +25,7 @@ const zh = {
     "Add another account": "使用新用户登录",
     Logout: "退出",
     // others
+    ...Notification,
     Show: "显示",
     Confirm: "确认",
     Cancel: "取消",
@@ -77,6 +90,7 @@ const zh = {
     Rejected: "拒绝",
     Published: "公开",
     // others
+    ...Notification,
     User: "用户",
     Email: "邮箱",
     Detail: "详情",

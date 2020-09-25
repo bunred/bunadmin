@@ -37,7 +37,7 @@ export default function() {
             searchField: "name"
           })
         }
-        editable={editableCtrl({ SchemaName })}
+        editable={editableCtrl({ t, SchemaName })}
       />
     </>
   )

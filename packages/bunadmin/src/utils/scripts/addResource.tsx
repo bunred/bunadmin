@@ -11,8 +11,11 @@ export default function addResource({
   group: string
 }) {
   Object.keys(i18nCodes).map(lan => {
-    const lang: any = requirePlugins(`${team}-${group}/utils/i18n/${lan}`)
+    let plugin = `bunadmin-plugin-${team}-${group}`
+    if (group.indexOf("auth") > -1 || group.indexOf("upload") > -1)
+      plugin = `bunadmin-${group}`
 
+    const lang: any = requirePlugins(`${plugin}/utils/i18n/${lan}`)
     if (!lang) return
 
     lang.plugins &&

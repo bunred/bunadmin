@@ -12,8 +12,12 @@ import { Dispatch, SetStateAction } from "react"
 import { NextRouter } from "next/dist/next-server/lib/router/router"
 import authorization from "@/utils/scripts/authorization"
 import initDocsData from "@/utils/database/rxInitData/initDocsData"
+import { Type } from "@/core/schema/types"
+import addResource from "@/utils/scripts/addResource"
+import { i18n } from "i18next"
 
 type Props = {
+  i18n: i18n
   router: NextRouter
   setReady: Dispatch<SetStateAction<boolean>>
   initialized: boolean
@@ -21,6 +25,7 @@ type Props = {
 }
 
 export default async function initData({
+  i18n,
   router,
   setReady,
   initialized,
@@ -90,6 +95,7 @@ export default async function initData({
   })
 
   // Init Plugins Data
+  const data = []
   const pluginsData = require("@plugins/pluginsData")
   for (let i = 0; i < pluginsData.length; i++) {
     const path: string = pluginsData[i]
@@ -100,7 +106,19 @@ export default async function initData({
     const initData: InitData = fileContent.default
 
     await initPluginData(initData)
+    data.push(initData)
   }
+
+  // Init Plugins I18n
+  const setting = db[Setting.name]
+  const resI18nCode = await setting
+    .findOne({ name: { $eq: SettingNames.i18n_code } })
+    .exec()
+  if (resI18nCode) i18n.changeLanguage(resI18nCode.value).then()
+
+  data.map(({ data }) => {
+    addSources(i18n, data)
+  })
 
   setInitialized(true)
   // Main page ready
@@ -150,4 +168,19 @@ async function initPluginData(initData: InitData) {
     // redux setNestedMenu
     store.dispatch(setNestedMenu(menuData))
   }
+}
+
+function addSources(i18n: i18n, schemas: any) {
+  schemas = schemas.map((item: Type) => ({ ...item }))
+
+  // Add i18n resource
+  let pathObj: any
+  schemas.map(({ team, group }: SchemaType) => {
+    if (!pathObj) pathObj = {}
+    // continue when plugin path added
+    if (!pathObj[team + group]) {
+      pathObj[team + group] = true
+      addResource({ i18n, team, group })
+    }
+  })
 }

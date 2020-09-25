@@ -1,8 +1,8 @@
 import {
-  EditableCtrl,
-  ENV,
   request,
   storedToken,
+  ENV,
+  EditableCtrl,
   notice
 } from "@bunred/bunadmin"
 
@@ -13,23 +13,36 @@ interface Props<RowData> extends EditableCtrl {
 export default async function deleteSer({
   t,
   SchemaName,
+  primaryKey = "id",
   oldData
 }: Props<any>) {
   const token = await storedToken()
 
-  const res = await request(`/${SchemaName}/${oldData.id}`, {
-    prefix: ENV.AUTH_URL,
-    method: "DELETE",
+  const gql = `
+    mutation MyMutation {
+      __typename
+      delete_${SchemaName}(where: {${primaryKey}: {_eq: "${oldData.id}"}}) {
+        affected_rows
+      }
+    }
+  `
+
+  const res = await request("/graphql", {
+    prefix: ENV.MAIN_URL,
+    method: "POST",
     headers: {
       Authorization: `Bearer ${token}`
-    }
+    },
+    data: JSON.stringify({ query: gql })
   })
 
-  if (res.error) {
+  const { errors } = res
+
+  if (errors) {
     await notice({
       title: t("Delete Failed"),
-      severity: "warning",
-      content: JSON.stringify(oldData)
+      severity: "error",
+      content: JSON.stringify({ errors })
     })
   } else {
     await notice({

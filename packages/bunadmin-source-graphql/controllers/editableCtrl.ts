@@ -5,8 +5,8 @@ import addSer from "../services/addSer"
 import bulkUpdateSer from "../services/bulkUpdateSer"
 
 export default function editableCtrl({
-  t,
   SchemaName,
+  t,
   disableAdd
 }: EditableCtrl): EditableDataType<any> {
   return {

@@ -48,3 +48,16 @@ export type InitData = {
   }[]
   data?: DocsData[]
 }
+
+export type ListServiceRes = {
+  data: any
+  totalCount: number
+  errors: any
+}
+
+export interface EditableCtrl {
+  t: TFunction
+  SchemaName: string
+  disableAdd?: boolean
+  primaryKey?: string
+}

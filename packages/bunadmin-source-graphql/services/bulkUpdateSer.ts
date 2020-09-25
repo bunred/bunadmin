@@ -16,6 +16,7 @@ interface Props<RowData> extends EditableCtrl {
 export default async function bulkUpdateSer({
   t,
   SchemaName,
+  primaryKey = "id",
   changes
 }: Props<any>) {
   const token = await storedToken()
@@ -26,21 +27,32 @@ export default async function bulkUpdateSer({
   changes = Object.values(changes)
   for (let i = 0; i < changes.length; i++) {
     const { oldData, newData } = changes[i]
-    const res = await request(`/${SchemaName}/${oldData.id}`, {
-      prefix: ENV.AUTH_URL,
-      method: "PUT",
+    const gql = `
+    mutation MyMutation {
+      __typename
+      update_${SchemaName}(where: {${primaryKey}: {_eq: "${oldData.id}"}}, _set: ${newData}) {
+        affected_rows
+      }
+    }
+  `
+
+    const res = await request("/graphql", {
+      prefix: ENV.MAIN_URL,
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`
       },
-      data: newData
+      data: JSON.stringify({ query: gql })
     })
     resList.push(resList)
 
-    if (res.error) {
+    const { errors } = res
+
+    if (errors) {
       await notice({
         title: t("Save Failed"),
-        severity: "warning",
-        content: JSON.stringify(oldData)
+        severity: "error",
+        content: JSON.stringify({ errors, newData })
       })
       failCount++
     } else {

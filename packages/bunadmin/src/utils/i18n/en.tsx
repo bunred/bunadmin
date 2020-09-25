@@ -1,3 +1,15 @@
+const Notification = {
+  "Request Failed": "Request Failed",
+  Created: "Created",
+  Saved: "Saved",
+  "Changes Saved": "Changes Saved",
+  Deleted: "Deleted",
+  "Create Failed": "Create Failed",
+  "Save Failed": "Save Failed",
+  "Batch Request Completed": "Batch Request Completed",
+  "Delete Failed": "Deleted Failed"
+}
+
 const en = {
   core: {
     // LeftMenu/SettingMenu
@@ -13,6 +25,7 @@ const en = {
     "Add another account": "Add another account",
     Logout: "Logout",
     // others
+    ...Notification,
     Show: "Show",
     Confirm: "Confirm",
     Cancel: "Cancel",
@@ -77,6 +90,7 @@ const en = {
     Rejected: "Rejected",
     Published: "Published",
     // others
+    ...Notification,
     User: "User",
     Email: "Email",
     Detail: "Detail",
