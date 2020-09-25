@@ -14,6 +14,7 @@ interface Props<RowData> extends EditableCtrl {
 }
 
 export default async function bulkUpdateSer({
+  t,
   SchemaName,
   changes
 }: Props<any>) {
@@ -37,7 +38,7 @@ export default async function bulkUpdateSer({
 
     if (res.error) {
       await notice({
-        title: `Sorry, you can't update this post ${oldData.id}`,
+        title: t("Save Failed"),
         severity: "warning",
         content: JSON.stringify(oldData)
       })
@@ -50,13 +51,14 @@ export default async function bulkUpdateSer({
       const successMsg = successCount > 0 ? `, ${successCount} success` : ""
       const failedMsg = failCount > 0 ? `, ${failCount} failure.` : ""
       await notice({
-        title: `Bulk Updated ${changes.length} items completed${successMsg}${failedMsg}`,
+        title: t(`Batch Request Completed`),
         severity:
           successCount === changes.length
             ? "success"
             : failCount === changes.length
             ? "error"
-            : "info"
+            : "info",
+        content: `${changes.length} items ${successMsg}${failedMsg}`
       })
     }
   }

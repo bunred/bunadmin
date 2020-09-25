@@ -10,7 +10,7 @@ interface Props<RowData> extends EditableCtrl {
   newData: RowData
 }
 
-export default async function addSer({ newData, SchemaName, t }: Props<any>) {
+export default async function addSer({ t, SchemaName, newData }: Props<any>) {
   const token = await storedToken()
 
   const res = await request(`/${SchemaName}`, {

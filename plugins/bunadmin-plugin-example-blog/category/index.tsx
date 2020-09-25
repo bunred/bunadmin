@@ -23,7 +23,7 @@ export default function() {
         tableRef={tableRef}
         title={t(SchemaLabel)}
         columns={SchemaColumns({ t, tableRef })}
-        editable={editableCtrl({ SchemaName })}
+        editable={editableCtrl({ t, SchemaName })}
         // style
         style={DefaultProps.style}
         // icons

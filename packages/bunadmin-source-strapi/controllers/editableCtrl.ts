@@ -5,6 +5,7 @@ import addSer from "../services/addSer"
 import bulkUpdateSer from "../services/bulkUpdateSer"
 
 export default function editableCtrl({
+  t,
   SchemaName,
   disableAdd
 }: EditableCtrl): EditableDataType<any> {
@@ -13,10 +14,10 @@ export default function editableCtrl({
     // isDeletable: rowData => rowData.not_deletable === true, // only name(a) rows would be deletable
     onRowAdd: disableAdd
       ? undefined
-      : async newData => await addSer({ newData, SchemaName }),
+      : async newData => await addSer({ t, SchemaName, newData }),
     onRowUpdate: async (newData, oldData) =>
-      await updateSer({ newData, oldData, SchemaName }),
-    onBulkUpdate: async changes => bulkUpdateSer({ SchemaName, changes }),
-    onRowDelete: oldData => deleteSer({ oldData, SchemaName })
+      await updateSer({ t, SchemaName, newData, oldData }),
+    onBulkUpdate: async changes => bulkUpdateSer({ t, SchemaName, changes }),
+    onRowDelete: oldData => deleteSer({ t, SchemaName, oldData })
   }
 }

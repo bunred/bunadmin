@@ -12,9 +12,10 @@ interface Props<RowData> extends EditableCtrl {
 }
 
 export default async function updateSer({
+  t,
+  SchemaName,
   newData,
-  oldData,
-  SchemaName
+  oldData
 }: Props<any>) {
   const token = await storedToken()
 
@@ -29,13 +30,13 @@ export default async function updateSer({
 
   if (res.error) {
     await notice({
-      title: "Sorry, you can't update this post",
+      title: t("Save Failed"),
       severity: "warning",
-      content: JSON.stringify(oldData)
+      content: JSON.stringify({ errors: res.error, newData })
     })
   } else {
     await notice({
-      title: "Successful",
+      title: t("Changes Saved"),
       severity: "success"
     })
   }

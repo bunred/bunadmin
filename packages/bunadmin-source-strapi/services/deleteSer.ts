@@ -10,7 +10,11 @@ interface Props<RowData> extends EditableCtrl {
   oldData: RowData
 }
 
-export default async function deleteSer({ oldData, SchemaName }: Props<any>) {
+export default async function deleteSer({
+  t,
+  SchemaName,
+  oldData
+}: Props<any>) {
   const token = await storedToken()
 
   const res = await request(`/${SchemaName}/${oldData.id}`, {
@@ -23,13 +27,13 @@ export default async function deleteSer({ oldData, SchemaName }: Props<any>) {
 
   if (res.error) {
     await notice({
-      title: "Sorry, you can't delete this item",
+      title: t("Delete Failed"),
       severity: "warning",
       content: JSON.stringify(oldData)
     })
   } else {
     await notice({
-      title: "Successful",
+      title: t("Deleted"),
       severity: "success"
     })
   }
