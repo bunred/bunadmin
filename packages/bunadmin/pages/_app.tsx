@@ -9,14 +9,9 @@ import { SnackbarProvider } from "notistack"
 import SnackMessage from "@/components/CommonSnackbar/Message"
 import "@/utils/i18n"
 import { useTranslation } from "react-i18next"
-import rxDb from "@/utils/database/rxConnect"
-import { Type, Type as SchemaType } from "@/core/schema/types"
-import addResource from "@/utils/scripts/addResource"
 import initData from "@/utils/scripts/initData"
-import { Collection as Setting, SettingNames } from "@/core/setting/collections"
-import { Provider, useSelector } from "react-redux"
+import { Provider } from "react-redux"
 import { store } from "@/utils/store"
-import { selectSchema } from "@/slices"
 import { useRouter } from "next/router"
 import CubeSpinner from "@/components/CommonBgs/CubeSpinner"
 import { DynamicDocRoute, DynamicRoute } from "@/utils"
@@ -43,7 +38,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     if (asPath === DynamicRoute || asPath === DynamicDocRoute) return
     ;(async () => {
       // Init Data
-      await initData({ router, setReady, initialized, setInitialized })
+      await initData({ i18n, router, setReady, initialized, setInitialized })
     })()
   }, [asPath])
 
@@ -77,46 +72,10 @@ const App = ({ Component, pageProps }: AppProps) => {
           </SnackbarProvider>
           {/* Core component */}
           <Component {...pageProps} />
-          {/* AddSources */}
-          <AddSources />
         </ThemeProvider>
       </Provider>
     </>
   )
-
-  function AddSources() {
-    ;(async () => {
-      if (ready) return
-      let schemas = useSelector(selectSchema)
-      schemas = schemas.map((item: Type) => ({ ...item }))
-      // Load setting i18n_code
-      let db
-      try {
-        db = await rxDb()
-      } catch (e) {
-        // console.error(e)
-      }
-
-      if (!db) return
-      const setting = db[Setting.name]
-      const resI18nCode = await setting
-        .findOne({ name: { $eq: SettingNames.i18n_code } })
-        .exec()
-      if (resI18nCode) i18n.changeLanguage(resI18nCode.value).then()
-
-      // Add i18n resource
-      let pathObj: any
-      schemas.map(({ team, group }: SchemaType) => {
-        if (!pathObj) pathObj = {}
-        // continue when plugin path added
-        if (!pathObj[team + group]) {
-          pathObj[team + group] = true
-          addResource({ i18n, team, group })
-        }
-      })
-    })()
-    return null
-  }
 }
 
 export default App
