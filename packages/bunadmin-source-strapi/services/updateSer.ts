@@ -1,5 +1,10 @@
-import { EditableCtrl } from "../types"
-import { ENV, request, storedToken, notice } from "@bunred/bunadmin"
+import {
+  EditableCtrl,
+  ENV,
+  request,
+  storedToken,
+  notice
+} from "@bunred/bunadmin"
 
 interface Props<RowData> extends EditableCtrl {
   newData: RowData

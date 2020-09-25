@@ -1,5 +1,6 @@
 import { TFunction } from "i18next"
 import { Query } from "material-table"
+import { ListServiceRes } from "@bunred/bunadmin"
 
 export type DataCtrl = {
   t?: TFunction
@@ -21,15 +22,4 @@ export type ListService = {
   fixCount?: boolean // strapi core APIs (*/count) return number, plugins return { count: number }
   searchField?: "name" | string
   searchSuffix?: "_contains" | string
-}
-
-export type ListServiceRes = {
-  data: any
-  totalCount: number
-  errors: any
-}
-
-export interface EditableCtrl {
-  SchemaName: string
-  disableAdd?: boolean
 }

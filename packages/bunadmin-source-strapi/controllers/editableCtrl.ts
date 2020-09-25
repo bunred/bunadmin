@@ -1,8 +1,7 @@
+import { EditableCtrl, EditableDataType } from "@bunred/bunadmin"
 import updateSer from "../services/updateSer"
 import deleteSer from "../services/deleteSer"
 import addSer from "../services/addSer"
-import { EditableCtrl } from "../types"
-import { EditableDataType } from "@bunred/bunadmin"
 import bulkUpdateSer from "../services/bulkUpdateSer"
 
 export default function editableCtrl({

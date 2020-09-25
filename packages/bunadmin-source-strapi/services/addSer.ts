@@ -1,11 +1,16 @@
-import { EditableCtrl } from "../types"
-import { ENV, request, storedToken, notice } from "@bunred/bunadmin"
+import {
+  EditableCtrl,
+  ENV,
+  request,
+  storedToken,
+  notice
+} from "@bunred/bunadmin"
 
 interface Props<RowData> extends EditableCtrl {
   newData: RowData
 }
 
-export default async function addSer({ newData, SchemaName }: Props<any>) {
+export default async function addSer({ newData, SchemaName, t }: Props<any>) {
   const token = await storedToken()
 
   const res = await request(`/${SchemaName}`, {
@@ -19,13 +24,13 @@ export default async function addSer({ newData, SchemaName }: Props<any>) {
 
   if (res.error) {
     await notice({
-      title: "Sorry, you can't update this post",
+      title: t("Create Failed"),
       severity: "warning",
       content: JSON.stringify(newData)
     })
   } else {
     await notice({
-      title: "Successful",
+      title: t("Created"),
       severity: "success"
     })
   }
