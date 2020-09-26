@@ -41,6 +41,6 @@ i18n
       escapeValue: false
     }
   })
-  .then(() => console.info(`[ i18n ]  ${ENV.I18N_CODE}`))
+  .then(() => null)
 
 export default i18n
