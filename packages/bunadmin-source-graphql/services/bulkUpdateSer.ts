@@ -1,31 +1,25 @@
 import {
-  EditableCtrl,
   ENV,
   request,
   storedToken,
-  notice
+  notice,
+  BulkUpdateProps
 } from "@bunred/bunadmin"
 
-interface Props<RowData> extends EditableCtrl {
-  changes: {
-    newData: RowData
-    oldData: RowData
-  }[]
-}
-
-export default async function bulkUpdateSer({
+export default async function bulkUpdateSer<T>({
   t,
   SchemaName,
   primaryKey = "id",
   changes
-}: Props<any>) {
+}: BulkUpdateProps<T>) {
   const token = await storedToken()
 
   const resList: any[] = []
   let successCount = 0
   let failCount = 0
-  changes = Object.values(changes)
-  for (let i = 0; i < changes.length; i++) {
+  const changesList = Object.values(changes)
+
+  for (let i = 0; i < changesList.length; i++) {
     const { oldData, newData } = changes[i]
     const gql = `
     mutation MyMutation {
@@ -59,18 +53,18 @@ export default async function bulkUpdateSer({
       successCount++
     }
 
-    if (i + 1 === changes.length) {
+    if (i + 1 === changesList.length) {
       const successMsg = successCount > 0 ? `, ${successCount} success` : ""
       const failedMsg = failCount > 0 ? `, ${failCount} failure.` : ""
       await notice({
         title: t(`Batch Request Completed`),
         severity:
-          successCount === changes.length
+          successCount === changesList.length
             ? "success"
-            : failCount === changes.length
+            : failCount === changesList.length
             ? "error"
             : "info",
-        content: `${changes.length} items ${successMsg}${failedMsg}`
+        content: `${changesList.length} items ${successMsg}${failedMsg}`
       })
     }
   }
