@@ -12,12 +12,10 @@ import { Collection } from "./collections"
 import { Collection as Setting, SettingNames } from "../setting/collections"
 import ConfirmDialog from "@/components/Dialog/ConfirmDialog"
 import rxDb from "@/utils/database/rxConnect"
-import dynamic from "next/dynamic"
-import jsonViewStyles from "@/utils/styles/jsonViewStyles"
 import { Type } from "./types"
 import { Box, Button } from "@material-ui/core"
 import { useTranslation } from "react-i18next"
-const DynamicReactJson = dynamic(import("react-json-view"), { ssr: false })
+import { JSON_VIEW_BG } from "@/utils/themes/defaultTheme"
 
 export default function AuthInfoContainer() {
   const { t } = useTranslation("table")
@@ -89,17 +87,10 @@ export default function AuthInfoContainer() {
                     </div>
                   )
                 } else {
-                  const str = rowData.details || ""
                   return (
-                    <DynamicReactJson
-                      src={JSON.parse(str)}
-                      theme="summerfruit:inverted"
-                      iconStyle="circle"
-                      collapseStringsAfterLength={20}
-                      displayObjectSize={false}
-                      displayDataTypes={false}
-                      style={jsonViewStyles({ theme })}
-                    />
+                    <Box style={{ background: JSON_VIEW_BG }} p={2}>
+                      {rowData.details || ""}
+                    </Box>
                   )
                 } // check columns
               } // render

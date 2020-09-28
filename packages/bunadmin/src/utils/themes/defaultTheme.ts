@@ -4,7 +4,7 @@ import red from "@material-ui/core/colors/red"
 const iconColor = "#8f9bb3"
 const contentBg = "#EDF1F7"
 const contentBoxBg = "#FFF"
-const jsonViewBg = "rgba(143, 155, 179, 0.3)"
+export const JSON_VIEW_BG = "rgba(143, 155, 179, 0.3)"
 const bodyBg = contentBg
 
 declare module "@material-ui/core/styles/createMuiTheme" {
@@ -34,7 +34,7 @@ const defaultTheme = createMuiTheme({
     iconColor,
     contentBg,
     contentBoxBg,
-    jsonViewBg
+    jsonViewBg: JSON_VIEW_BG
   },
   palette: {
     primary: {

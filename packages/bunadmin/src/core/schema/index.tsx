@@ -7,13 +7,12 @@ import Table, { TableHead } from "@/components/Table"
 import tableIcons from "@/components/Table/models/tableIcons"
 import { Columns } from "./columns"
 import { Schema } from "./schema"
-import dynamic from "next/dynamic"
-import jsonViewStyles from "@/utils/styles/jsonViewStyles"
 import { Type } from "./types"
 import { useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
 import { selectSchema } from "@/slices/schemaSlice"
-const DynamicReactJson = dynamic(import("react-json-view"), { ssr: false })
+import { Box } from "@material-ui/core"
+import { JSON_VIEW_BG } from "@/utils/themes/defaultTheme"
 
 export default function SchemaManagerContainer() {
   const { t } = useTranslation("table")
@@ -60,17 +59,10 @@ export default function SchemaManagerContainer() {
                     </div>
                   )
                 } else {
-                  const arr = JSON.parse(rowData.columns) || []
                   return (
-                    <DynamicReactJson
-                      src={arr}
-                      theme="summerfruit:inverted"
-                      iconStyle="circle"
-                      collapseStringsAfterLength={20}
-                      displayObjectSize={false}
-                      displayDataTypes={false}
-                      style={jsonViewStyles({ theme })}
-                    />
+                    <Box style={{ background: JSON_VIEW_BG }} p={2}>
+                      {rowData.columns || ""}
+                    </Box>
                   )
                 } // check columns
               } // render
