@@ -1,21 +1,44 @@
-import React from "react"
-import CommonSchema from "@/components/CommonSchema"
-import DefaultLayout from "@/layouts/DefaultLayout"
+import React, { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import CorePages from "@/components/CorePages"
 import { ParsedUrlQuery } from "querystring"
-import { ENV } from "@/utils"
+import {
+  CoreContainer,
+  SchemaContainer,
+  withoutLayout,
+  ENV
+} from "../../src"
+import PluginTable from "../../src/private/PluginTable"
+import DefaultLayout from "../../src/private/DefaultLayout"
+import Error from "../../src/private/Error";
 
-const ModulePage = () => {
+const DynamicGroupNamePage = () => {
   const router = useRouter()
-
   const { group, name } = router.query as ParsedUrlQuery
+  const [NtTable, setNtTable] = useState<JSX.Element>()
+  const [NtCount, setNtCount] = useState<() => Promise<number>>()
+
+  useEffect(() => {
+    ;(async () => {
+      if (!ENV.NOTIFICATION_PLUGIN) return
+      const customNotificationPath = ENV.NOTIFICATION_PLUGIN
+      const { NotificationTable, notificationCount } = await import(
+        `@plugins/${customNotificationPath}`
+        )
+      if (!NotificationTable || !notificationCount) return
+      setNtTable(NotificationTable)
+      setNtCount(notificationCount)
+    })()
+  }, [])
 
   let render
-
   switch (group) {
     case "core":
-      render = <CorePages />
+      render = (
+        <CoreContainer
+          NotificationTable={NtTable}
+          notificationCount={NtCount}
+        />
+      )
       break
     case "auth":
       switch (name) {
@@ -23,23 +46,18 @@ const ModulePage = () => {
         case "sign-up":
         case "recovery":
           // skipped Layout
-          return <CommonSchema isAuthPath={true} />
+          return <SchemaContainer isAuthPath={true} PluginTable={PluginTable} Error={Error} />
         default:
-          render = <CommonSchema />
+          render = <SchemaContainer PluginTable={PluginTable} Error={Error} />
       }
       break
     default:
-      render = <CommonSchema />
+      render = <SchemaContainer PluginTable={PluginTable} Error={Error} />
   }
 
-  const path = `/${group}/${name}`
-  for (let i = 0; i < ENV.PATHS_WITHOUT_LAYOUT.length; i++) {
-    const item = ENV.PATHS_WITHOUT_LAYOUT[i]
-    const itemRegx = new RegExp(`${item}.*`, "g")
-    if (itemRegx.test(path)) return render
-  }
+  if (withoutLayout(group, name)) return render
 
   return <DefaultLayout>{render}</DefaultLayout>
 }
 
-export default ModulePage
+export default DynamicGroupNamePage
