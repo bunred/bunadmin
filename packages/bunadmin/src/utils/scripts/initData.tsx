@@ -1,9 +1,8 @@
 import rxInitData from "@/utils/database/rxInitData"
 import { Collection as Setting, SettingNames } from "@/core/setting/collections"
-import requirePlugins from "@/utils/scripts/requirePlugins"
 import rxDb from "@/utils/database/rxConnect"
 import { Primary as AuthPrimary } from "@/core/auth/schema"
-import { DEFAULT_AUTH_PLUGIN, ENV } from "@/utils/config"
+import { ENV } from "@/utils/config"
 import { MenuType, SchemaType } from "@/core"
 import { IAuthPlugin, InitData, store } from "@/utils"
 import { setNestedMenu } from "@/slices/nestedMenuSlice"
@@ -19,6 +18,9 @@ import { i18n } from "i18next"
 type Props = {
   i18n: i18n
   router: NextRouter
+  authPlugin: IAuthPlugin
+  pluginsData: string[]
+  requirePlugin: (path: string) => any
   setReady: Dispatch<SetStateAction<boolean>>
   initialized: boolean
   setInitialized: Dispatch<SetStateAction<boolean>>
@@ -27,19 +29,19 @@ type Props = {
 export default async function initData({
   i18n,
   router,
+  authPlugin,
+  pluginsData,
+  requirePlugin,
   setReady,
   initialized,
   setInitialized
 }: Props) {
-  const authPluginName =
-    process.env.NEXT_PUBLIC_AUTH_PLUGIN || DEFAULT_AUTH_PLUGIN
-
   const {
     initData,
     authResponseKey,
     authRequestUrl,
     authRequestMethod
-  } = (await import(`@plugins/${authPluginName}`)) as IAuthPlugin
+  } = authPlugin
 
   // Avoid repeated initialization
   if (!initialized) {
@@ -96,10 +98,9 @@ export default async function initData({
 
   // Init Plugins Data
   const data = []
-  const pluginsData = require("@plugins/pluginsData")
   for (let i = 0; i < pluginsData.length; i++) {
     const path: string = pluginsData[i]
-    const fileContent: any = requirePlugins(path)
+    const fileContent: any = requirePlugin(path)
 
     if (!fileContent) continue
 
@@ -123,6 +124,21 @@ export default async function initData({
   setInitialized(true)
   // Main page ready
   setReady(true)
+
+  function addSources(i18n: i18n, schemas: any) {
+    schemas = schemas.map((item: Type) => ({ ...item }))
+
+    // Add i18n resource
+    let pathObj: any
+    schemas.map(({ team, group }: SchemaType) => {
+      if (!pathObj) pathObj = {}
+      // continue when plugin path added
+      if (!pathObj[team + group]) {
+        pathObj[team + group] = true
+        addResource({ i18n, team, group, requirePlugin })
+      }
+    })
+  }
 }
 
 async function initPluginData(initData: InitData) {
@@ -168,19 +184,4 @@ async function initPluginData(initData: InitData) {
     // redux setNestedMenu
     store.dispatch(setNestedMenu(menuData))
   }
-}
-
-function addSources(i18n: i18n, schemas: any) {
-  schemas = schemas.map((item: Type) => ({ ...item }))
-
-  // Add i18n resource
-  let pathObj: any
-  schemas.map(({ team, group }: SchemaType) => {
-    if (!pathObj) pathObj = {}
-    // continue when plugin path added
-    if (!pathObj[team + group]) {
-      pathObj[team + group] = true
-      addResource({ i18n, team, group })
-    }
-  })
 }
