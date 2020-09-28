@@ -28,6 +28,7 @@ out
 /packages/bunadmin/deploy*.sh
 
 dist
+lib
 *.tgz
 
 pluginsData.json
