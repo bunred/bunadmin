@@ -1,21 +1,22 @@
-import requirePlugins from "@/utils/scripts/requirePlugins"
 import { i18nCodes } from "@/utils/i18n"
 
 export default function addResource({
   i18n,
   team,
-  group
+  group,
+  requirePlugin
 }: {
   i18n: any
   team: string
   group: string
+  requirePlugin: (path: string) => any
 }) {
   Object.keys(i18nCodes).map(lan => {
     let plugin = `bunadmin-plugin-${team}-${group}`
     if (group.indexOf("auth") > -1 || group.indexOf("upload") > -1)
       plugin = `bunadmin-${group}`
 
-    const lang: any = requirePlugins(`${plugin}/utils/i18n/${lan}`)
+    const lang: any = requirePlugin(`${plugin}/utils/i18n/${lan}`)
     if (!lang) return
 
     lang.plugins &&
