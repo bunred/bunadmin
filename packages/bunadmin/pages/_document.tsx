@@ -1,9 +1,8 @@
 import React from "react"
 import Document, { Html, Head, Main, NextScript } from "next/document"
 import { ServerStyleSheets } from "@material-ui/core/styles"
-import defaultTheme from "@/utils/themes/defaultTheme"
 import { resetServerContext } from "react-beautiful-dnd"
-import { ENV } from "@/utils/config"
+import { defaultTheme, ENV } from "../src"
 
 export default class MyDocument extends Document {
   render() {
