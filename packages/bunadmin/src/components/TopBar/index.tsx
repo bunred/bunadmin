@@ -10,25 +10,27 @@ import UserMenu from "./TopBarRightMenu/UserMenu"
 import SettingMenu from "./TopBarRightMenu/SettingMenu"
 import Link from "@/components/Link"
 import NoticeMenu from "./TopBarRightMenu/NoticeMenu"
-import I18nMenu from "@/layouts/DefaultLayout/TopBar/TopBarRightMenu/I18nMenu"
+import I18nMenu from "@/components/TopBar/TopBarRightMenu/I18nMenu"
 import { ENV } from "@/utils/config"
 import DocMenu from "./TopBarRightMenu/DocMenu"
 import { useRouter } from "next/router"
 import { DynamicDocRoute } from "@/utils/routes"
+import { NoticePlugin } from "@/utils"
 
 const useStyles = topBarStyles
 
-interface TopBarProps {
+type TopBarProps = {
   menuClick: () => void
-}
+  docsHome?: string
+} & NoticePlugin
 
 export default function TopBar(props: TopBarProps) {
-  const { menuClick } = props
+  const { menuClick, notificationCount } = props
   const classes = useStyles()
   const theme = useTheme()
   const router = useRouter()
   const isDoc = router.route === DynamicDocRoute
-  const docsHome = "/docs/getting-started/introduction"
+  const docsHome = props.docsHome || "/docs/getting-started/introduction"
 
   return (
     <AppBar
@@ -64,7 +66,7 @@ export default function TopBar(props: TopBarProps) {
         <div className={classes.rightBlock}>
           {!isDoc && (
             <>
-              <NoticeMenu />
+              <NoticeMenu notificationCount={notificationCount} />
               <UserMenu />
               {ENV.ON_SETTING && <SettingMenu />}
             </>

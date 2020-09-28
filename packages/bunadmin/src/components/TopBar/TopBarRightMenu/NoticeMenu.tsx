@@ -5,9 +5,11 @@ import EvaIcon from "react-eva-icons"
 import { useTheme } from "@material-ui/core/styles"
 import { DynamicRoute, LocalDataRoute } from "@/utils/routes"
 import Badge from "@material-ui/core/Badge"
-import { ENV } from "@/utils"
+import { ENV, NoticePlugin } from "@/utils"
 
-export default function NoticeMenu() {
+type Props = {} & NoticePlugin
+
+export default function NoticeMenu(props: Props) {
   const theme = useTheme()
   const router = useRouter()
 
@@ -20,16 +22,12 @@ export default function NoticeMenu() {
   }
 
   async function queryCount() {
+    // Handle dynamic import `plugins`
+    const { notificationCount }: NoticePlugin = props
     try {
-      if (!ENV.NOTIFICATION_PLUGIN) return
-      const customNotificationPath = ENV.NOTIFICATION_PLUGIN
-      const { notificationCount } = await import(
-        `@plugins/${customNotificationPath}`
-      )
-
       if (!notificationCount) return
       const count = await notificationCount()
-      setCount(count)
+      setCount(Number(count))
     } catch (e) {
       // console.error(e)
     }
@@ -48,12 +46,7 @@ export default function NoticeMenu() {
     }
 
     ;(async () => {
-      if (!ENV.NOTIFICATION_PLUGIN) return
-      const customNotificationPath = ENV.NOTIFICATION_PLUGIN
-      const { notificationCount } = await import(
-        `@plugins/${customNotificationPath}`
-      )
-
+      const { notificationCount }: NoticePlugin = props
       if (!notificationCount) return
     })()
 
