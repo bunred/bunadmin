@@ -5,18 +5,14 @@ export { default as UploadConfirmDialog } from "./CommonDialog/UploadCustomDialo
 export { default as CommonDrawer, default as Drawer } from "./CommonDrawer"
 import { DrawerProps as IDrawerProps } from "./CommonDrawer"
 export type DrawerProps = IDrawerProps
-export { default as CommonError, default as Error } from "./CommonError"
-import { ErrorProps as ErrorPropsType } from "./CommonError/models/types"
-export type ErrorProps = ErrorPropsType
-export { default as errorMessages } from "./CommonError/models/errorMessages"
 
 export {
   default as CommonSchema,
   default as SchemaContainer
-} from "./CommonSchema"
-export { default as columnsController } from "./CommonSchema/controllers/columnsController"
-export { default as dataController } from "./CommonSchema/controllers/dataController"
-export * from "./CommonSchema/controllers/editableController"
+} from "./SchemaContainer"
+export { default as columnsController } from "./SchemaContainer/controllers/columnsController"
+export { default as dataController } from "./SchemaContainer/controllers/dataController"
+export * from "./SchemaContainer/controllers/editableController"
 
 export * from "./CommonSelector"
 export {
@@ -44,7 +40,25 @@ export * from "./FileExplorer"
 
 export { default as BunField } from "./Formik/BunField"
 export { default as Repeater } from "./Repeater"
-export { default as CorePages } from "./CorePages"
+export { default as CoreContainer } from "./CoreContainer"
+export { default as DefaultHead } from "./DefaultHead"
 export { default as ProTip } from "./ProTip"
 
+export { default as LeftMenu } from "@/components/LeftMenu"
+export { default as NestedList } from "./NestedMenu"
+export { default as TopBar } from "./TopBar"
+
 export { MDXProvider } from "@mdx-js/react"
+
+import { LeftMenuProps } from "@/components/LeftMenu"
+export interface DefaultLayoutProps {
+  children?: any
+  leftMenu?: LeftMenuProps
+}
+
+export interface ErrorProps {
+  statusCode: number
+  hasLayout: boolean
+  message?: string
+  redirect?: string
+}
