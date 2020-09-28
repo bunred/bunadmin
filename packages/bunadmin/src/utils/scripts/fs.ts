@@ -19,7 +19,9 @@ export async function fsUpload(e: React.ChangeEvent<HTMLInputElement>) {
   // File object
   // const fileObj = JSON.parse(e.target.files?.[0])
 
-  const file = e.target.files?.[0]
+  if (!e.target.files) return
+
+  const file = e.target.files[0]
   const str = await readAsBinaryString(file)
 
   return JSON.parse(str as string)

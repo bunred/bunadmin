@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react"
 
 import { createStyles, makeStyles, useTheme } from "@material-ui/core/styles"
-import { CommonTableDefaultProps as DefaultProps } from "@/components/CommonTable/models/defaultProps"
+import { TableDefaultProps as DefaultProps } from "@/components/Table/models/defaultProps"
 
-import CommonTable, { CommonTableHead } from "@/components/CommonTable"
-import tableIcons from "@/components/CommonTable/models/tableIcons"
+import Table, { TableHead } from "@/components/Table"
+import tableIcons from "@/components/Table/models/tableIcons"
 import rxSubscribe from "@/utils/database/rxSubscribe"
 import { Columns } from "./columns"
 import { Schema } from "./schema"
 import { editableController } from "./controllers/editableController"
 import { Collection } from "./collections"
-import ConfirmDialog from "@/components/CommonDialog/ConfirmDialog"
+import ConfirmDialog from "@/components/Dialog/ConfirmDialog"
 import rxDb from "@/utils/database/rxConnect"
 import { Type } from "./types"
 import { useTranslation } from "react-i18next"
@@ -68,10 +68,10 @@ export default function NoticeContainer(props: Props) {
   return (
     <div className={CustomNotification && classes.root}>
       <>
-        <CommonTableHead title={t(Schema.title)} />
+        <TableHead title={t(Schema.title)} />
         {CustomNotification && <NoticeTabs t={t} tab={tab} setTab={setTab} />}
         {tab === 0 && (
-          <CommonTable
+          <Table
             title={t(Schema.title)}
             columns={Columns({ t })}
             editable={editableController()}

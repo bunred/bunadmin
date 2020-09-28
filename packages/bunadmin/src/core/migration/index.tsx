@@ -2,10 +2,10 @@ import React, { useState } from "react"
 
 import { MTableToolbar } from "material-table"
 import { useTheme } from "@material-ui/core/styles"
-import { CommonTableDefaultProps as DefaultProps } from "@/components/CommonTable/models/defaultProps"
+import { TableDefaultProps as DefaultProps } from "@/components/Table/models/defaultProps"
 
-import CommonTable, { CommonTableHead } from "@/components/CommonTable"
-import tableIcons from "@/components/CommonTable/models/tableIcons"
+import Table, { TableHead } from "@/components/Table"
+import tableIcons from "@/components/Table/models/tableIcons"
 import { Columns } from "./columns"
 import { Schema } from "./schema"
 import { Data } from "./data"
@@ -39,8 +39,8 @@ export default function MigrationContainer() {
   return (
     <>
       <>
-        <CommonTableHead title={t(Schema.title)} />
-        <CommonTable
+        <TableHead title={t(Schema.title)} />
+        <Table
           title={t(Schema.title)}
           columns={Columns({ t })}
           data={Data({ t }) as any}

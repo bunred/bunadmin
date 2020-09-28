@@ -1,7 +1,7 @@
 import { MaterialTableProps } from "material-table"
 import { EditableCtrl } from "@/utils"
 
-export interface CommonTableProps<RowData extends object>
+export interface TableProps<RowData extends object>
   extends MaterialTableProps<RowData> {}
 
 /**

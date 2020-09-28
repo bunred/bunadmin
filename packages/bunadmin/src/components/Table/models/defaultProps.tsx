@@ -2,7 +2,7 @@ import { MaterialTableProps } from "material-table"
 import EvaIcon from "react-eva-icons"
 import React from "react"
 
-export const CommonTableDefaultProps: MaterialTableProps<any> = {
+export const TableDefaultProps: MaterialTableProps<any> = {
   // default placeholder
   columns: [],
   data: [],

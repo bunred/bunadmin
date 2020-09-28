@@ -1,8 +1,8 @@
 import React from "react"
-import ConfirmDialog from "@/components/CommonDialog/ConfirmDialog"
+import ConfirmDialog from "@/components/Dialog/ConfirmDialog"
 import rxDb from "@/utils/database/rxConnect"
 import { fsDownload, fsUpload } from "@/utils/scripts/fs"
-import UploadConfirmDialog from "@/components/CommonDialog/UploadCustomDialog"
+import UploadConfirmDialog from "@/components/Dialog/UploadCustomDialog"
 import { notice } from "@/core"
 
 interface Interface {
@@ -59,6 +59,7 @@ export default function MigrationDialogs({
         onChange={async e => {
           try {
             const json = await fsUpload(e)
+            if (!json) return
             const db = await rxDb()
             // dump collection
             if (selData.name !== "ALL") {

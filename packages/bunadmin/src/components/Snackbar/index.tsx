@@ -3,7 +3,7 @@ import { withSnackbar, WithSnackbarProps } from "notistack"
 import { useSelector } from "react-redux"
 import { selectNotice } from "@/slices/noticeSlice"
 
-function CommonSnackbar(props: WithSnackbarProps) {
+function Snackbar(props: WithSnackbarProps) {
   const notice = useSelector(selectNotice)
 
   React.useEffect(() => {
@@ -17,4 +17,4 @@ function CommonSnackbar(props: WithSnackbarProps) {
   return null
 }
 
-export default withSnackbar(CommonSnackbar)
+export default withSnackbar(Snackbar)

@@ -1,5 +1,5 @@
 import rxDb from "@/utils/database/rxConnect"
-import { EditableDataType } from "@/components/CommonTable/models/types"
+import { EditableDataType } from "@/components/Table/models/types"
 import { Type } from "../types"
 import { Collection } from "../collections"
 import { Primary } from "../schema"

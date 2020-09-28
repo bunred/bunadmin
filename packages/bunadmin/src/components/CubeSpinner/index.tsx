@@ -3,7 +3,7 @@ import Head from "next/head"
 
 const css = "/assets/css/cubeSpinner.css"
 
-function CubeSpinner() {
+export default function CubeSpinner() {
   return (
     <>
       <Head>
@@ -16,5 +16,3 @@ function CubeSpinner() {
     </>
   )
 }
-
-export default CubeSpinner

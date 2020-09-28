@@ -1,7 +1,5 @@
-import React from "react"
 import { Column } from "material-table"
 import { Type } from "./types"
-import { Button, Tooltip } from "@material-ui/core"
 
 export const Columns = ({ t }: any): Column<Type>[] => [
   { title: t("Id"), field: "id", editable: "onAdd" },
@@ -11,12 +9,7 @@ export const Columns = ({ t }: any): Column<Type>[] => [
   {
     title: t("Icon"),
     field: "icon",
-    render: r =>
-      r && r.icon ? (
-        <Tooltip title={r.icon} placement="top" arrow>
-          <Button>{r.icon.substr(0, 5)}...</Button>
-        </Tooltip>
-      ) : null
+    render: r => (r && r.icon ? r.icon : null)
   },
   {
     title: t("Icon Type"),

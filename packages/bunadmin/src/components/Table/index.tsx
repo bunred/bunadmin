@@ -4,14 +4,14 @@ import Head from "next/head"
 import MaterialTable from "material-table"
 import { useTheme } from "@material-ui/core/styles"
 import tableIcons from "./models/tableIcons"
-import { CommonTableProps } from "./models/types"
-import { CommonTableDefaultProps as DefaultProps } from "./models/defaultProps"
+import { TableProps } from "@/components"
+import { TableDefaultProps as DefaultProps } from "./models/defaultProps"
 import { useTranslation } from "react-i18next"
-import localization from "@/components/CommonTable/localization"
+import localization from "@/components/Table/localization"
 import { ENV, DynamicRoute } from "@/utils"
 import { useRouter } from "next/router"
 
-export function CommonTableHead({ title }: { title?: string }) {
+export function TableHead({ title }: { title?: string }) {
   return (
     <Head>
       <title>
@@ -22,7 +22,7 @@ export function CommonTableHead({ title }: { title?: string }) {
   )
 }
 
-export default function CommonTable(props: CommonTableProps<any>) {
+export default function Table(props: TableProps<any>) {
   const { t } = useTranslation("table")
   const theme = useTheme()
   const router = useRouter()

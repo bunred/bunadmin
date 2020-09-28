@@ -1,6 +1,6 @@
 import React from "react"
 import dynamic from "next/dynamic"
-import TableSkeleton from "../components/CommonTable/components/TableSkeleton"
+import TableSkeleton from "../components/Table/components/TableSkeleton"
 import { PluginTableProps } from "../utils"
 import handleSpecialPlugin from "../utils/scripts/handleSpecialPlugin"
 

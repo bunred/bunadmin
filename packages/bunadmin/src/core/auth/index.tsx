@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react"
 
 import { useTheme } from "@material-ui/core/styles"
-import { CommonTableDefaultProps as DefaultProps } from "@/components/CommonTable/models/defaultProps"
+import { TableDefaultProps as DefaultProps } from "@/components/Table/models/defaultProps"
 
-import CommonTable, { CommonTableHead } from "@/components/CommonTable"
-import tableIcons from "@/components/CommonTable/models/tableIcons"
+import Table, { TableHead } from "@/components/Table"
+import tableIcons from "@/components/Table/models/tableIcons"
 import rxQuery from "@/utils/database/rxQuery"
 import { Columns } from "./columns"
 import { Primary, Schema } from "./schema"
 import { Collection } from "./collections"
 import { Collection as Setting, SettingNames } from "../setting/collections"
-import ConfirmDialog from "@/components/CommonDialog/ConfirmDialog"
+import ConfirmDialog from "@/components/Dialog/ConfirmDialog"
 import rxDb from "@/utils/database/rxConnect"
 import dynamic from "next/dynamic"
 import jsonViewStyles from "@/utils/styles/jsonViewStyles"
@@ -43,8 +43,8 @@ export default function AuthInfoContainer() {
   return (
     <>
       <>
-        <CommonTableHead title={t(Schema.title)} />
-        <CommonTable
+        <TableHead title={t(Schema.title)} />
+        <Table
           title={t(Schema.title)}
           columns={Columns({ t })}
           data={data}
