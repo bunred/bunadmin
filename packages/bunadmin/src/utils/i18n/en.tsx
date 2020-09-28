@@ -111,7 +111,7 @@ const en = {
     nRowsSelected: "{0} row(s) selected",
     exportTitle: "Export",
     exportAriaLabel: "Export",
-    exportName: "Export as CSV",
+    exportCSVName: "Export as CSV",
     // body
     addTooltip: "Add",
     editTooltip: "Edit",

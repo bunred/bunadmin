@@ -111,7 +111,7 @@ const zh = {
     nRowsSelected: "{0} 条 已选",
     exportTitle: "导出",
     exportAriaLabel: "导出",
-    exportName: "导出为CSV",
+    exportCSVName: "导出为CSV",
     // body
     addTooltip: "添加",
     editTooltip: "编辑",

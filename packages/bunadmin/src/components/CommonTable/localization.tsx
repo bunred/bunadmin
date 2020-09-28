@@ -15,7 +15,7 @@ export default function localization({ t }: props): Localization {
       nRowsSelected: t("nRowsSelected"),
       exportTitle: t("exportTitle"),
       exportAriaLabel: t("exportAriaLabel"),
-      exportName: t("exportName")
+      exportCSVName: t("exportCSVName")
     },
     body: {
       addTooltip: t("addTooltip"),
