@@ -20,6 +20,7 @@ export default async function bulkUpdateSer<T>({
 
   for (let i = 0; i < changesList.length; i++) {
     const { oldData, newData } = changes[i]
+    // @ts-ignore
     const res = await request(`/${SchemaName}/${oldData.id}`, {
       prefix: ENV.AUTH_URL,
       method: "PUT",
