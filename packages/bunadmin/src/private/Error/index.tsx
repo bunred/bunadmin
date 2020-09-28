@@ -1,18 +1,12 @@
 import React from "react"
 import { Box, Button, Typography } from "@material-ui/core"
-import DefaultLayout from "@/layouts/DefaultLayout"
-import errorMessages from "./models/errorMessages"
-import { ErrorMsg, ErrorProps } from "./models/types"
+import errorMessages from "./errorMessages"
+import { ErrorMsg } from "./types"
 import { useRouter } from "next/router"
+import DefaultLayout from "../DefaultLayout"
+import { ErrorProps } from "@/components"
 
-interface Props {
-  statusCode: number
-  hasLayout: boolean
-  message?: string
-  redirect?: string
-}
-
-function CommonError({ statusCode, hasLayout, message, redirect }: Props) {
+function Error({ statusCode, hasLayout, message, redirect }: ErrorProps) {
   const router = useRouter()
 
   const msg = (msg: ErrorMsg) => {
@@ -61,9 +55,18 @@ function CommonError({ statusCode, hasLayout, message, redirect }: Props) {
   )
 }
 
-CommonError.getInitialProps = ({ res, err }: ErrorProps) => {
+export interface ErrorGetProps {
+  res: {
+    statusCode: string
+  }
+  err: {
+    statusCode: number
+  }
+}
+
+Error.getInitialProps = ({ res, err }: ErrorGetProps) => {
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404
   return { statusCode }
 }
 
-export default CommonError
+export default Error
