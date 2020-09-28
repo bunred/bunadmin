@@ -2,12 +2,15 @@ import React from "react"
 import { useRouter } from "next/router"
 import LocalLeftMenuContainer from "@/core/menu"
 import MigrationContainer from "@/core/migration"
-import LocalNoticeContainer from "@/core/notice"
+import NoticeContainer from "@/core/notice"
 import SchemaManagerContainer from "@/core/schema"
 import AuthInfoContainer from "@/core/auth"
 import BunadminSettingContainer from "@/core/setting"
+import { NoticePlugin } from "@/utils"
 
-export default function CorePages() {
+type Props = {} & NoticePlugin
+
+export default function CoreContainer(props: Props) {
   const router = useRouter()
   const { name } = router.query
 
@@ -21,7 +24,7 @@ export default function CorePages() {
       container = <MigrationContainer />
       break
     case "notice":
-      container = <LocalNoticeContainer />
+      container = <NoticeContainer {...props} />
       break
     case "schema":
       container = <SchemaManagerContainer />
