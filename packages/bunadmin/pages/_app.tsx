@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from "react"
-import { AppProps } from "next/app"
-import Head from "next/head"
-import { ThemeProvider } from "@material-ui/core/styles"
-import CssBaseline from "@material-ui/core/CssBaseline"
-import defaultTheme from "@/utils/themes/defaultTheme"
-import CommonSnackbar from "@/components/CommonSnackbar"
-import { SnackbarProvider } from "notistack"
-import SnackMessage from "@/components/CommonSnackbar/Message"
-import "@/utils/i18n"
-import { useTranslation } from "react-i18next"
-import initData from "@/utils/scripts/initData"
 import { Provider } from "react-redux"
-import { store } from "@/utils/store"
+import { useTranslation } from "react-i18next"
+import { AppProps } from "next/app"
 import { useRouter } from "next/router"
-import CubeSpinner from "@/components/CommonBgs/CubeSpinner"
-import { DynamicDocRoute, DynamicRoute } from "@/utils"
+import Head from "next/head"
+import { ThemeProvider, CssBaseline } from "@material-ui/core"
+import { SnackbarProvider } from "notistack"
+import {
+  defaultTheme,
+  Snackbar,
+  SnackMessage,
+  initData,
+  store,
+  CubeSpinner,
+  DynamicDocRoute,
+  DynamicRoute,
+  IAuthPlugin,
+  DEFAULT_AUTH_PLUGIN
+} from "../src"
+import "@/utils/i18n"
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { i18n } = useTranslation()
@@ -22,6 +26,14 @@ const App = ({ Component, pageProps }: AppProps) => {
   const { asPath } = router
   const [ready, setReady] = useState(false)
   const [initialized, setInitialized] = useState(false)
+
+  function requirePlugin(path: string) {
+    try {
+      return require(`@plugins/${path}`)
+    } catch (err) {
+      return null
+    }
+  }
 
   useEffect(() => {
     ;(async () => {
@@ -37,8 +49,24 @@ const App = ({ Component, pageProps }: AppProps) => {
     // Waiting for dynamic route
     if (asPath === DynamicRoute || asPath === DynamicDocRoute) return
     ;(async () => {
+      const authPluginName =
+        process.env.NEXT_PUBLIC_AUTH_PLUGIN || DEFAULT_AUTH_PLUGIN
+      const authPlugin: IAuthPlugin = await import(
+        `../plugins/dynamic-import/${authPluginName}`
+      )
+      const pluginsData: string[] = require("../plugins/dynamic-import/pluginsData")
+
       // Init Data
-      await initData({ i18n, router, setReady, initialized, setInitialized })
+      await initData({
+        i18n,
+        authPlugin,
+        pluginsData,
+        requirePlugin,
+        router,
+        setReady,
+        initialized,
+        setInitialized
+      })
     })()
   }, [asPath])
 
@@ -68,7 +96,7 @@ const App = ({ Component, pageProps }: AppProps) => {
               <SnackMessage id={key} message={message} />
             )}
           >
-            <CommonSnackbar />
+            <Snackbar />
           </SnackbarProvider>
           {/* Core component */}
           <Component {...pageProps} />
