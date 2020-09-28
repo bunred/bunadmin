@@ -15,9 +15,11 @@ import rxDb from "@/utils/database/rxConnect"
 import { Type } from "./types"
 import { useTranslation } from "react-i18next"
 import NoticeTabs from "./components/NoticeTabs"
-import { ENV } from "@/utils"
+import { ENV, NoticePlugin } from "@/utils"
 
-export default function LocalNoticeContainer() {
+type Props = {} & NoticePlugin
+
+export default function NoticeContainer(props: Props) {
   const { t } = useTranslation("table")
   const theme = useTheme()
   const [data, setData] = useState([])
@@ -51,15 +53,11 @@ export default function LocalNoticeContainer() {
       })
       try {
         if (!ENV.NOTIFICATION_PLUGIN) return
-        const customNotificationPath = ENV.NOTIFICATION_PLUGIN
-        const { NotificationTable, notificationCount } = await import(
-          `@plugins/${customNotificationPath}`
-        )
-        if (!NotificationTable) return
+        // Handle dynamic import `plugins`
+        const { NotificationTable, notificationCount }: NoticePlugin = props
+        if (!NotificationTable || !notificationCount) return
         // @ts-ignore
         setCustomNotification(<NotificationTable />)
-
-        if (!notificationCount) return
         const count = await notificationCount()
 
         setTab(count > 0 ? 1 : 0)
