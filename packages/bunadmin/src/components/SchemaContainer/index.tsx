@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import CommonTable, { CommonTableHead } from "../CommonTable"
 import { Column } from "material-table"
-import { editableController } from "@/components"
+import { editableController, TableHead, Table, ErrorProps } from "@/components"
 import { CommonTableDefaultProps as DefaultProps } from "../CommonTable/models/defaultProps"
 import tableIcons from "../CommonTable/models/tableIcons"
 import { Type } from "@/core/schema/types"
 import { useTheme } from "@material-ui/core/styles"
-import Plugins from "../Plugins"
-import CommonError from "../CommonError"
 import { LocalDataRoute } from "@/utils/routes"
-import dataController from "@/components/CommonSchema/controllers/dataController"
-import columnsController from "@/components/CommonSchema/controllers/columnsController"
+import dataController from "./controllers/dataController"
+import columnsController from "./controllers/columnsController"
 import TableSkeleton from "@/components/CommonTable/components/TableSkeleton"
 import { useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
 import { selectSchema } from "@/slices/schemaSlice"
+import { PluginTableProps } from "@/utils"
 
 interface Interface {
   group: string
@@ -29,10 +27,16 @@ interface StateSchemaType {
 }
 
 interface Props {
+  PluginTable: (props: PluginTableProps) => JSX.Element
+  Error: (props: ErrorProps) => JSX.Element
   isAuthPath?: boolean
 }
 
-export default function CommonSchema({ isAuthPath }: Props) {
+export default function SchemaContainer({
+  PluginTable,
+  Error,
+  isAuthPath
+}: Props) {
   const { t } = useTranslation("table")
   const theme = useTheme()
   const router = useRouter()
@@ -81,7 +85,7 @@ export default function CommonSchema({ isAuthPath }: Props) {
   if (notFound)
     return (
       <div style={{ display: "flex" }}>
-        <CommonError
+        <Error
           statusCode={404}
           hasLayout={false}
           message={
@@ -98,7 +102,7 @@ export default function CommonSchema({ isAuthPath }: Props) {
   if (ready && isAuthPath) {
     // When the auth path does not exist in the plugin, a blank page will be rendered
     return (
-      <Plugins
+      <PluginTable
         team={data.team}
         group={data.group}
         name={data.name}
@@ -112,26 +116,22 @@ export default function CommonSchema({ isAuthPath }: Props) {
 
   // Check customized
   if (data.customized) {
-    return <Plugins team={data.team} group={data.group} name={data.name} />
+    return <PluginTable team={data.team} group={data.group} name={data.name} />
   }
 
   const title = (data.label && t(data.label)) || t(name)
 
   return (
     <>
-      <CommonTableHead title={title} />
-      <CommonTable
+      <TableHead title={title} />
+      <Table
         title={title}
         columns={(schema.columns as unknown) as Column<any>[]}
-        editable={editableController()}
-        // style
         style={DefaultProps.style}
-        // icons
         icons={tableIcons({ theme })}
-        // options
         options={{ ...DefaultProps.options, filtering: true }}
-        // data
         data={query => dataController({ query, name: data.name })}
+        editable={editableController()}
       />
     </>
   )
