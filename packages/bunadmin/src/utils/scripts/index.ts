@@ -13,8 +13,8 @@ export { default as storedToken } from "./storedToken"
  * @param name
  */
 export function withoutLayout(
-  group: string | string[],
-  name: string | string[]
+  group: string | string[] | undefined,
+  name: string | string[] | undefined
 ): boolean {
   const path = `/${group}/${name}`
   for (let i = 0; i < ENV.PATHS_WITHOUT_LAYOUT.length; i++) {
