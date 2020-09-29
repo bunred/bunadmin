@@ -1,4 +1,4 @@
-import { CommonTableDefaultProps as DefaultProps, CommonTable, CommonTableHead } from "@bunred/bunadmin";
+import { TableDefaultProps as DefaultProps, Table, TableHead } from "@bunred/bunadmin";
 const editableCtrl = {
   // isEditable: rowData => rowData.not_editable === true, // only name(a) rows would be editable
   // isDeletable: rowData => rowData.not_deletable === true, // only name(a) rows would be deletable
@@ -11,8 +11,8 @@ const editableCtrl = {
 ### Data management: browse (filter, sort, search), edit, create, delete, etc.
 
 <div>
-  <CommonTableHead title={"Page Title: Users"} />
-  <CommonTable
+  <TableHead title={"Page Title: Users"} />
+  <Table
     title={"Users"}
     editable={editableCtrl}
     columns={[
@@ -59,7 +59,7 @@ const editableCtrl = {
 </div>
 
 ```tsx
-import { CommonTableDefaultProps as DefaultProps, CommonTable, CommonTableHead } from "@bunred/bunadmin";
+import { TableDefaultProps as DefaultProps, Table, TableHead } from "@bunred/bunadmin";
 const editableCtrl = {
   // isEditable: rowData => rowData.not_editable === true, // only name(a) rows would be editable
   // isDeletable: rowData => rowData.not_deletable === true, // only name(a) rows would be deletable
@@ -69,8 +69,8 @@ const editableCtrl = {
 }
 //...
 <div>
-  <CommonTableHead title={"Title"} />
-  <CommonTable
+  <TableHead title={"Title"} />
+  <Table
     title={"Title2"}
     editable={editableCtrl}
     columns={[

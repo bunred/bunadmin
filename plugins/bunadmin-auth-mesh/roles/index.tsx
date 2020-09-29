@@ -1,9 +1,9 @@
 import React, { createRef } from "react"
 import {
-  CommonTable,
-  CommonTableHead,
+  Table,
+  TableHead,
   tableIcons,
-  CommonTableDefaultProps as DefaultProps
+  TableDefaultProps as DefaultProps
 } from "@bunred/bunadmin"
 import { useTheme } from "@material-ui/core/styles"
 
@@ -19,8 +19,8 @@ export default function() {
 
   return (
     <>
-      <CommonTableHead title={t(SchemaLabel)} />
-      <CommonTable
+      <TableHead title={t(SchemaLabel)} />
+      <Table
         tableRef={tableRef}
         title={t(SchemaLabel)}
         columns={SchemaColumns({ t })}

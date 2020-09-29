@@ -2,7 +2,7 @@ export { default as AnimatedRandomBG } from "./AnimationBackground"
 export { default as CubeSpinner } from "./CubeSpinner"
 export { default as ConfirmDialog } from "./Dialog/ConfirmDialog"
 export { default as UploadConfirmDialog } from "./Dialog/UploadCustomDialog"
-export { default as CommonDrawer, default as Drawer } from "./Drawer"
+export { default as Drawer } from "./Drawer"
 import { DrawerProps as IDrawerProps } from "./Drawer"
 export type DrawerProps = IDrawerProps
 
