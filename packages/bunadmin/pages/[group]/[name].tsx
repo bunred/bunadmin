@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { ParsedUrlQuery } from "querystring"
-import {
-  CoreContainer,
-  SchemaContainer,
-  withoutLayout,
-  ENV
-} from "../../src"
+import { CoreContainer, SchemaContainer, withoutLayout, ENV } from "../../src"
 import PluginTable from "../../src/private/PluginTable"
 import DefaultLayout from "../../src/private/DefaultLayout"
-import Error from "../../src/private/Error";
+import Error from "../../src/private/Error"
 
 const DynamicGroupNamePage = () => {
   const router = useRouter()
@@ -22,8 +17,8 @@ const DynamicGroupNamePage = () => {
       if (!ENV.NOTIFICATION_PLUGIN) return
       const customNotificationPath = ENV.NOTIFICATION_PLUGIN
       const { NotificationTable, notificationCount } = await import(
-        `@plugins/${customNotificationPath}`
-        )
+        `../../plugins/dynamic/${customNotificationPath}`
+      )
       if (!NotificationTable || !notificationCount) return
       setNtTable(NotificationTable)
       setNtCount(notificationCount)
@@ -45,8 +40,13 @@ const DynamicGroupNamePage = () => {
         case "sign-in":
         case "sign-up":
         case "recovery":
-          // skipped Layout
-          return <SchemaContainer isAuthPath={true} PluginTable={PluginTable} Error={Error} />
+          return (
+            <SchemaContainer
+              isAuthPath={true}
+              PluginTable={PluginTable}
+              Error={Error}
+            />
+          )
         default:
           render = <SchemaContainer PluginTable={PluginTable} Error={Error} />
       }

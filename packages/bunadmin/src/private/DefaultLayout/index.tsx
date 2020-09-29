@@ -8,8 +8,8 @@ import DefaultHead from "../../components/DefaultHead"
 import LeftMenu from "../../components/LeftMenu"
 import TopBar from "../../components/TopBar"
 import { Container, Fade, useMediaQuery } from "@material-ui/core"
-import { DefaultLayoutProps } from "../../components"
-import { ENV } from "../../utils"
+import { DefaultLayoutProps } from "@/components"
+import { ENV } from "@/utils"
 
 /**
  * !DO NOT export DefaultLayout in @bunred/bunadmin
@@ -31,7 +31,7 @@ export default function DefaultLayout(props: DefaultLayoutProps) {
       if (!ENV.NOTIFICATION_PLUGIN) return
       const customNotificationPath = ENV.NOTIFICATION_PLUGIN
       const { NotificationTable, notificationCount } = await import(
-        `@plugins/${customNotificationPath}`
+        `../../../plugins/dynamic/${customNotificationPath}`
       )
       if (!NotificationTable || !notificationCount) return
       setNtCount(notificationCount)

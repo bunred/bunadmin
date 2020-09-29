@@ -1,7 +1,7 @@
 import React from "react"
 import dynamic from "next/dynamic"
 import TableSkeleton from "../components/Table/components/TableSkeleton"
-import { PluginTableProps } from "../utils"
+import { PluginTableProps } from "@/utils"
 import handleSpecialPlugin from "../utils/scripts/handleSpecialPlugin"
 
 /**
@@ -23,7 +23,7 @@ export default function PluginTable({
   const pluginPath = handleSpecialPlugin({ team, group, name })
 
   const Plugin = dynamic({
-    loader: () => import(`@plugins/${pluginPath}`),
+    loader: () => import(`../../plugins/dynamic/${pluginPath}`),
     loading: () =>
       hideLoading ? null : <TableSkeleton title={`${name} loading...`} />
   })

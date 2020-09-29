@@ -27,7 +27,6 @@ module.exports = () => {
       }
       // alias
       config.resolve.alias["@"] = path.resolve(__dirname, "src")
-      config.resolve.alias["@plugins"] = path.resolve(__dirname, pluginsPath)
       config.resolve.alias["@bunred/bunadmin"] = path.resolve(__dirname)
       // rules
       config.module.rules.push({
