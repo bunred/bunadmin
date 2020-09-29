@@ -5,44 +5,36 @@ const withMDX = require("@next/mdx")({
 })
 
 module.exports = () => {
-  const asPackage = __dirname.indexOf("/node_modules/") > -1
-  const pluginsPath = asPackage
-    ? path.resolve(__dirname, "plugins") // PROD using as package
-    : path.resolve(__dirname, "../../plugins") // DEV
-
   return withMDX({
     poweredByHeader: false,
     generateBuildId: async () => {
       return "bunadmin-" + require("./package.json").version
     },
     webpack: (config, { isServer }) => {
-      // fix npm packages that depend on `fs` module
+      /**
+       * fix npm packages that depend on `fs` module
+       */
       if (!isServer) {
         config.node = {
           fs: "empty"
         }
       } else {
-        // prepare bunadmin plugins
         preparePlugin()
       }
-      // alias
+      /**
+       * alias
+       */
       config.resolve.alias["@"] = path.resolve(__dirname, "src")
       config.resolve.alias["@bunred/bunadmin"] = path.resolve(__dirname)
-      // rules
+      /**
+       * rules
+       *  - ignore
+       */
       config.module.rules.push({
-        // ignore file or file types
-        test: /\.md$|LICENSE$|\.yml$|\.lock$|\.jpg$/,
+        test: [/\.md$/, /LICENSE$/, /\.yml$/, /\.lock$/, /\.tgz$/, /\.d\.ts$/],
         use: [{ loader: "ignore-loader" }]
       })
-      config.module.rules.push({
-        test: /\.jsx$|\.tsx$|\.ts$/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["next/babel"]
-          }
-        }
-      })
+
       return config
     }
   })
