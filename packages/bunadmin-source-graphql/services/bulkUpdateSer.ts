@@ -21,10 +21,12 @@ export default async function bulkUpdateSer<T>({
 
   for (let i = 0; i < changesList.length; i++) {
     const { oldData, newData } = changes[i]
+    // @ts-ignore
+    const _eqData = oldData[primaryKey]
     const gql = `
     mutation MyMutation {
       __typename
-      update_${SchemaName}(where: {${primaryKey}: {_eq: "${oldData.id}"}}, _set: ${newData}) {
+      update_${SchemaName}(where: {${primaryKey}: {_eq: "${_eqData}"}}, _set: ${newData}) {
         affected_rows
       }
     }
