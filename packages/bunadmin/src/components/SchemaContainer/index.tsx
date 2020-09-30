@@ -13,7 +13,7 @@ import TableSkeleton from "@/components/Table/components/TableSkeleton"
 import { useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
 import { selectSchema } from "@/slices/schemaSlice"
-import { PluginTableProps } from "@/utils"
+import { PluginTableProps, specialPluginGroup } from "@/utils"
 
 interface Interface {
   group: string
@@ -54,15 +54,7 @@ export default function SchemaContainer({
       const current = schemas.filter((item: Interface) => {
         let itemGroup = item.group
 
-        if (itemGroup.indexOf("auth-") > -1) {
-          // auth-buncms -> auth
-          itemGroup = itemGroup.replace(/auth-.*/, "auth")
-        }
-
-        if (itemGroup.indexOf("upload-") > -1) {
-          // upload-buncms -> upload
-          itemGroup = itemGroup.replace(/upload-.*/, "upload")
-        }
+        itemGroup = specialPluginGroup(itemGroup)
 
         return itemGroup === group && item.name === name
       })

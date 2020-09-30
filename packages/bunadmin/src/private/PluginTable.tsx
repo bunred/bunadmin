@@ -1,8 +1,7 @@
 import React from "react"
 import dynamic from "next/dynamic"
 import TableSkeleton from "../components/Table/components/TableSkeleton"
-import { PluginTableProps } from "@/utils"
-import handleSpecialPlugin from "../utils/scripts/handleSpecialPlugin"
+import { PluginTableProps, handlePluginPath } from "@/utils"
 
 /**
  * !DO NOT export PluginTable in @bunred/bunadmin
@@ -20,7 +19,7 @@ export default function PluginTable({
   name,
   hideLoading
 }: PluginTableProps) {
-  const pluginPath = handleSpecialPlugin({ team, group, name })
+  const pluginPath = handlePluginPath({ team, group, name })
 
   const Plugin = dynamic({
     loader: () => import(`../../plugins/dynamic/${pluginPath}`),

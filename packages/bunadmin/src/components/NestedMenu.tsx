@@ -14,6 +14,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore"
 import { useTranslation } from "react-i18next"
 import { Collection as Setting, SettingNames } from "@/core/setting/collections"
 import rxDb from "@/utils/database/rxConnect"
+import { specialPluginSlug } from "@/utils"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -144,21 +145,6 @@ export default function NestedList({ data }: Props): any {
     return false
   }
 
-  // handling slug (upload-*, auth-*)
-  function handleSlug(slug: string) {
-    // /auth-buncms/users -> /auth/users
-    if (slug.indexOf("/auth-") > -1) {
-      slug = slug.replace(/auth-.*\/.*?/, "auth/")
-    }
-
-    // /upload-buncms/files -> /upload/files
-    if (slug.indexOf("/upload-") > -1) {
-      slug = slug.replace(/upload-.*\/.*?/, "upload/")
-    }
-
-    return slug
-  }
-
   return (
     <>
       {data
@@ -170,7 +156,7 @@ export default function NestedList({ data }: Props): any {
           if (role && !isAllowedRole(currentRole, role)) return null
 
           let { slug } = item
-          if (slug) slug = handleSlug(slug)
+          if (slug) slug = specialPluginSlug(slug)
 
           return (
             <List key={name} component="nav" className={classes.root}>
@@ -206,7 +192,7 @@ export default function NestedList({ data }: Props): any {
                     .map(item => {
                       const { name, label, parent } = item
                       let { slug } = item
-                      if (slug) slug = handleSlug(slug)
+                      if (slug) slug = specialPluginSlug(slug)
                       const isSelected = slug === `/${qGroup}/${qName}`
 
                       if (isSelected && !selectedRootName)
