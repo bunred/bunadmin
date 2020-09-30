@@ -58,8 +58,10 @@ export type InitData = {
     name: string
     data: any
   }[]
-  data?: DocsData[]
+  data?: PluginData[]
 }
+
+export type PluginData = DocsData
 
 export type ListServiceRes = {
   data: any

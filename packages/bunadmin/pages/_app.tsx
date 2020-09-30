@@ -8,15 +8,16 @@ import { ThemeProvider, CssBaseline } from "@material-ui/core"
 import { SnackbarProvider } from "notistack"
 import {
   defaultTheme,
-  Snackbar,
-  SnackMessage,
   initData,
   store,
+  Snackbar,
+  SnackMessage,
   CubeSpinner,
   DynamicDocRoute,
   DynamicRoute,
   IAuthPlugin,
-  DEFAULT_AUTH_PLUGIN
+  DEFAULT_AUTH_PLUGIN,
+  PluginData
 } from "../src"
 import "../src/utils/i18n"
 
@@ -46,7 +47,9 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [])
 
   useEffect(() => {
-    // Waiting for dynamic route
+    /**
+     * Waiting for dynamic route
+     */
     if (asPath === DynamicRoute || asPath === DynamicDocRoute) return
     ;(async () => {
       const authPluginName =
@@ -54,9 +57,11 @@ const App = ({ Component, pageProps }: AppProps) => {
       const authPlugin: IAuthPlugin = await import(
         `../plugins/dynamic/${authPluginName}`
       )
-      const pluginsData: string[] = require("../plugins/dynamic/pluginsData")
+      const pluginsData: PluginData[] = require("../plugins/dynamic/pluginsData")
 
-      // Init Data
+      /**
+       * Initialization data
+       */
       await initData({
         i18n,
         authPlugin,
@@ -83,9 +88,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       </Head>
       <Provider store={store}>
         <ThemeProvider theme={defaultTheme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          {/* Snackbar / Notice */}
           <SnackbarProvider
             anchorOrigin={{
               vertical: "top",
@@ -98,7 +101,6 @@ const App = ({ Component, pageProps }: AppProps) => {
           >
             <Snackbar />
           </SnackbarProvider>
-          {/* Core component */}
           <Component {...pageProps} />
         </ThemeProvider>
       </Provider>

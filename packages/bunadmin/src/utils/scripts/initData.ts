@@ -4,7 +4,7 @@ import rxDb from "@/utils/database/rxConnect"
 import { Primary as AuthPrimary } from "@/core/auth/schema"
 import { ENV } from "@/utils/config"
 import { MenuType, SchemaType } from "@/core"
-import { IAuthPlugin, InitData, store } from "@/utils"
+import { IAuthPlugin, PluginData, store } from "@/utils"
 import { setNestedMenu } from "@/slices/nestedMenuSlice"
 import { setSchema } from "@/slices/schemaSlice"
 import { Dispatch, SetStateAction } from "react"
@@ -19,7 +19,7 @@ type Props = {
   i18n: i18n
   router: NextRouter
   authPlugin: IAuthPlugin
-  pluginsData: string[]
+  pluginsData: PluginData[]
   requirePlugin: (path: string) => any
   setReady: Dispatch<SetStateAction<boolean>>
   initialized: boolean
@@ -43,13 +43,19 @@ export default async function initData({
     authRequestMethod
   } = authPlugin
 
-  // Avoid repeated initialization
+  /**
+   * Avoid repeated initialization
+   */
   if (!initialized) {
-    // Init Auth Plugin Data
-    initData && (await initPluginData(initData))
+    /**
+     * Init auth plugin data
+     */
+    initData && initData.data && (await initPluginsData(initData.data))
   }
 
-  // Authenticate the current user, fail to execute redirect
+  /**
+   * Authenticate the current user, fail to execute redirect
+   */
   await authorization({
     router,
     authResponseKey, // Successful when the response data[key] is not null
@@ -57,12 +63,16 @@ export default async function initData({
     authRequestMethod
   })
 
-  // Avoid repeated initialization
+  /**
+   * Avoid repeated initialization
+   */
   if (initialized) return
 
   const db = await rxDb()
 
-  // Init Core Setting Data
+  /**
+   * Init core setting data
+   */
   await rxInitData({
     db,
     collection: Setting.name,
@@ -96,43 +106,41 @@ export default async function initData({
       })
   })
 
-  // Init Plugins Data
-  const data = []
-  for (let i = 0; i < pluginsData.length; i++) {
-    const path: string = pluginsData[i]
-    const fileContent: any = requirePlugin(path)
+  /**
+   * Init plugins data
+   */
+  await initPluginsData(pluginsData)
 
-    if (!fileContent) continue
-
-    const initData: InitData = fileContent.default
-
-    await initPluginData(initData)
-    data.push(initData)
-  }
-
-  // Init Plugins I18n
+  /**
+   * Init I18n for plugins
+   */
   const setting = db[Setting.name]
   const resI18nCode = await setting
     .findOne({ name: { $eq: SettingNames.i18n_code } })
     .exec()
   if (resI18nCode) i18n.changeLanguage(resI18nCode.value).then()
 
-  data.map(({ data }) => {
-    addSources(i18n, data)
-  })
+  addSources(i18n, pluginsData)
 
   setInitialized(true)
-  // Main page ready
+  /**
+   * Main page ready
+   */
   setReady(true)
 
-  function addSources(i18n: i18n, schemas: any) {
-    schemas = schemas.map((item: Type) => ({ ...item }))
+  function addSources(i18n: i18n, pluginsData: PluginData[]) {
+    const schemas = pluginsData as SchemaType[]
+    schemas.map((item: Type) => ({ ...item }))
 
-    // Add i18n resource
+    /**
+     * Add i18n resource
+     */
     let pathObj: any
     schemas.map(({ team, group }: SchemaType) => {
       if (!pathObj) pathObj = {}
-      // continue when plugin path added
+      /**
+       * Continue when plugin path added
+       */
       if (!pathObj[team + group]) {
         pathObj[team + group] = true
         addResource({ i18n, team, group, requirePlugin })
@@ -141,13 +149,17 @@ export default async function initData({
   }
 }
 
-async function initPluginData(initData: InitData) {
-  // Loop init DocsData
-  if (initData.data) {
-    // handle Data
+async function initPluginsData(pluginsData: PluginData[]) {
+  /**
+   * Set PluginsData
+   */
+  if (pluginsData) {
+    /**
+     * handle schemaData, menuData
+     */
     const schemaData = ([] as unknown) as SchemaType[]
     const menuData = ([] as unknown) as MenuType[]
-    initData.data.map(item => {
+    pluginsData.map(item => {
       if ("group" in item) {
         !item.ignore_schema &&
           schemaData.push({
@@ -169,7 +181,9 @@ async function initPluginData(initData: InitData) {
             name: item.name,
             label: item.label,
             slug:
-              // disable onClick route when group is same as name
+              /**
+               * disable onClick when the group is same as the name
+               */
               item.group === item.name ? "" : `/${item.group}/${item.name}`,
             parent: menuItem.parent || "",
             rank: menuItem.rank || "0",
@@ -179,9 +193,13 @@ async function initPluginData(initData: InitData) {
           })
       }
     })
-    // redux setSchema
+    /**
+     * redux setSchema
+     */
     store.dispatch(setSchema(schemaData))
-    // redux setNestedMenu
+    /**
+     * redux setNestedMenu
+     */
     store.dispatch(setNestedMenu(menuData))
   }
 }
