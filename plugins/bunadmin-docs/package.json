@@ -1,11 +1,11 @@
 {
   "name": "bunadmin-docs",
-  "version": "1.0.0-alpha.2",
+  "version": "1.1.0-beta.1.2.2",
   "description": "",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
-    "dist"
+    "lib"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
+    "jsx": "preserve",
     "rootDir": "./src",
     "outDir": "./lib",
     "declaration": true,
@@ -8,15 +9,9 @@
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "isolatedModules": true
   },
-  "exclude": [
-    "node_modules",
-    "lib"
-  ],
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+  "exclude": ["node_modules", "lib"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }
