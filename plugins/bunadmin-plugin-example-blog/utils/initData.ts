@@ -3,8 +3,7 @@ const plugin = "strapi-example-blog"
 const commonProps = {
   team: "example",
   group: "blog",
-  customized: true,
-  icon_type: "eva"
+  customized: true
 }
 const data: IPluginData[] = [
   {
@@ -12,6 +11,7 @@ const data: IPluginData[] = [
     id: "example_blog",
     name: "example_blog",
     label: "Blog",
+    icon_type: "eva",
     icon: "file-text-outline",
     ignore_schema: true
   },
