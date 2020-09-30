@@ -138,6 +138,7 @@ export default async function initData({
     let pathObj: any
     schemas.map(({ team, group }: SchemaType) => {
       if (!pathObj) pathObj = {}
+      if (!group) return
       /**
        * Continue when plugin path added
        */
@@ -159,39 +160,38 @@ async function initPluginsData(pluginsData: PluginData[]) {
      */
     const schemaData = ([] as unknown) as SchemaType[]
     const menuData = ([] as unknown) as MenuType[]
-    pluginsData.map(item => {
-      if ("group" in item) {
-        !item.ignore_schema &&
-          schemaData.push({
-            id: item.id,
-            name: item.name,
-            label: item.label,
-            group: item.group,
-            team: item.team,
-            customized: item.customized,
-            columns: item.columns,
-            created_at: Date.now(),
-            role: item.role
-          })
-        // @ts-ignore
-        const menuItem: MenuType = item
-        !menuItem.ignore_menu &&
-          menuData.push({
-            id: item.id,
-            name: item.name,
-            label: item.label,
-            slug:
-              /**
-               * disable onClick when the group is same as the name
-               */
-              item.group === item.name ? "" : `/${item.group}/${item.name}`,
-            parent: menuItem.parent || "",
-            rank: menuItem.rank || "0",
-            icon_type: menuItem.icon_type,
-            icon: menuItem.icon,
-            role: menuItem.role
-          })
-      }
+    pluginsData.map(data => {
+      const item = data as SchemaType & MenuType
+      !item.ignore_schema &&
+        schemaData.push({
+          id: item.id,
+          name: item.name,
+          label: item.label,
+          group: item.group,
+          team: item.team,
+          customized: item.customized,
+          columns: item.columns,
+          created_at: Date.now(),
+          role: item.role
+        })
+      // @ts-ignore
+      const menuItem: MenuType = item
+      !menuItem.ignore_menu &&
+        menuData.push({
+          id: item.id,
+          name: item.name,
+          label: item.label,
+          slug:
+            /**
+             * disable onClick when the group is same as the name
+             */
+            item.group === item.name ? "" : `/${item.group}/${item.name}`,
+          parent: menuItem.parent || "",
+          rank: menuItem.rank || "0",
+          icon_type: menuItem.icon_type,
+          icon: menuItem.icon,
+          role: menuItem.role
+        })
     })
     /**
      * redux setSchema
