@@ -19,7 +19,9 @@ module.exports = () => {
           fs: "empty"
         }
       } else {
-        preparePlugin()
+        const nodeModulesPath = path.resolve(__dirname, "../../node_modules")
+        const pluginsDynamicPath = path.resolve(__dirname, "./plugins/dynamic")
+        preparePlugin({ nodeModulesPath, pluginsDynamicPath })
       }
       /**
        * alias
@@ -27,8 +29,7 @@ module.exports = () => {
       config.resolve.alias["@"] = path.resolve(__dirname, "src")
       config.resolve.alias["@bunred/bunadmin"] = path.resolve(__dirname)
       /**
-       * rules
-       *  - ignore
+       * ignore
        */
       config.module.rules.push({
         test: [/\.md$/, /LICENSE$/, /\.yml$/, /\.lock$/, /\.tgz$/, /\.d\.ts$/],

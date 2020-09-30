@@ -4,33 +4,40 @@ const fs = require("fs")
 const Log = require("next/dist/build/output/log")
 
 /**
- * Prepare bunadmin plugins, generate the file `plugins/pluginsData.json`
+ * Prepare bunadmin plugins to `bunadmin/plugins/dynamic` tmp directory,
+ * generate the data file (menu, schema) `dynamic/pluginsData.json` to `plugins/`,
+ * generate the index file (export from node_modules) `[group]/[name].js` to
+ * `dynamic/[plugin]/[group]/[name]`.
+ * @param nodeModulesPath {string}
+ * @param pluginsDynamicPath {string}
  * @return {boolean}
  */
-module.exports = () => {
-  // find all plugin initData files
-  const asPackage = __dirname.indexOf("/node_modules/") > -1
-  const pluginsPath = asPackage
-    ? path.resolve(__dirname, "plugins") // PROD using as package
-    : path.resolve(__dirname, "../../plugins") // DEV
+module.exports = ({ nodeModulesPath, pluginsDynamicPath }) => {
+  /**
+   * Find all bunadmin plugins from root/node_modules
+   */
 
-  // Prepare plugins START
+  /**
+   * Prepare plugins START
+   */
   Log.info("prepare bunadmin plugins")
 
-  // Generate pluginsData.json START
+  /**
+   * Generate pluginsData.json START
+   */
   Log.wait("preparing...")
 
-  const pluginsInitFiles = FileHound.create()
-    .paths(pluginsPath)
-    .match(["initData.js", "initData.ts"])
-    .findSync()
-  let jsonStr = JSON.stringify(pluginsInitFiles)
+  let pluginsInModules =
+    FileHound.create()
+      .paths(nodeModulesPath)
+      .depth(1)
+      .directory()
+      .match(["bunadmin-auth-*", "bunadmin-upload-*", "bunadmin-plugin-*"])
+      .findSync() || []
 
-  // replace to {team}-{group} path
-  jsonStr = jsonStr.replace(/\\\\/g, "/")
-  jsonStr = jsonStr.replace(/".*?\/plugins\/(.*?)"/gm, `"$1"`)
-
-  // handle NEXT_PUBLIC_AUTH_PLUGIN
+  /**
+   * Handle NEXT_PUBLIC_AUTH_PLUGIN
+   */
   if (process.env.NEXT_PUBLIC_AUTH_PLUGIN) {
     let specifiedAuthPluginExists
     try {
@@ -42,14 +49,19 @@ module.exports = () => {
           process.env.NEXT_PUBLIC_AUTH_PLUGIN
       )
     }
-    if (!specifiedAuthPluginExists) return
+    if (!specifiedAuthPluginExists) return false
   }
 
-  // handle duplicate auth plugins (keep one)
-  const countAuth = (jsonStr.match(/bunadmin-auth-/g) || []).length
+  /**
+   * Handle duplicate auth plugins (keep one)
+   * @type {number}
+   */
+  const countAuth = (
+    pluginsInModules.find(item => /bunadmin-auth-/g.test(item)) || []
+  ).length
   if (countAuth > 1) {
     const newArr = []
-    JSON.parse(jsonStr).map(item => {
+    pluginsInModules.map(item => {
       if (
         item.indexOf(process.env.NEXT_PUBLIC_AUTH_PLUGIN) > -1 ||
         item.indexOf("bunadmin-auth-") < 0
@@ -57,26 +69,108 @@ module.exports = () => {
         newArr.push(item)
       }
     })
-    jsonStr = JSON.stringify(newArr)
+    pluginsInModules = newArr
   }
 
-  // handle ignored plugins
+  /**
+   * Handle ignored plugins
+   */
   const ignoredArr = process.env.NEXT_PUBLIC_IGNORED_PLUGINS
     ? process.env.NEXT_PUBLIC_IGNORED_PLUGINS.split(/[ ,]+/)
     : []
   ignoredArr.map(item => {
-    const ignoredRegx = new RegExp(`"${item}.*?",?`, "g")
-    jsonStr = jsonStr.replace(ignoredRegx, "")
+    const ignoredRegx = new RegExp(item, "g")
+    const ignoreIndex = pluginsInModules.findIndex(item =>
+      ignoredRegx.test(item)
+    )
+    delete pluginsInModules[ignoreIndex]
   })
-  jsonStr = jsonStr.replace(",]", "]")
+
+  /**
+   * Recreate directory plugins/dynamic
+   */
+  const rimraf = require("rimraf")
+  rimraf.sync(pluginsDynamicPath)
+  if (!fs.existsSync(pluginsDynamicPath)) {
+    fs.mkdirSync(pluginsDynamicPath)
+  }
+
+  /**
+   * Merge pluginsData
+   * Generate pluginsSchema ([plugin]/[group]/[name].js)
+   * @type {*[]}
+   */
+
+  let pluginsData = []
+  pluginsInModules.map(async pathItem => {
+    if (typeof pathItem !== "string") return
+
+    let plugin
+    try {
+      plugin = require(pathItem)
+      if (!plugin || !plugin.initData || !plugin.initData.data) return
+      pluginsData = [...pluginsData, ...plugin.initData.data]
+    } catch (e) {
+      Log.error(
+        "cannot find 'initData' in the plugin, please export or check: " +
+          pathItem
+      )
+      console.error(e)
+    }
+
+    /**
+     * Generating plugin files
+     * mkdir directories [plugin], [plugin]/[group]
+     * create files [plugin]/[group]/[name].js
+     */
+    try {
+      const pluginName = pathItem.replace(/.*\//g, "")
+      /**
+       * Recreate directory dynamic/[plugin]
+       */
+      const savePluginPath = path.resolve(pluginsDynamicPath, pluginName)
+      if (!fs.existsSync(savePluginPath)) {
+        await fs.mkdirSync(savePluginPath)
+      }
+      plugin.initData.data.map(async dataItem => {
+        if (dataItem["ignore_schema"] || !dataItem["name"]) return
+        /**
+         * Recreate directory dynamic/[plugin]/[name]
+         */
+        const saveNamePath = path.resolve(savePluginPath, dataItem["name"])
+        if (!fs.existsSync(saveNamePath)) {
+          await fs.mkdirSync(saveNamePath)
+        }
+        const saveNameContent = `export { default } from "${pluginName}/lib/${dataItem["name"]}"`
+        fs.writeFile(`${saveNamePath}/index.js`, saveNameContent, e => {
+          if (e) Log.error("cannot generating plugin schema: " + e)
+        })
+
+        const saveIndexPath = path.resolve(
+          pluginsDynamicPath,
+          `${pluginName}/index.js`
+        )
+        const saveIndexContent = `export * from "${pluginName}"`
+        fs.writeFile(saveIndexPath, saveIndexContent, e => {
+          if (e) Log.error("cannot generating plugin index: " + e)
+        })
+      })
+    } catch (e) {
+      Log.error("cannot generating pluginSchema: " + e)
+    }
+  })
 
   const name = "pluginsData.json"
-  const savePath = path.resolve(pluginsPath, name)
-  fs.writeFile(savePath, jsonStr, "utf8", () => {
-    // Prepare plugins END
+  const savePath = path.resolve(pluginsDynamicPath, name)
+  fs.writeFile(savePath, JSON.stringify(pluginsData), "utf8", () => {
+    /**
+     * Prepare plugins END
+     */
     Log.info("bunadmin plugins data generated successfully")
   })
-  // Generate pluginsData.json END
+  /**
+   * Generate pluginsData.json END
+   */
 
   return true
 }
