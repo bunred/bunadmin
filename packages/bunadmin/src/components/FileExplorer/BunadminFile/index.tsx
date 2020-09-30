@@ -5,7 +5,7 @@ import {
   CardMedia,
   CircularProgress
 } from "@material-ui/core"
-import DropZone, { DropEvent } from "react-dropzone"
+import DropZone, { DropEvent, FileRejection } from "react-dropzone"
 import FilePreview from "../FilePreview"
 import styles from "./styles"
 import BunadminFileProps, { BunadminFileType } from "../"
@@ -19,7 +19,7 @@ export const default_file = "/p/default_file.svg"
 export interface OnDropProps {
   droppedFiles: any[]
   existedFile?: BunadminFileType
-  rejectedFiles?: File[]
+  rejectedFiles?: FileRejection[]
   event?: DropEvent
   prefix?: string
   setImageUrl?: Dispatch<SetStateAction<string>>
@@ -72,7 +72,7 @@ export default function BunadminFile(props: BunadminFileProps) {
 
   const handleOnDrop = async (
     acceptedFiles: File[],
-    rejectedFiles: File[],
+    rejectedFiles: FileRejection[],
     event: DropEvent,
     existedFile?: BunadminFileType
   ) => {
