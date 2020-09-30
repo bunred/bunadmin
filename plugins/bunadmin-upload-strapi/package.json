@@ -10,9 +10,7 @@
   "scripts": {
     "pack": "rm -rf lib & tsc && npm pack"
   },
-  "dependencies": {
-    "react-dropzone": "^10.2.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "prettier": "1.19.1",
     "typescript": "^3.9.3"

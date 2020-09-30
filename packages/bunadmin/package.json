@@ -26,7 +26,7 @@
     "start": "next start",
     "test": "prettier --check --no-semi src/** pages/** test/** && jest",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
-    "pack": "rm -rf lib & ttsc -p tsconfig.pack.json && npm pack",
+    "ttsc-pack": "rm -rf lib & ttsc -p tsconfig.pack.json && npm pack",
     "ttsc": "rm -rf lib & ttsc"
   },
   "dependencies": {
@@ -56,6 +56,7 @@
     "prism-react-renderer": "^1.1.1",
     "react": "latest",
     "react-dom": "latest",
+    "react-dropzone": "^11.2.0",
     "react-eva-icons": "0.0.8",
     "react-i18next": "^11.5.0",
     "react-redux": "^7.2.0",
