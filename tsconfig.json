@@ -3,13 +3,10 @@
     "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
-    "jsx": "preserve",
+    "jsx": "react",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "lib": [
-      "dom",
-      "es2017"
-    ],
+    "lib": ["dom", "es2017"],
     "noEmit": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -23,14 +20,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "exclude": [
-    "node_modules",
-    "lib",
-    "**/node_modules",
-    "**/lib"
-  ],
-  "include": [
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+  "exclude": ["node_modules", "lib", "**/node_modules", "**/lib"],
+  "include": ["**/*.ts", "**/*.tsx"]
 }
