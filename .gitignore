@@ -32,8 +32,8 @@ lib
 *.tgz
 
 pluginsData.json
+/packages/bunadmin/.bunadmin
 
-# for plugins
 yarn.lock
 package-lock.json
 

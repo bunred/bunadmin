@@ -7,6 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin-rich-text-editor/lib" />
       <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin-source-graphql/lib" />
       <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin-source-strapi/lib" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin/.bunadmin" />
       <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin/.next" />
       <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin/lib" />

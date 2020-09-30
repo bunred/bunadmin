@@ -22,7 +22,7 @@ export default function PluginTable({
   const pluginPath = handlePluginPath({ team, group, name })
 
   const Plugin = dynamic({
-    loader: () => import(`../../plugins/dynamic/${pluginPath}`),
+    loader: () => import(`../../.bunadmin/dynamic/${pluginPath}`),
     loading: () =>
       hideLoading ? null : <TableSkeleton title={`${name} loading...`} />
   })

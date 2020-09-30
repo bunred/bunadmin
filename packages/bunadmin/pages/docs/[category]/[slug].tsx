@@ -37,7 +37,7 @@ export default function DocsCategorySlug() {
     ;(async () => {
       try {
         const content = await import(
-          `../../../plugins/dynamic/${bunadminDocPath}/menus`
+          `../../../.bunadmin/dynamic/${bunadminDocPath}/menus`
         )
         const menuData = content && (content.default as Type[])
         setMenuData(menuData)
@@ -74,7 +74,7 @@ export default function DocsCategorySlug() {
   const DocsComponent = dynamic({
     loader: () =>
       import(
-        `../../../plugins/dynamic/${bunadminDocPath}/${category}/${slug}.mdx`
+        `../../../.bunadmin/dynamic/${bunadminDocPath}/${category}/${slug}.mdx`
       ),
     loading: () => <TableSkeleton title={`${slug} loading...`} />
   })

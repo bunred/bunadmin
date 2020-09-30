@@ -4,7 +4,7 @@ const fs = require("fs")
 const Log = require("next/dist/build/output/log")
 
 /**
- * Prepare bunadmin plugins to `bunadmin/plugins/dynamic` tmp directory,
+ * Prepare bunadmin plugins to `.bunadmin/dynamic` tmp directory,
  * generate the data file (menu, schema) `dynamic/pluginsData.json` to `plugins/`,
  * generate the index file (export from node_modules) `[group]/[name].js` to
  * `dynamic/[plugin]/[group]/[name]`.
@@ -13,10 +13,6 @@ const Log = require("next/dist/build/output/log")
  * @return {boolean}
  */
 module.exports = ({ nodeModulesPath, pluginsDynamicPath }) => {
-  /**
-   * Find all bunadmin plugins from root/node_modules
-   */
-
   /**
    * Prepare plugins START
    */
@@ -27,6 +23,9 @@ module.exports = ({ nodeModulesPath, pluginsDynamicPath }) => {
    */
   Log.wait("preparing...")
 
+  /**
+   * Find all bunadmin plugins from root/node_modules
+   */
   let pluginsInModules =
     FileHound.create()
       .paths(nodeModulesPath)
@@ -87,10 +86,13 @@ module.exports = ({ nodeModulesPath, pluginsDynamicPath }) => {
   })
 
   /**
-   * Recreate directory plugins/dynamic
+   * Recreate directory .bunadmin/dynamic
    */
   const rimraf = require("rimraf")
   rimraf.sync(pluginsDynamicPath)
+  if (!fs.existsSync(".bunadmin")) {
+    fs.mkdirSync(".bunadmin")
+  }
   if (!fs.existsSync(pluginsDynamicPath)) {
     fs.mkdirSync(pluginsDynamicPath)
   }

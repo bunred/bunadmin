@@ -31,7 +31,7 @@ export default function DefaultLayout(props: DefaultLayoutProps) {
       if (!ENV.NOTIFICATION_PLUGIN) return
       const customNotificationPath = ENV.NOTIFICATION_PLUGIN
       const { NotificationTable, notificationCount } = await import(
-        `../../../plugins/dynamic/${customNotificationPath}`
+        `../../../.bunadmin/dynamic/${customNotificationPath}`
       )
       if (!NotificationTable || !notificationCount) return
       setNtCount(notificationCount)

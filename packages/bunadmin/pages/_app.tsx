@@ -30,7 +30,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   function requirePlugin(path: string) {
     try {
-      return require(`../plugins/dynamic/${path}`)
+      return require(`../.bunadmin/dynamic/${path}`)
     } catch (err) {
       return null
     }
@@ -55,9 +55,9 @@ const App = ({ Component, pageProps }: AppProps) => {
       const authPluginName =
         process.env.NEXT_PUBLIC_AUTH_PLUGIN || DEFAULT_AUTH_PLUGIN
       const authPlugin: IAuthPlugin = await import(
-        `../plugins/dynamic/${authPluginName}`
+        `../.bunadmin/dynamic/${authPluginName}`
       )
-      const pluginsData: PluginData[] = require("../plugins/dynamic/pluginsData")
+      const pluginsData: PluginData[] = require("../.bunadmin/dynamic/pluginsData")
 
       /**
        * Initialization data
