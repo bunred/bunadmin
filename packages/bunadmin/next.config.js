@@ -1,5 +1,5 @@
 const path = require("path")
-const preparePlugin = require("./prepare-plugin")
+const bunadminPlugin = require("./plugin")
 const withMDX = require("@next/mdx")({
   extension: /\.mdx?$/
 })
@@ -21,7 +21,7 @@ module.exports = () => {
       } else {
         const nodeModulesPath = path.resolve(__dirname, "../../node_modules")
         const pluginsDynamicPath = path.resolve(__dirname, "./plugins/dynamic")
-        preparePlugin({ nodeModulesPath, pluginsDynamicPath })
+        bunadminPlugin({ nodeModulesPath, pluginsDynamicPath })
       }
       /**
        * alias

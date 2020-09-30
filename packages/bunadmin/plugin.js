@@ -124,6 +124,7 @@ module.exports = ({ nodeModulesPath, pluginsDynamicPath }) => {
      * create files [plugin]/[group]/[name].js
      */
     try {
+      if (!plugin) return
       const pluginName = pathItem.replace(/.*\//g, "")
       /**
        * Recreate directory dynamic/[plugin]
