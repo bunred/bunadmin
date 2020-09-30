@@ -11,9 +11,7 @@
     "test": "prettier --check --no-semi src/** pages/** test/** && jest",
     "pack": "rm -rf lib & tsc && npm pack"
   },
-  "dependencies": {
-    "@bunred/bunadmin": "^1.1.0-beta.1.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "typescript": "^3.9.3"
   }
