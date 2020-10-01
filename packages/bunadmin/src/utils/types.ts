@@ -26,6 +26,13 @@ export type PluginColumns = {
   tableRef: RefObject<any>
 }
 
+export type PluginTableProps = {
+  team: string
+  group: string
+  name: string
+  hideLoading?: boolean
+}
+
 export type AuthProps = {
   router: NextRouter
   authResponseKey?: IAuthPlugin["authResponseKey"]
@@ -40,14 +47,21 @@ export interface IAuthPlugin {
   authRequestMethod?: string
 }
 
+export type NoticePlugin = {
+  NotificationTable?: JSX.Element
+  notificationCount?: () => Promise<number>
+}
+
 export type InitData = {
   plugin: string
   list?: {
     name: string
     data: any
   }[]
-  data?: DocsData[]
+  data?: PluginData[]
 }
+
+export type PluginData = DocsData
 
 export type ListServiceRes = {
   data: any

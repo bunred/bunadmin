@@ -3,7 +3,6 @@
  */
 import { ENV, request, storedToken, store, TableState } from "@bunred/bunadmin"
 import { ListService } from "../types"
-import { SchemaName } from "pcode-bunadmin-plugin/code/plugin"
 
 const eq = "_eq"
 
@@ -105,7 +104,7 @@ export default async function listSer({
     },
     data: JSON.stringify({ query: graphql, variables })
   })
-  const arrayList = data && data[SchemaName]
+  const arrayList = data && data[name]
 
   let count = arrayList ? arrayList.length : 0
   if (!skipCount)

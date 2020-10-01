@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "jsx": "react",
+    "plugins": [
+      {
+        "transform": "typescript-transform-paths"
+      },
+      {
+        "transform": "typescript-transform-paths",
+        "afterDeclarations": true
+      }
+    ]
+  },
+  "exclude": [
+    "index.ts",
+    "node_modules",
+    "lib",
+    "pages",
+    "src/private"
+  ]
+}

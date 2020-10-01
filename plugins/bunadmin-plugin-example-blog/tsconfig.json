@@ -1,37 +1,12 @@
 {
+  "extends": "../../tsconfig",
   "compilerOptions": {
-    "allowJs": false,
-    "allowSyntheticDefaultImports": true,
-    "jsx": "preserve",
-    "lib": [
-      "dom",
-      "es2017"
-    ],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noEmit": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "preserveConstEnums": true,
-    "removeComments": false,
-    "skipLibCheck": true,
-    "sourceMap": false,
-    "strict": true,
-    "target": "esnext",
-    "forceConsistentCasingInFileNames": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "outDir": "dist"
+    "rootDir": "./",
+    "outDir": "./lib",
+    "declaration": true,
+    "declarationDir": "./lib",
+    "baseUrl": "./"
   },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "package1.json"
-  ],
-  "include": [
-    "index.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+  "exclude": ["node_modules", "lib"],
+  "include": ["*.ts", "*.tsx"]
 }

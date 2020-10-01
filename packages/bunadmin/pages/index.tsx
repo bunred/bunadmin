@@ -1,19 +1,15 @@
 import React from "react"
-import Container from "@material-ui/core/Container"
-import Typography from "@material-ui/core/Typography"
-import Box from "@material-ui/core/Box"
-import MuiLink from "@material-ui/core/Link"
-import ProTip from "@/components/ProTip"
-import DefaultLayout from "@/layouts/DefaultLayout"
-import { ENV } from "@/utils/config"
+import { Container, Typography, Box, Link } from "@material-ui/core"
+import { ENV, ProTip } from "../src"
+import DefaultLayout from "../src/private/DefaultLayout"
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <MuiLink color="inherit" href="#">
+      <Link color="inherit" href="#">
         {ENV.SITE_NAME}
-      </MuiLink>{" "}
+      </Link>{" "}
       {new Date().getFullYear()}
       {"."}
     </Typography>

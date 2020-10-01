@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from "react"
-import { AppProps } from "next/app"
-import Head from "next/head"
-import { ThemeProvider } from "@material-ui/core/styles"
-import CssBaseline from "@material-ui/core/CssBaseline"
-import defaultTheme from "@/utils/themes/defaultTheme"
-import CommonSnackbar from "@/components/CommonSnackbar"
-import { SnackbarProvider } from "notistack"
-import SnackMessage from "@/components/CommonSnackbar/Message"
-import "@/utils/i18n"
-import { useTranslation } from "react-i18next"
-import initData from "@/utils/scripts/initData"
 import { Provider } from "react-redux"
-import { store } from "@/utils/store"
+import { useTranslation } from "react-i18next"
+import { AppProps } from "next/app"
 import { useRouter } from "next/router"
-import CubeSpinner from "@/components/CommonBgs/CubeSpinner"
-import { DynamicDocRoute, DynamicRoute } from "@/utils"
+import Head from "next/head"
+import { ThemeProvider, CssBaseline } from "@material-ui/core"
+import { SnackbarProvider } from "notistack"
+import {
+  defaultTheme,
+  initData,
+  store,
+  Snackbar,
+  SnackMessage,
+  CubeSpinner,
+  DynamicDocRoute,
+  DynamicRoute,
+  IAuthPlugin,
+  DEFAULT_AUTH_PLUGIN,
+  PluginData
+} from "../src"
+import "../src/utils/i18n"
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { i18n } = useTranslation()
@@ -22,6 +27,14 @@ const App = ({ Component, pageProps }: AppProps) => {
   const { asPath } = router
   const [ready, setReady] = useState(false)
   const [initialized, setInitialized] = useState(false)
+
+  function requirePlugin(path: string) {
+    try {
+      return require(`../.bunadmin/dynamic/${path}`)
+    } catch (err) {
+      return null
+    }
+  }
 
   useEffect(() => {
     ;(async () => {
@@ -34,11 +47,34 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [])
 
   useEffect(() => {
-    // Waiting for dynamic route
+    /**
+     * Waiting for dynamic route
+     */
     if (asPath === DynamicRoute || asPath === DynamicDocRoute) return
     ;(async () => {
-      // Init Data
-      await initData({ i18n, router, setReady, initialized, setInitialized })
+      const authPluginName =
+        process.env.NEXT_PUBLIC_AUTH_PLUGIN || DEFAULT_AUTH_PLUGIN
+      const authPlugin: IAuthPlugin = await import(
+        `../.bunadmin/dynamic/${authPluginName}`
+      )
+      let pluginsData: PluginData[] = require("../.bunadmin/dynamic/pluginsData")
+      const plugins = require("../src/private/plugins/pluginsData")
+      if (plugins && plugins.data)
+        pluginsData = [...pluginsData, ...plugins.data]
+
+      /**
+       * Initialization data
+       */
+      await initData({
+        i18n,
+        authPlugin,
+        pluginsData,
+        requirePlugin,
+        router,
+        setReady,
+        initialized,
+        setInitialized
+      })
     })()
   }, [asPath])
 
@@ -55,9 +91,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       </Head>
       <Provider store={store}>
         <ThemeProvider theme={defaultTheme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          {/* Snackbar / Notice */}
           <SnackbarProvider
             anchorOrigin={{
               vertical: "top",
@@ -68,9 +102,8 @@ const App = ({ Component, pageProps }: AppProps) => {
               <SnackMessage id={key} message={message} />
             )}
           >
-            <CommonSnackbar />
+            <Snackbar />
           </SnackbarProvider>
-          {/* Core component */}
           <Component {...pageProps} />
         </ThemeProvider>
       </Provider>

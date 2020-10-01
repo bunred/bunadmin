@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from "react"
-import DefaultLayout from "@/layouts/DefaultLayout"
-import CommonError from "@/components/CommonError"
 import { Type } from "@/core/menu/types"
-import { Box, Link, Button } from "@material-ui/core";
+import { Box, Link, Button } from "@material-ui/core"
 import dynamic from "next/dynamic"
-import TableSkeleton from "@/components/CommonTable/components/TableSkeleton"
+import TableSkeleton from "@/components/Table/components/TableSkeleton"
 import Head from "next/head"
 import { MDXProvider } from "@mdx-js/react"
-import { ParsedUrlQuery } from "querystring";
-import { useRouter } from "next/router";
-import { defaultTheme, DynamicDocRoute, ENV } from "@/utils";
-import { createMuiTheme, createStyles, makeStyles } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
+import { ParsedUrlQuery } from "querystring"
+import { useRouter } from "next/router"
+import { defaultTheme, DynamicDocRoute, ENV } from "@/utils"
+import {
+  createMuiTheme,
+  createStyles,
+  makeStyles
+} from "@material-ui/core/styles"
+import { ThemeProvider } from "@material-ui/styles"
 
 import PrismHighlight, { defaultProps } from "prism-react-renderer"
-import EvaIcon from "react-eva-icons";
+import EvaIcon from "react-eva-icons"
+import DefaultLayout from "@/private/DefaultLayout"
+import Error from "@/private/Error"
 // import prismTheme from "prism-react-renderer/themes/vsDark"
 const prismCss = "/assets/css/prism.css"
 
@@ -32,38 +36,55 @@ export default function DocsCategorySlug() {
   useEffect(() => {
     ;(async () => {
       try {
-        const content = await import(`@plugins/${bunadminDocPath}/menus`)
-        const menuData = content && (content.default as Type[])
+        const content = await import(
+          `../../../.bunadmin/dynamic/${bunadminDocPath}/menus`
+        )
+        const menuData: Type[] = content ? content.menu : []
         setMenuData(menuData)
       } catch (e) {}
     })()
   }, [])
 
   useEffect(() => {
-    const currentPageIndex = menuData.findIndex(item => item.slug === `/docs/${category}/${slug}`)
-    const previousData = menuData[currentPageIndex - 1] || menuData[currentPageIndex - 2]
-    const nextData = menuData[currentPageIndex + 1] || menuData[currentPageIndex + 2]
+    const currentPageIndex = menuData.findIndex(
+      item => item.slug === `/docs/${category}/${slug}`
+    )
+    const previousData =
+      menuData[currentPageIndex - 1] || menuData[currentPageIndex - 2]
+    const nextData =
+      menuData[currentPageIndex + 1] || menuData[currentPageIndex + 2]
     setPagination({
-      previous: (previousData && previousData.label && previousData && previousData.slug) ? {
-        title: previousData.label,
-        uri: previousData.slug
-      }: undefined,
-      next: (nextData && nextData.label && nextData && nextData.slug) ? {
-        title: nextData.label,
-        uri: nextData.slug
-      }: undefined
+      previous:
+        previousData && previousData.label && previousData && previousData.slug
+          ? {
+              title: previousData.label,
+              uri: previousData.slug
+            }
+          : undefined,
+      next:
+        nextData && nextData.label && nextData && nextData.slug
+          ? {
+              title: nextData.label,
+              uri: nextData.slug
+            }
+          : undefined
     })
   }, [slug, menuData])
 
   const DocsComponent = dynamic({
-    loader: () => import(`@plugins/${bunadminDocPath}/${category}/${slug}.mdx`),
+    loader: () =>
+      import(
+        `../../../../../plugins/${bunadminDocPath}/${category}/${slug}.mdx`
+      ),
     loading: () => <TableSkeleton title={`${slug} loading...`} />
   })
 
   return (
     <>
       <Head>
-        <title>{slug} - {category} - {ENV.SITE_NAME}</title>
+        <title>
+          {slug} - {category} - {ENV.SITE_NAME}
+        </title>
         {<link rel="stylesheet" href={prismCss} />}
       </Head>
       <ThemeProvider theme={theme}>
@@ -77,7 +98,7 @@ export default function DocsCategorySlug() {
               <DocsPagination />
             </Box>
           ) : (
-            <CommonError statusCode={404} hasLayout={false} />
+            <Error statusCode={404} hasLayout={false} />
           )}
         </DefaultLayout>
       </ThemeProvider>
@@ -90,7 +111,10 @@ export default function DocsCategorySlug() {
         <Button
           className={classes.DocsEditThis}
           component="a"
-          href={REMOTE_BRANCH + `/plugins/${bunadminDocPath}/${category}/${slug}.mdx`}
+          href={
+            REMOTE_BRANCH +
+            `/plugins/${bunadminDocPath}/${category}/${slug}.mdx`
+          }
           target="_blank"
           rel="noopener nofollow"
           size="small"
@@ -103,17 +127,27 @@ export default function DocsCategorySlug() {
 
   function DocsPagination() {
     return (
-      <Box className={classes.DocsPagination} display="flex" justifyContent="space-between">
+      <Box
+        className={classes.DocsPagination}
+        display="flex"
+        justifyContent="space-between"
+      >
         <Link href="#" onClick={() => pagePush(pagination.previous)}>
           {pagination.previous ? (
             <Box display="flex" alignItems="center">
-              <EvaIcon name="arrow-ios-back-outline" size="xlarge" fill="gray"/>
+              <EvaIcon
+                name="arrow-ios-back-outline"
+                size="xlarge"
+                fill="gray"
+              />
               <Box ml={1}>
                 <span>PREVIOUS</span>
                 <h5>{pagination.previous.title}</h5>
               </Box>
             </Box>
-          ) : <Box />}
+          ) : (
+            <Box />
+          )}
         </Link>
         {pagination.next && (
           <Link href="#" onClick={() => pagePush(pagination.next)}>
@@ -122,7 +156,11 @@ export default function DocsCategorySlug() {
                 <span>NEXT</span>
                 <h5>{pagination.next.title}</h5>
               </Box>
-              <EvaIcon name="arrow-ios-forward-outline" size="xlarge" fill="gray"/>
+              <EvaIcon
+                name="arrow-ios-forward-outline"
+                size="xlarge"
+                fill="gray"
+              />
             </Box>
           </Link>
         )}
@@ -160,7 +198,6 @@ export default function DocsCategorySlug() {
     )
   }
 
-
   function theme() {
     return createMuiTheme({
       ...defaultTheme,
@@ -174,11 +211,11 @@ export default function DocsCategorySlug() {
   }
 
   function useStyles() {
-    return makeStyles((theme) =>
+    return makeStyles(theme =>
       createStyles({
         DocsEditThis: {
           position: "absolute",
-          top: theme.spacing(1),
+          top: theme.spacing(1)
         },
         DocsBox: {
           fontSize: 16,
@@ -189,17 +226,17 @@ export default function DocsCategorySlug() {
             color: defaultTheme.palette.primary.main
           },
           "& h1, & h2, & h3, & h4, & h5": {
-            fontWeight: 400,
+            fontWeight: 400
           },
           "& em": {
-            opacity: .5
+            opacity: 0.5
           },
           "& code": {
             padding: "0.1em 0.2em",
             backgroundColor: defaultTheme.palette.background.default,
             border: "1px solid #e6eaf0",
             borderRadius: "0.3rem",
-            color: defaultTheme.palette.primary.main,
+            color: defaultTheme.palette.primary.main
           },
           "& pre": {
             fontSize: 14
@@ -223,7 +260,7 @@ export default function DocsCategorySlug() {
             fontSize: 18,
             marginTop: theme.spacing(2),
             marginBottom: 0,
-            fontWeight: 600,
+            fontWeight: 600
           }
         }
       })

@@ -1,14 +1,13 @@
 import React from "react"
-import CommonError from "@/components/CommonError"
-import { ErrorProps } from "@/components/CommonError/models/types"
+import Error, { ErrorGetProps } from "@/private/Error"
 
-function Error({ statusCode }: { statusCode: number }) {
-  return <CommonError statusCode={statusCode} hasLayout={true} />
+function ErrorPage({ statusCode }: { statusCode: number }) {
+  return <Error statusCode={statusCode} hasLayout={true} />
 }
 
-Error.getInitialProps = ({ res, err }: ErrorProps) => {
+Error.getInitialProps = ({ res, err }: ErrorGetProps) => {
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404
   return { statusCode }
 }
 
-export default Error
+export default ErrorPage

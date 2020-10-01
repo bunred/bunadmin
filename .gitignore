@@ -28,11 +28,13 @@ out
 /packages/bunadmin/deploy*.sh
 
 dist
+lib
 *.tgz
 
 pluginsData.json
+/packages/bunadmin/.bunadmin
+/packages/bunadmin/src/private/plugins/pluginsData.ts
 
-# for plugins
 yarn.lock
 package-lock.json
 

@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from "react"
 
 import { useTheme } from "@material-ui/core/styles"
-import { CommonTableDefaultProps as DefaultProps } from "@/components/CommonTable/models/defaultProps"
+import { TableDefaultProps as DefaultProps } from "@/components/Table/models/defaultProps"
 
-import CommonTable, { CommonTableHead } from "@/components/CommonTable"
-import tableIcons from "@/components/CommonTable/models/tableIcons"
+import Table, { TableHead } from "@/components/Table"
+import tableIcons from "@/components/Table/models/tableIcons"
 import rxQuery from "@/utils/database/rxQuery"
 import { Columns } from "./columns"
 import { Primary, Schema } from "./schema"
 import { Collection } from "./collections"
 import { Collection as Setting, SettingNames } from "../setting/collections"
-import ConfirmDialog from "@/components/CommonDialog/ConfirmDialog"
+import ConfirmDialog from "@/components/Dialog/ConfirmDialog"
 import rxDb from "@/utils/database/rxConnect"
-import dynamic from "next/dynamic"
-import jsonViewStyles from "@/utils/styles/jsonViewStyles"
 import { Type } from "./types"
 import { Box, Button } from "@material-ui/core"
 import { useTranslation } from "react-i18next"
-const DynamicReactJson = dynamic(import("react-json-view"), { ssr: false })
+import { JSON_VIEW_BG } from "@/utils/themes/defaultTheme"
 
 export default function AuthInfoContainer() {
   const { t } = useTranslation("table")
@@ -43,8 +41,8 @@ export default function AuthInfoContainer() {
   return (
     <>
       <>
-        <CommonTableHead title={t(Schema.title)} />
-        <CommonTable
+        <TableHead title={t(Schema.title)} />
+        <Table
           title={t(Schema.title)}
           columns={Columns({ t })}
           data={data}
@@ -89,17 +87,10 @@ export default function AuthInfoContainer() {
                     </div>
                   )
                 } else {
-                  const str = rowData.details || ""
                   return (
-                    <DynamicReactJson
-                      src={JSON.parse(str)}
-                      theme="summerfruit:inverted"
-                      iconStyle="circle"
-                      collapseStringsAfterLength={20}
-                      displayObjectSize={false}
-                      displayDataTypes={false}
-                      style={jsonViewStyles({ theme })}
-                    />
+                    <Box style={{ background: JSON_VIEW_BG }} p={2}>
+                      {rowData.details || ""}
+                    </Box>
                   )
                 } // check columns
               } // render

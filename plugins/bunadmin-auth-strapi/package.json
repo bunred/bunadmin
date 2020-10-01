@@ -1,14 +1,15 @@
 {
   "name": "bunadmin-auth-strapi",
-  "version": "1.0.1-alpha.1",
+  "version": "1.1.0-beta.10.1",
   "license": "Apache-2.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
-    "dist"
+    "lib"
   ],
   "dependencies": {
-    "@bunred/bunadmin": "^1.1.0-beta.1.2"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "devDependencies": {
     "prettier": "1.19.1",
@@ -16,6 +17,6 @@
   },
   "scripts": {
     "test": "prettier --check --no-semi src/** pages/** test/** && jest",
-    "pack": "rm -rf dist & tsc && npm pack"
+    "pack": "rm -rf lib & tsc && npm pack"
   }
 }
