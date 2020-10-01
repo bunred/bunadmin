@@ -33,6 +33,7 @@ lib
 
 pluginsData.json
 /packages/bunadmin/.bunadmin
+/packages/bunadmin/src/private/plugins/pluginsData.ts
 
 yarn.lock
 package-lock.json
