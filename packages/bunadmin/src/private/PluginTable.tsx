@@ -1,7 +1,10 @@
 import React from "react"
 import dynamic from "next/dynamic"
-import TableSkeleton from "../components/Table/components/TableSkeleton"
-import { PluginTableProps, handlePluginPath } from "@/utils"
+import {
+  PluginTableProps,
+  TableSkeleton,
+  handlePluginPath
+} from "@bunred/bunadmin"
 
 /**
  * !DO NOT export PluginTable in @bunred/bunadmin
@@ -21,11 +24,22 @@ export default function PluginTable({
 }: PluginTableProps) {
   const pluginPath = handlePluginPath({ team, group, name })
 
-  const Plugin = dynamic({
-    loader: () => import(`../../.bunadmin/dynamic/${pluginPath}`),
-    loading: () =>
-      hideLoading ? null : <TableSkeleton title={`${name} loading...`} />
-  })
+  /**
+   * Load plugin that override or customize
+   */
+  let CustomPlugin
+  try {
+    CustomPlugin = require(`./plugins/${pluginPath}`)
+    CustomPlugin = CustomPlugin.default
+  } catch (e) {}
+
+  const Plugin =
+    CustomPlugin ||
+    dynamic({
+      loader: () => import(`../../.bunadmin/dynamic/${pluginPath}`),
+      loading: () =>
+        hideLoading ? null : <TableSkeleton title={`${name} loading...`} />
+    })
 
   return <Plugin />
 }
