@@ -8,7 +8,8 @@
     "declarationDir": "./lib",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@bunred/bunadmin": ["./src"]
     },
     "isolatedModules": true
   },
