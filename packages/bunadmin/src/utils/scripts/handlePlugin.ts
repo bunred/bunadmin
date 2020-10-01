@@ -1,4 +1,5 @@
 /**
+ * Handle plugin path
  * bunadmin-[team]-[group]/[name] -> bunadmin-[plugin or special]-[group]/[name]
  * return dynamic import path: bunadmin-[plugin]-[group]/[name]
  * example:
@@ -36,7 +37,7 @@ export function handlePluginPath({
 }
 
 /**
- * Handling special group, remove [team]
+ * Handle special group, remove [team]
  * [slug plugin]-[team] -> [slug plugin]
  * @param group
  */
@@ -48,7 +49,7 @@ export function specialPluginGroup(group: string): string {
 }
 
 /**
- * Handling special slug, remove [team]
+ * Handle special slug, remove [team]
  * /[slug plugin]-[team]/[name] -> /[slug plugin]/[name]
  * @param slug
  */

@@ -1,7 +1,10 @@
 const path = require("path")
-const FileHound = require("filehound")
 const fs = require("fs")
 const Log = require("next/dist/build/output/log")
+const {
+  findPluginsPaths,
+  getPluginsData
+} = require("./lib/utils/node/plugin-action")
 
 /**
  * Prepare bunadmin plugins to `.bunadmin/dynamic` tmp directory,
@@ -24,68 +27,6 @@ module.exports = ({ nodeModulesPath, pluginsDynamicPath }) => {
   Log.wait("preparing...")
 
   /**
-   * Find all bunadmin plugins from root/node_modules
-   */
-  let pluginsInModules =
-    FileHound.create()
-      .paths(nodeModulesPath)
-      .depth(1)
-      .directory()
-      .match(["bunadmin-auth-*", "bunadmin-upload-*", "bunadmin-plugin-*"])
-      .findSync() || []
-
-  /**
-   * Handle NEXT_PUBLIC_AUTH_PLUGIN
-   */
-  if (process.env.NEXT_PUBLIC_AUTH_PLUGIN) {
-    let specifiedAuthPluginExists
-    try {
-      specifiedAuthPluginExists = require(process.env.NEXT_PUBLIC_AUTH_PLUGIN +
-        "/package.json").version
-    } catch (e) {
-      Log.error(
-        "AUTH_PLUGIN specified but not exists: " +
-          process.env.NEXT_PUBLIC_AUTH_PLUGIN
-      )
-    }
-    if (!specifiedAuthPluginExists) return false
-  }
-
-  /**
-   * Handle duplicate auth plugins (keep one)
-   * @type {number}
-   */
-  const countAuth = (
-    pluginsInModules.find(item => /bunadmin-auth-/g.test(item)) || []
-  ).length
-  if (countAuth > 1) {
-    const newArr = []
-    pluginsInModules.map(item => {
-      if (
-        item.indexOf(process.env.NEXT_PUBLIC_AUTH_PLUGIN) > -1 ||
-        item.indexOf("bunadmin-auth-") < 0
-      ) {
-        newArr.push(item)
-      }
-    })
-    pluginsInModules = newArr
-  }
-
-  /**
-   * Handle ignored plugins
-   */
-  const ignoredArr = process.env.NEXT_PUBLIC_IGNORED_PLUGINS
-    ? process.env.NEXT_PUBLIC_IGNORED_PLUGINS.split(/[ ,]+/)
-    : []
-  ignoredArr.map(item => {
-    const ignoredRegx = new RegExp(item, "g")
-    const ignoreIndex = pluginsInModules.findIndex(item =>
-      ignoredRegx.test(item)
-    )
-    delete pluginsInModules[ignoreIndex]
-  })
-
-  /**
    * Recreate directory .bunadmin/dynamic
    */
   const rimraf = require("rimraf")
@@ -97,21 +38,22 @@ module.exports = ({ nodeModulesPath, pluginsDynamicPath }) => {
     fs.mkdirSync(pluginsDynamicPath)
   }
 
+  const pluginsPaths = findPluginsPaths(nodeModulesPath)
+  const pluginsData = getPluginsData(pluginsPaths)
+
   /**
    * Merge pluginsData
    * Generate pluginsSchema ([plugin]/[group]/[name].js)
    * @type {*[]}
    */
 
-  let pluginsData = []
-  pluginsInModules.map(async pathItem => {
+  pluginsPaths.map(async pathItem => {
     if (typeof pathItem !== "string") return
 
     let plugin
     try {
       plugin = require(pathItem)
       if (!plugin || !plugin.initData || !plugin.initData.data) return
-      pluginsData = [...pluginsData, ...plugin.initData.data]
     } catch (e) {
       Log.error(
         "cannot find 'initData' in the plugin, please export or check: " +
