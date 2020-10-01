@@ -3,13 +3,13 @@ import { PluginData } from "@/utils"
 
 /**
  * NODE MODULE
- * Find all bunadmin plugin paths under the [paths]
- * @param path {string}
+ * Find active plugins' paths under the [paths]
+ * @param paths {string}
  */
-export function findPluginsPaths(path: string): string[] {
-  let pluginsInModules: string[] =
+export function findPlugins(paths: string): string[] {
+  let activePlugins: string[] =
     FileHound.create()
-      .paths(path)
+      .paths(paths)
       .depth(1)
       .directory()
       // @ts-ignore
@@ -21,11 +21,11 @@ export function findPluginsPaths(path: string): string[] {
    * @type {number}
    */
   const countAuth = (
-    pluginsInModules.find(item => /bunadmin-auth-/g.test(item)) || []
+    activePlugins.find(item => /bunadmin-auth-/g.test(item)) || []
   ).length
   if (countAuth > 1) {
     const newArr: string[] = []
-    pluginsInModules.map(item => {
+    activePlugins.map(item => {
       if (
         (process.env.NEXT_PUBLIC_AUTH_PLUGIN &&
           item.indexOf(process.env.NEXT_PUBLIC_AUTH_PLUGIN) > -1) ||
@@ -34,7 +34,7 @@ export function findPluginsPaths(path: string): string[] {
         newArr.push(item)
       }
     })
-    pluginsInModules = newArr
+    activePlugins = newArr
   }
 
   /**
@@ -45,15 +45,13 @@ export function findPluginsPaths(path: string): string[] {
     : []
   ignoredArr.map(item => {
     const ignoredRegx = new RegExp(item, "g")
-    const ignoreIndex = pluginsInModules.findIndex(item =>
-      ignoredRegx.test(item)
-    )
-    delete pluginsInModules[ignoreIndex]
+    const ignoreIndex = activePlugins.findIndex(item => ignoredRegx.test(item))
+    delete activePlugins[ignoreIndex]
   })
 
-  pluginsInModules = pluginsInModules.map(item => item)
+  activePlugins = activePlugins.map(item => item)
 
-  return pluginsInModules
+  return activePlugins
 }
 
 /**
@@ -61,11 +59,13 @@ export function findPluginsPaths(path: string): string[] {
  * Get plugins data from [paths]
  * @param paths
  */
-export function getPluginsData(paths: string[]): PluginData[] {
+export function getPlugins(paths: string[]): PluginData[] {
   const Log = require("next/dist/build/output/log")
 
   let pluginsData: PluginData[] = []
   paths.map(async pathItem => {
+    if (pathItem.indexOf("node_modules") < 0) return
+
     let plugin
     try {
       plugin = require("" + pathItem)
