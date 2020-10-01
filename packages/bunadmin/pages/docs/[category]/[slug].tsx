@@ -17,7 +17,7 @@ import { ThemeProvider } from "@material-ui/styles"
 
 import PrismHighlight, { defaultProps } from "prism-react-renderer"
 import EvaIcon from "react-eva-icons"
-import DefaultLayout from "../../../src/private/DefaultLayout"
+import DefaultLayout from "@/private/DefaultLayout"
 import Error from "@/private/Error"
 // import prismTheme from "prism-react-renderer/themes/vsDark"
 const prismCss = "/assets/css/prism.css"
@@ -39,7 +39,7 @@ export default function DocsCategorySlug() {
         const content = await import(
           `../../../.bunadmin/dynamic/${bunadminDocPath}/menus`
         )
-        const menuData = content && (content.default as Type[])
+        const menuData: Type[] = content ? content.menu : []
         setMenuData(menuData)
       } catch (e) {}
     })()
@@ -74,7 +74,7 @@ export default function DocsCategorySlug() {
   const DocsComponent = dynamic({
     loader: () =>
       import(
-        `../../../.bunadmin/dynamic/${bunadminDocPath}/${category}/${slug}.mdx`
+        `../../../../../plugins/${bunadminDocPath}/${category}/${slug}.mdx`
       ),
     loading: () => <TableSkeleton title={`${slug} loading...`} />
   })
