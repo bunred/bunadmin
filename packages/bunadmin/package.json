@@ -1,6 +1,6 @@
 {
   "name": "@bunred/bunadmin",
-  "version": "1.1.0-beta.1.2.2",
+  "version": "1.1.0-beta.10.1",
   "description": "A simple graphql admin dashboard. Easy to expand with the flexible plugin. Graphql first, also supports api. Based on React, Redux, Material-UI, Realtime RxDB, Formik, I18N.",
   "license": "Apache-2.0",
   "repository": {
@@ -26,8 +26,8 @@
     "start": "next start",
     "test": "prettier --check --no-semi src/** pages/** test/** && jest",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
-    "ttsc-pack": "rm -rf lib & ttsc -p tsconfig.pack.json && npm pack",
-    "ttsc": "rm -rf lib & ttsc"
+    "ttsc": "rm -rf lib & ttsc -p tsconfig.pack.json",
+    "ttsc-pack": "rm -rf lib & ttsc -p tsconfig.pack.json && npm pack"
   },
   "dependencies": {
     "@material-ui/core": "^4.10.0",
@@ -40,7 +40,6 @@
     "@types/react-beautiful-dnd": "^13.0.0",
     "@types/react-redux": "^7.1.9",
     "babel-loader": "^8.1.0",
-    "bunadmin-auth-buncms": "^1.0.0-alpha.1",
     "clsx": "^1.1.1",
     "filehound": "^1.17.4",
     "formik": "^2.1.4",
