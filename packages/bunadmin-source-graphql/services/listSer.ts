@@ -26,8 +26,8 @@ export default async function listSer({
   } = tableQuery
 
   let filtersObj: any = {}
-  filters.map(({ column, value: filterValue }) => {
-    let suffix = "_like" // default: like
+  filters.map(({ column, operator, value: filterValue }) => {
+    let suffix = operator === "=" ? "_like" : operator // default: like
 
     if (!column.field) return
     const field = column.field.toString()
@@ -69,7 +69,9 @@ export default async function listSer({
     filtersObj[filterField] = { [suffix]: filterValue }
   })
 
-  filtersObj[searchField] = { [searchSuffix]: `%${searchWords || ""}%` }
+  if (!filtersObj[searchField]) {
+    filtersObj[searchField] = { [searchSuffix]: `%${searchWords || ""}%` }
+  }
 
   const orderByField =
     (orderBy && orderBy.field && orderBy.field.toString()) || "id"
@@ -82,11 +84,11 @@ export default async function listSer({
   }
 
   const graphql = `
-    query MyQuery($offset: Int = 0, $limit: Int = 10, $order_by: [code_order_by!] = {}, $where: code_bool_exp = {}) {
+    query MyQuery($offset: Int = 0, $limit: Int = 10, $order_by: [${name}_order_by!] = {}, $where: ${name}_bool_exp = {}) {
       ${name}(limit: $limit, offset: $offset, order_by: $order_by, where: $where) {
       ${fields}
     }
-      ${name}_aggregate {
+      ${name}_aggregate(where: $where) {
         aggregate {
           count
         }
