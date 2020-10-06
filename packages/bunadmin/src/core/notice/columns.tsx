@@ -20,6 +20,6 @@ export const Columns = ({ t }: any): Column<Type>[] => [
     title: t("Created At"),
     field: "created_at",
     editable: "never",
-    type: "datetime"
+    render: r => <>{r && new Date(r.created_at).toLocaleString()}</>
   }
 ]
