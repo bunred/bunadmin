@@ -9,7 +9,7 @@ import { useTheme } from "@material-ui/core/styles"
 
 import { SchemaName, SchemaLabel, SchemaColumns } from "./plugin"
 import { useTranslation } from "react-i18next"
-import { dataCtrl, editableCtrl } from "bunadmin-source-strapi"
+import { bulkDeleteCtrl, dataCtrl, editableCtrl } from "bunadmin-source-strapi"
 
 export default function() {
   const { t } = useTranslation("table")
@@ -23,20 +23,17 @@ export default function() {
         tableRef={tableRef}
         title={t(SchemaLabel)}
         columns={SchemaColumns({ t, tableRef })}
-        editable={editableCtrl({ t, SchemaName })}
-        // style
         style={DefaultProps.style}
-        // icons
         icons={tableIcons({ theme })}
-        // options
         options={{
           ...DefaultProps.options,
           filtering: true
         }}
-        // data
         data={async tableQuery =>
           await dataCtrl({ t, tableQuery, path: SchemaName })
         }
+        editable={editableCtrl({ t, SchemaName })}
+        actions={[bulkDeleteCtrl({ SchemaName, t, tableRef })]}
       />
     </>
   )

@@ -9,7 +9,7 @@ import { useTheme } from "@material-ui/core/styles"
 
 import { SchemaLabel, SchemaColumns, SchemaName } from "./plugin"
 import { useTranslation } from "@bunred/bunadmin"
-import { dataCtrl, editableCtrl } from "bunadmin-source-strapi"
+import { bulkDeleteCtrl, dataCtrl, editableCtrl } from "bunadmin-source-strapi"
 
 export default function() {
   const { t } = useTranslation("table")
@@ -38,6 +38,7 @@ export default function() {
           })
         }
         editable={editableCtrl({ t, SchemaName })}
+        actions={[bulkDeleteCtrl({ SchemaName, t, tableRef })]}
       />
     </>
   )
