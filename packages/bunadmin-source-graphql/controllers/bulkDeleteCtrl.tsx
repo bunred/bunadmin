@@ -5,7 +5,7 @@ import { BulkDeleteProps } from "@bunred/bunadmin"
 import EvaIcon from "react-eva-icons"
 import bulkDeleteSer from "../services/bulkDeleteSer"
 
-export default function bunkDeleteCtrl<RowData extends object>(
+export default function bulkDeleteCtrl<RowData extends object>(
   props: BulkDeleteProps
 ): Action<RowData> {
   const { t, SchemaName, tableRef, primaryKey } = props
