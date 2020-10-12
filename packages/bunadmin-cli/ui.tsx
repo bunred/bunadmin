@@ -10,8 +10,7 @@ type UIProps = {
 }
 
 type State = {
-  command: "help" | "new" | "plugin" | "schema"
-  ready: boolean
+  command?: "new" | "plugin" | "schema"
   errors?: string
 }
 
@@ -27,8 +26,7 @@ const UI = (props: UIProps) => {
   } = props
 
   const [state, setState] = useState<State>({
-    command: "help",
-    ready: false,
+    command: undefined,
     errors: undefined
   })
 
@@ -71,32 +69,18 @@ const UI = (props: UIProps) => {
           })
       }
     })()
-  }, [])
-
+  }, [command])
   switch (command) {
     case "new":
     case "plugin":
     case "schema":
       return (
         <Text color={state.errors ? "red" : "green"}>
-          {state.errors || "Done."}
+          {state.errors || "done"}
         </Text>
       )
-    case "help":
     default:
-      return (
-        <Text>
-          $ bunadmin --help Usage Create a new project
-          {`\n`}$ bunadmin new [name]
-          {`\n`}
-          Options
-          {`\n`} --plugin with demo plugin
-          {`\n`} --doc with demo document Examples
-          {`\n`}$ bunadmin new my-dashboard
-          {`\n`} Your project "my-dashboard" has been created.
-          {`\n`}
-        </Text>
-      )
+      return <Text color="red">{state.errors}</Text>
   }
 }
 

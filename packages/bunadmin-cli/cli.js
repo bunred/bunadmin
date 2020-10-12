@@ -8,17 +8,20 @@ const meow = require("meow")
 const ui = importJsx("./lib/ui")
 
 const cli = meow(`
-	Usage
-	  Create a new project
+	Create a new project
 	  $ bunadmin new {name}
 
-	Options
-		--plugin  with demo plugin
-		--doc     with demo document
+    Options
+      --plugin  with demo plugin
+      --doc     with demo document
 
-	Examples
-	  $ bunadmin new my-dashboard
-	  Your project "my-dashboard" has been created.
+	Create a plugin
+	  $ bunadmin plugin [team]-[group]
+	  (Run in the plugins directory: plugins/)
+
+	Create a schema
+	  $ bunadmin schema [name]
+	  (Run in the plugin directory: plugins/bunadmin-plugin-[team]-[group]/)
 `)
 
 render(

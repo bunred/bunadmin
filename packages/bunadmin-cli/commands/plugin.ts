@@ -13,8 +13,7 @@ export default async function newPlugin(
 ): Promise<undefined | string> {
   // check in the plugins path
   const currentPath = path.resolve()
-  console.error(currentPath)
-  if (!/.*\/plugins/.test(currentPath)) {
+  if (!/.*\/plugins$/.test(currentPath)) {
     return "You need to run this command in the plugins path"
   }
 
