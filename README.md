@@ -4,6 +4,12 @@
 
 Bunadmin hopes to achieve as many function reuse as possible through simple development methods, so in each bunadmin project, **common functions have been built**, such as dynamic routing, multi-level menus, **permission control, data management**, search filtering and sorting, CRUD, **file management, message notification**, documenting your code, etc. You only need to build your own plugin to call it, and the bunadmin plugin is also easy to learn and use.
 
+## Quick start
+```
+npm install --global bunadmin-cli
+bunadmin new my-bunadmin
+```
+
 [Read the Getting Started tutorial](http://blog.eg.bunadmin.com/docs/getting-started/introduction)
 
 ## Online demo
