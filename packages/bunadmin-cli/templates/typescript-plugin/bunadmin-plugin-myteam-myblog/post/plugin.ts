@@ -1,7 +1,5 @@
-import Columns from "./columns"
+export { default as SchemaColumns } from "./columns"
 
-export const SchemaName = "posts"
+export const SCHEMA_NAME = "posts"
 
-export const SchemaLabel = "Posts"
-
-export const SchemaColumns = Columns
+export const SCHEMA_LABEL = "Posts"
