@@ -25,7 +25,7 @@ export default async function newPlugin(
   const group = input[1]
   if (!group || group === "") return `group '${group}' format is incorrect`
   // copy template files to target folder
-  const targetFolder = path.resolve(name)
+  const targetFolder = path.resolve(`bunadmin-plugin-${name}`)
   errors = await copyFolder(sourceFolder, targetFolder)
   if (errors) return errors
 
