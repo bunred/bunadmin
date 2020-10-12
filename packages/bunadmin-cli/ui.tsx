@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { Text } from "ink"
-import newProject from "./new"
+import newProject from "./commands/new"
+import newPlugin from "./commands/plugin"
+import newSchema from "./commands/schema"
 
 type UIProps = {
   inputs: string[]
@@ -8,10 +10,9 @@ type UIProps = {
 }
 
 type State = {
-  type: "help" | "new" | "plugin"
+  command: "help" | "new" | "plugin" | "schema"
   ready: boolean
-  success: boolean
-  projectName: string
+  errors?: string
 }
 
 type PickOne<T> = {
@@ -26,54 +27,60 @@ const UI = (props: UIProps) => {
   } = props
 
   const [state, setState] = useState<State>({
-    type: "help",
+    command: "help",
     ready: false,
-    success: false,
-    projectName: "my-bunadmin"
+    errors: undefined
   })
 
   function updateState(obj: PickOne<State>) {
     setState({ ...state, ...obj })
   }
 
-  const type = inputs[0]
+  const command: State["command"] | string = inputs[0]
 
   useEffect(() => {
     ;(async () => {
-      switch (type) {
+      switch (command) {
         case "new":
           {
-            updateState({ type })
+            updateState({ command })
             const projectName = inputs[1] || "my-bunadmin"
-            const success = await newProject(projectName)
-            updateState({ projectName })
-            updateState({ success })
+            const errors = await newProject(projectName)
+            updateState({ errors })
+          }
+          break
+        case "plugin":
+          {
+            updateState({ command })
+            const pluginName = inputs[1] || "myteam-myblog"
+            const errors = await newPlugin(pluginName)
+            updateState({ errors })
+          }
+          break
+        case "schema":
+          {
+            updateState({ command })
+            const pluginName = inputs[1] || "mypost"
+            const errors = await newSchema(pluginName)
+            updateState({ errors })
           }
           break
         default:
-          updateState({ success: false })
+          updateState({
+            errors: "Command does not exist, please check help: bunadmin --help"
+          })
       }
     })()
   }, [])
 
-  const { projectName } = state
-
-  switch (type) {
+  switch (command) {
     case "new":
+    case "plugin":
+    case "schema":
       return (
-        <>
-          {state.success ? (
-            <Text>
-              Your project <Text color="green">{projectName}</Text> has been
-              created.
-            </Text>
-          ) : (
-            <Text>
-              Creation failed, please try again or check the name
-              <Text color="green">{projectName}</Text>.
-            </Text>
-          )}
-        </>
+        <Text color={state.errors ? "red" : "green"}>
+          {state.errors || "Done."}
+        </Text>
       )
     case "help":
     default:

@@ -4,13 +4,11 @@ import { copySync } from "fs-extra"
 export default async function copyFolder(
   source: string,
   destination: string
-): Promise<boolean> {
+): Promise<undefined | string> {
   try {
     await copySync(source, destination)
   } catch (e) {
-    console.error("An error occured while copying the folder.")
-    return false
+    console.error(e)
+    return `An error occured while copying the folder.`
   }
-
-  return true
 }
