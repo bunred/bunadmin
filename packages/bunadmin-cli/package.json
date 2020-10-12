@@ -1,0 +1,60 @@
+{
+  "name": "bunadmin-cli",
+  "version": "1.1.0-beta.10.1.1",
+  "license": "MIT",
+  "bin": {
+    "bunadmin": "cli.js"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "test": "xo && ava",
+    "pack": "rm -rf lib & tsc && npm pack",
+    "local-install -g": "npm run pack && npm install --global ./"
+  },
+  "files": [
+    "cli.js",
+    "lib",
+    "templates"
+  ],
+  "dependencies": {
+    "fs-extra": "^9.0.1",
+    "import-jsx": "^4.0.0",
+    "ink": "^3.0.7",
+    "meow": "^7.1.1",
+    "react": "^16.13.1"
+  },
+  "devDependencies": {
+    "@ava/babel": "^1.0.1",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/register": "^7.11.5",
+    "@types/fs-extra": "^9.0.1",
+    "ava": "^3.13.0",
+    "chalk": "^4.1.0",
+    "eslint-config-xo-react": "^0.23.0",
+    "eslint-plugin-react": "^7.21.4",
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "ink-testing-library": "^2.1.0",
+    "xo": "^0.33.1"
+  },
+  "ava": {
+    "babel": true,
+    "require": [
+      "@babel/register"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  },
+  "xo": {
+    "extends": "xo-react",
+    "rules": {
+      "react/prop-types": "off"
+    }
+  }
+}
