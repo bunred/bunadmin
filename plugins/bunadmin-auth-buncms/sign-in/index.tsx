@@ -15,13 +15,13 @@ import validateController from "./controllers/validateController"
 import useStyles from "./styles"
 import submitController from "./controllers/submitController"
 import { Values } from "./types"
-import { useRouter } from "next/router"
-import { useTranslation } from "react-i18next"
 import {
   ENV,
   AuthPrimary as Primary,
   BunField,
-  AnimatedRandomBG
+  AnimatedRandomBG,
+  useTranslation,
+  useRouter
 } from "@bunred/bunadmin"
 
 function Copyright() {

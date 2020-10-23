@@ -29,7 +29,7 @@ export default function() {
           ...DefaultProps.options,
           filtering: true
         }}
-        data={async tableQuery =>
+        data={async (tableQuery: any) =>
           await dataCtrl({
             t,
             tableQuery,
