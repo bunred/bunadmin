@@ -2,7 +2,6 @@ import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import IconButton from "@material-ui/core/IconButton"
 import EvaIcon from "react-eva-icons"
-import Typography from "@material-ui/core/Typography"
 import React from "react"
 import { useTheme } from "@material-ui/core/styles"
 import { topBarStyles } from "./styles"
@@ -16,6 +15,8 @@ import DocMenu from "./TopBarRightMenu/DocMenu"
 import { useRouter } from "next/router"
 import { DynamicDocRoute } from "@/utils/routes"
 import { NoticePlugin } from "@/utils"
+import { Link } from "react-router-dom"
+import { Button } from "@material-ui/core"
 
 const useStyles = topBarStyles
 
@@ -56,11 +57,15 @@ export default function TopBar(props: TopBarProps) {
               />
             </IconButton>
           )}
-          <Link href={!isDoc ? "/" : docsHome}>
-            <Typography variant="h6" noWrap>
-              {!isDoc ? ENV.SITE_NAME : ENV.SITE_NAME + " DOCS"}
-            </Typography>
-          </Link>
+          <Button
+            variant={"text"}
+            size="large"
+            color="primary"
+            component={Link}
+            to={!isDoc ? "/" : docsHome}
+          >
+            {!isDoc ? ENV.SITE_NAME : ENV.SITE_NAME + " DOCS"}
+          </Button>
         </div>
 
         <div className={classes.rightBlock}>
