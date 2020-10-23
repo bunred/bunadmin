@@ -2,6 +2,8 @@
   "extends": "./tsconfig",
   "compilerOptions": {
     "jsx": "react",
+    "module": "commonjs",
+    "noEmit": false,
     "plugins": [
       {
         "transform": "typescript-transform-paths"
@@ -17,6 +19,11 @@
     "node_modules",
     "lib",
     "pages",
+    "src/private",
+    "src/App.tsx",
+    "src/index.tsx",
+    "src/serviceWorker.ts",
+    "src/pages",
     "src/private"
   ]
 }

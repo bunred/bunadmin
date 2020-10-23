@@ -11,9 +11,11 @@
       <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin-source-strapi/lib" />
       <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin/.bunadmin" />
       <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin/.next" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin/build" />
       <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin/lib" />
       <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin/out" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/bunadmin/src/.bunadmin" />
       <excludeFolder url="file://$MODULE_DIR$/plugins/bunadmin-auth-buncms/lib" />
       <excludeFolder url="file://$MODULE_DIR$/plugins/bunadmin-auth-mesh/lib" />
       <excludeFolder url="file://$MODULE_DIR$/plugins/bunadmin-auth-strapi/lib" />
