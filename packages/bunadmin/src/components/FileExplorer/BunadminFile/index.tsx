@@ -3,7 +3,9 @@ import {
   Card,
   CardActionArea,
   CardMedia,
-  CircularProgress
+  CircularProgress,
+  createStyles,
+  Theme
 } from "@material-ui/core"
 import DropZone, { DropEvent, FileRejection } from "react-dropzone"
 import FilePreview from "../FilePreview"
@@ -12,6 +14,7 @@ import BunadminFileProps, { BunadminFileType } from "../"
 import CardBottomArea from "./CardBottomArea"
 import { Translation } from "react-i18next"
 import { ENV } from "@/utils"
+import { makeStyles } from "@material-ui/styles"
 
 export const upload_image = "/p/upload.svg"
 export const default_file = "/p/default_file.svg"
@@ -56,7 +59,9 @@ export default function BunadminFile(props: BunadminFileProps) {
     url = file.url
   }
 
-  const classes = styles({ id, width })
+  const classes = makeStyles((theme: Theme) => {
+    return createStyles(styles({ theme, id, width }))
+  })()
   const previewUrl = ENV.FILE_PREVIEW_URL
   const [uploading, setUploading] = React.useState(false),
     [imageUrl, setImageUrl] = React.useState(
@@ -112,7 +117,7 @@ export default function BunadminFile(props: BunadminFileProps) {
   useEffect(() => {
     multipleUpload &&
       console.log(multipleUpload, "Multiple Upload not supported yet")
-  }, [display_name])
+  }, [display_name, multipleUpload])
 
   const UploadText = () => (
     <Translation ns="table">{t => t("Choose or drag")}</Translation>
