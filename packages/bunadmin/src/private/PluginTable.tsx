@@ -1,10 +1,5 @@
-import React from "react"
-import dynamic from "next/dynamic"
-import {
-  PluginTableProps,
-  TableSkeleton,
-  handlePluginPath
-} from "@bunred/bunadmin"
+import React, { Suspense } from "react"
+import { PluginTableProps, TableSkeleton, handlePluginPath } from "../"
 
 /**
  * !DO NOT export PluginTable in @bunred/bunadmin
@@ -16,12 +11,7 @@ import {
  * @param hideLoading
  * @constructor
  */
-export default function PluginTable({
-  team,
-  group,
-  name,
-  hideLoading
-}: PluginTableProps) {
+export default function PluginTable({ team, group, name }: PluginTableProps) {
   const pluginPath = handlePluginPath({ team, group, name })
 
   /**
@@ -33,13 +23,21 @@ export default function PluginTable({
     CustomPlugin = CustomPlugin.default
   } catch (e) {}
 
-  const Plugin =
-    CustomPlugin ||
-    dynamic({
-      loader: () => import(`../../.bunadmin/dynamic/${pluginPath}`),
-      loading: () =>
-        hideLoading ? null : <TableSkeleton title={`${name} loading...`} />
-    })
+  const Plugin = CustomPlugin || DynamicPlugin
+
+  const DynamicComponent = React.lazy(() =>
+    import(`../.bunadmin/dynamic/${pluginPath}`)
+  )
+
+  function DynamicPlugin() {
+    return (
+      <div>
+        <Suspense fallback={<TableSkeleton title={`${name} loading...`} />}>
+          <DynamicComponent />
+        </Suspense>
+      </div>
+    )
+  }
 
   return <Plugin />
 }

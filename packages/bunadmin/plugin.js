@@ -1,7 +1,6 @@
 const path = require("path")
 const fs = require("fs")
 const rimraf = require("rimraf")
-const Log = require("next/dist/build/output/log")
 const { findPlugins, getPlugins } = require("./lib/utils/node/plugin-action")
 
 /**
@@ -19,12 +18,12 @@ module.exports = ({ modulesPath, dynamicPath, pluginsPath }) => {
   /**
    * Prepare plugins START
    */
-  Log.info("prepare bunadmin plugins")
+  console.info("prepare bunadmin plugins")
 
   /**
    * Generate pluginsData.json START
    */
-  Log.wait("preparing...")
+  console.info("preparing...")
 
   /**
    * Recreate directory .bunadmin/dynamic
@@ -65,7 +64,7 @@ ${importLine}
 export const data: IPluginData[] = [${arrayLine}]
 `
   fs.writeFile(`${pluginsPath}/pluginsData.ts`, tsContent, e => {
-    if (e) Log.error("cannot generating pluginsData.ts: " + e)
+    if (e) console.error("cannot generating pluginsData.ts: " + e)
   })
 
   /**
@@ -84,7 +83,7 @@ export const data: IPluginData[] = [${arrayLine}]
       plugin = require(pathItem)
       if (!plugin || !plugin.initData || !plugin.initData.data) return
     } catch (e) {
-      Log.error(
+      console.error(
         "cannot find 'initData' in the plugin, please export or check: " +
           pathItem
       )
@@ -117,7 +116,7 @@ export const data: IPluginData[] = [${arrayLine}]
         }
         const saveNameContent = `export { default } from "${pluginName}/lib/${dataItem["name"]}"`
         fs.writeFile(`${saveNamePath}/index.js`, saveNameContent, e => {
-          if (e) Log.error("cannot generating plugin schema: " + e)
+          if (e) console.error("cannot generating plugin schema: " + e)
         })
 
         const saveIndexPath = path.resolve(
@@ -126,11 +125,11 @@ export const data: IPluginData[] = [${arrayLine}]
         )
         const saveIndexContent = `export * from "${pluginName}"`
         fs.writeFile(saveIndexPath, saveIndexContent, e => {
-          if (e) Log.error("cannot generating plugin index.js: " + e)
+          if (e) console.error("cannot generating plugin index.js: " + e)
         })
       })
     } catch (e) {
-      Log.error("cannot generating pluginSchema: " + e)
+      console.error("cannot generating pluginSchema: " + e)
     }
   })
 
@@ -140,7 +139,7 @@ export const data: IPluginData[] = [${arrayLine}]
     /**
      * Prepare plugins END
      */
-    Log.info("bunadmin plugins data generated successfully")
+    console.info("bunadmin plugins data generated successfully")
   })
   /**
    * Generate pluginsData.json END

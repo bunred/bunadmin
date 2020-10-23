@@ -1,7 +1,6 @@
 import { MenuType, SchemaType } from "@/core"
 import { TFunction } from "i18next"
 import { RefObject } from "react"
-import { NextRouter } from "next/router"
 import { DocsData } from "@/utils/database/rxInitData/initDocsData"
 
 export interface IPluginData {
@@ -34,7 +33,6 @@ export type PluginTableProps = {
 }
 
 export type AuthProps = {
-  router: NextRouter
   authResponseKey?: IAuthPlugin["authResponseKey"]
   authRequestUrl?: IAuthPlugin["authRequestUrl"]
   authRequestMethod?: IAuthPlugin["authRequestMethod"]

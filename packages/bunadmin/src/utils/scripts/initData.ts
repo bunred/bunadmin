@@ -8,7 +8,6 @@ import { IAuthPlugin, PluginData, store } from "@/utils"
 import { setNestedMenu } from "@/slices/nestedMenuSlice"
 import { setSchema } from "@/slices/schemaSlice"
 import { Dispatch, SetStateAction } from "react"
-import { NextRouter } from "next/dist/next-server/lib/router/router"
 import authorization from "@/utils/scripts/authorization"
 import initDocsData from "@/utils/database/rxInitData/initDocsData"
 import { Type } from "@/core/schema/types"
@@ -17,8 +16,8 @@ import { i18n } from "i18next"
 
 type Props = {
   i18n: i18n
-  router: NextRouter
   authPlugin: IAuthPlugin
+  setIsProtected: Dispatch<SetStateAction<boolean>>
   pluginsData: PluginData[]
   requirePlugin: (path: string) => any
   setReady: Dispatch<SetStateAction<boolean>>
@@ -28,8 +27,8 @@ type Props = {
 
 export default async function initData({
   i18n,
-  router,
   authPlugin,
+  setIsProtected,
   pluginsData,
   requirePlugin,
   setReady,
@@ -56,12 +55,13 @@ export default async function initData({
   /**
    * Authenticate the current user, fail to execute redirect
    */
-  await authorization({
-    router,
+  const isVerified = await authorization({
     authResponseKey, // Successful when the response data[key] is not null
     authRequestUrl,
     authRequestMethod
   })
+
+  setIsProtected(!isVerified)
 
   /**
    * Avoid repeated initialization
