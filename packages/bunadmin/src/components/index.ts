@@ -27,7 +27,6 @@ export * from "./FileExplorer"
 export { default as BunField } from "./Formik/BunField"
 export { default as Repeater } from "./Repeater"
 export { default as CoreContainer } from "./CoreContainer"
-export { default as DefaultHead } from "./DefaultHead"
 export { default as ProTip } from "./ProTip"
 
 export { default as LeftMenu } from "@/components/LeftMenu"
