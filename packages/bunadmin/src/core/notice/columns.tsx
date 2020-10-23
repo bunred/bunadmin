@@ -1,3 +1,4 @@
+import React from "react"
 import { Column } from "material-table"
 import { Type } from "./types"
 

@@ -34,6 +34,6 @@ export default async function rxInitData({
 
     console.log(`DatabaseService: ${name} done`)
 
-    return location.reload()
+    return window.location.reload()
   }
 }

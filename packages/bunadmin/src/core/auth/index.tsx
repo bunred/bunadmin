@@ -118,7 +118,7 @@ export default function AuthInfoContainer() {
                           value: rowData["role"],
                           updated_at: Date.now()
                         })
-                        location.reload()
+                        window.location.reload()
                       }}
                     >
                       Switch to {rowData[Primary]}
