@@ -2,7 +2,7 @@ import React from "react"
 import { Box, Button, Typography } from "@material-ui/core"
 import errorMessages from "./errorMessages"
 import { ErrorMsg } from "./types"
-import { useRouter } from "next/router"
+import { useRouter } from "@/router"
 import DefaultLayout from "../DefaultLayout"
 import { ErrorProps } from "@/components"
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useRouter } from "next/router"
+import { useRouter } from "@/router"
 import { Column } from "material-table"
 import { editableController, TableHead, Table, ErrorProps } from "@/components"
 import { TableDefaultProps as DefaultProps } from "../Table/models/defaultProps"

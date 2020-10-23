@@ -8,7 +8,7 @@ import { TableDefaultProps as DefaultProps } from "./models/defaultProps"
 import { useTranslation } from "react-i18next"
 import localization from "@/components/Table/localization"
 import { ENV, DynamicRoute } from "@/utils"
-import { useRouter } from "next/router"
+import { useRouter } from "@/router"
 
 export function TableHead({ title }: { title?: string }) {
   React.useEffect(() => {

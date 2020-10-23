@@ -1,6 +1,6 @@
 import React from "react"
 
-import { useRouter } from "next/router"
+import { useRouter } from "@/router"
 import IconButton from "@material-ui/core/IconButton"
 import EvaIcon from "react-eva-icons"
 import { useTheme } from "@material-ui/core/styles"
@@ -17,8 +17,8 @@ export default function DocMenu({
   const router = useRouter()
 
   const handleRoute = ({ route }: { route: string }) => {
-    if (route === "/") return router.push("/").then(_r => {})
-    router.push(DynamicDocRoute, route).then(_r => {})
+    if (route === "/") return router.push("/")
+    router.push(DynamicDocRoute, route)
   }
 
   return (

@@ -15,7 +15,6 @@ import { useStyles } from "./styles"
 import { SeverityType } from "@/core/notice/types"
 import { useTheme } from "@material-ui/core/styles"
 import { LocalDataRoute } from "@/utils/routes"
-import { useRouter } from "next/router"
 import { useSelector } from "react-redux"
 import { selectNotice } from "@/slices/noticeSlice"
 
@@ -28,7 +27,6 @@ const SnackMessage = React.forwardRef(
   (props: { id: SnackbarKey; message: SnackbarMessage }, ref) => {
     const notice = useSelector(selectNotice)
 
-    const router = useRouter()
     const theme = useTheme()
     const classes = useStyles()
     const { closeSnackbar } = useSnackbar()
@@ -107,7 +105,7 @@ const SnackMessage = React.forwardRef(
             <Button
               size="small"
               className={classes.button}
-              onClick={() => router.push(LocalDataRoute.notice).then(_r => {})}
+              onClick={() => window.open(LocalDataRoute.notice, "_blank")}
             >
               <CheckCircleIcon className={classes.checkIcon} />
               Open List

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import IconButton from "@material-ui/core/IconButton"
-import { useRouter } from "next/router"
+import { useRouter } from "@/router"
 import EvaIcon from "react-eva-icons"
 import { useTheme } from "@material-ui/core/styles"
 import { DynamicRoute, LocalDataRoute } from "@/utils/routes"
