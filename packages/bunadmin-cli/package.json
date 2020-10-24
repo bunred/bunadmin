@@ -1,6 +1,6 @@
 {
   "name": "bunadmin-cli",
-  "version": "1.1.0-beta.10.1.1",
+  "version": "1.1.1-beta.0",
   "license": "MIT",
   "bin": {
     "bunadmin": "cli.js"
@@ -11,7 +11,7 @@
   "scripts": {
     "test": "xo && ava",
     "pack": "rm -rf lib & tsc && npm pack",
-    "local-install -g": "npm run pack && npm install --global ./"
+    "local-install-global": "npm run pack && npm uninstall bunadmin-cli --global && npm install --global ./"
   },
   "files": [
     "cli.js",

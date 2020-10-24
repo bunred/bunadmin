@@ -5,6 +5,7 @@ import {
   CardActionArea,
   CardActions,
   CardMedia,
+  createStyles,
   Dialog,
   DialogActions,
   IconButton
@@ -21,6 +22,7 @@ import {
   isImage
 } from "@/components/FileExplorer/BunadminFile"
 import { ENV } from "@/utils"
+import { makeStyles } from "@material-ui/styles"
 
 interface Props {
   preview: boolean
@@ -37,11 +39,13 @@ export default function FilePreview({
   file,
   prefix
 }: Props) {
-  if (!file) return null
-
-  const classes = useStyles()
-  const { created_at, display_name, file_name } = file
+  const classes = makeStyles(() => {
+    return createStyles(useStyles)
+  })()
   const [state, setState] = useState({ fullScreen: fullScreen })
+
+  if (!file) return null
+  const { created_at, display_name, file_name } = file
 
   let { url = default_file } = file
   const previewUrl = ENV.FILE_PREVIEW_URL
@@ -93,7 +97,7 @@ export default function FilePreview({
             </IconButton>
           )}
 
-          <a href={url} target="_blank">
+          <a href={url} target="_blank" rel="noopener noreferrer">
             <IconButton aria-label="Download">
               <DownloadIcon />
             </IconButton>

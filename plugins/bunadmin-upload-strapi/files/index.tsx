@@ -5,6 +5,7 @@ import {
   tableIcons,
   TableDefaultProps as DefaultProps
 } from "@bunred/bunadmin"
+import { Query } from "material-table"
 import { useTheme } from "@material-ui/core/styles"
 
 import { SchemaLabel, SchemaColumns } from "./plugin"
@@ -35,7 +36,7 @@ export default function media() {
           filtering: true
         }}
         // data
-        data={async tableQuery =>
+        data={async (tableQuery: Query<any>) =>
           await dataCtrl({
             t,
             tableQuery,

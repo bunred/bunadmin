@@ -14,7 +14,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
 import EvaIcon from "react-eva-icons"
 import { settingMenus } from "@/utils/config/settingMenus"
-import { useRouter } from "next/router"
+import { useRouter } from "@/router"
 import { DynamicRoute } from "@/utils/routes"
 import { useTranslation } from "react-i18next"
 
@@ -48,7 +48,7 @@ export default function SettingMenu() {
   }
 
   const handleRoute = ({ route }: { route: string }) => {
-    router.push(DynamicRoute, route).then(_r => {})
+    router.push(DynamicRoute, route)
   }
 
   return (

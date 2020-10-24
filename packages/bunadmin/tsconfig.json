@@ -1,18 +1,25 @@
 {
-  "extends": "../../tsconfig",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "jsx": "preserve",
     "rootDir": "./src",
     "outDir": "./lib",
     "declaration": true,
     "declarationDir": "./lib",
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@bunred/bunadmin": ["./src"]
-    },
-    "isolatedModules": true
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
   },
-  "exclude": ["node_modules", "lib"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "exclude": ["node_modules", "lib", "pages", ".bunadmin", "src/.bunadmin"],
+  "include": ["src"]
 }

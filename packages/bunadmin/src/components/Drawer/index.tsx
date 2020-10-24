@@ -5,9 +5,15 @@ import React, {
   useRef,
   useState
 } from "react"
-import { Button, Drawer as MUIDrawer } from "@material-ui/core"
+import {
+  Button,
+  createStyles,
+  Drawer as MUIDrawer,
+  Theme
+} from "@material-ui/core"
 import CSS from "csstype"
 import styles from "./styles"
+import { makeStyles } from "@material-ui/styles"
 
 export interface DrawerProps {
   width?: number | string
@@ -47,7 +53,9 @@ export default function Drawer({
   contentStyles,
   children
 }: DrawerProps) {
-  const classes = styles({ width, height })
+  const classes = makeStyles((theme: Theme) => {
+    return createStyles(styles({ theme, width, height }))
+  })()
   const [state, setState] = useState({ open: false })
   const contentRef: MutableRefObject<any | undefined> = useRef()
 

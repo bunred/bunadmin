@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import RxDB from "rxdb"
 
-import { useRouter } from "next/router"
+import { useRouter } from "@/router"
 import IconButton from "@material-ui/core/IconButton"
 import MenuItem from "@material-ui/core/MenuItem"
 import Menu from "@material-ui/core/Menu"
@@ -33,7 +33,7 @@ export default function SettingMenu() {
   const handleClose = ({ route }: { route: string }) => {
     setAnchorEl(null)
     if (!route) return
-    router.push(DynamicRoute, route).then(_r => {})
+    router.push(DynamicRoute, route)
   }
 
   const handleClearDb = () => {
@@ -97,7 +97,9 @@ export default function SettingMenu() {
         title={modalState.title}
         msg={modalState.msg}
         doFunc={() => {
-          RxDB.removeDatabase("bunadmin", "idb").then(_r => location.reload())
+          RxDB.removeDatabase("bunadmin", "idb").then(_r =>
+            window.location.reload()
+          )
         }}
       />
     </div>

@@ -3,14 +3,16 @@ import { Text } from "ink"
 import newProject from "./commands/new"
 import newPlugin from "./commands/plugin"
 import newSchema from "./commands/schema"
+import { BUNADMIN_CLI_PATH } from "./utils/config"
+import * as path from "path"
 
 type UIProps = {
   inputs: string[]
-  options: { [key: string]: string }
+  options: { [key: string]: string | boolean } | any
 }
 
 type State = {
-  command?: "new" | "plugin" | "schema"
+  command?: "new" | "plugin" | "schema" | "-v"
   errors?: string
 }
 
@@ -20,11 +22,9 @@ type PickOne<T> = {
 }[keyof T]
 
 const UI = (props: UIProps) => {
-  const {
-    inputs
-    // options: { plugin, doc }
-  } = props
+  const { inputs, options } = props
 
+  const [version, setVersion] = useState(null)
   const [state, setState] = useState<State>({
     command: undefined,
     errors: undefined
@@ -38,12 +38,19 @@ const UI = (props: UIProps) => {
 
   useEffect(() => {
     ;(async () => {
+      const packagePath = path.resolve(BUNADMIN_CLI_PATH, "package.json")
+
+      if (!command && options.v) {
+        const packageJson = require(packagePath).version
+        return setVersion(packageJson)
+      }
+
       switch (command) {
         case "new":
           {
             updateState({ command })
             const projectName = inputs[1] || "my-bunadmin"
-            const errors = await newProject(projectName)
+            const errors = await newProject(projectName, options)
             updateState({ errors })
           }
           break
@@ -70,6 +77,11 @@ const UI = (props: UIProps) => {
       }
     })()
   }, [command])
+
+  if (version) {
+    return <Text>{version}</Text>
+  }
+
   switch (command) {
     case "new":
     case "plugin":

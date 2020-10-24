@@ -22,7 +22,7 @@ const data: IPluginData[] = [
     icon_type: "eva",
     icon: "person-outline",
     rank: "100",
-    role: process.env.NEXT_PUBLIC_AUTH_STRAPI_ROLE
+    role: process.env.REACT_APP_AUTH_STRAPI_ROLE
   },
   {
     id: "bunadmin_auth_strapi_roles",
@@ -34,7 +34,7 @@ const data: IPluginData[] = [
     icon_type: "eva",
     icon: "people-outline",
     rank: "100",
-    role: process.env.NEXT_PUBLIC_AUTH_STRAPI_ROLE
+    role: process.env.REACT_APP_AUTH_STRAPI_ROLE
   }
 ]
 

@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@bunred/bunadmin": ["./src"],
+      "@.bunadmin/dynamic": ["./bunadmin/dynamic"]
+    }
+  }
+}

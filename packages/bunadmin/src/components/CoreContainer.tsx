@@ -1,5 +1,5 @@
 import React from "react"
-import { useRouter } from "next/router"
+import { useRouter } from "@/router"
 import LocalLeftMenuContainer from "@/core/menu"
 import MigrationContainer from "@/core/migration"
 import NoticeContainer from "@/core/notice"

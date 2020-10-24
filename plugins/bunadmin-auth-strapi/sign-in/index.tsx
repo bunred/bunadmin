@@ -15,12 +15,12 @@ import validateController from "./controllers/validateController"
 import useStyles from "./styles"
 import submitController from "./controllers/submitController"
 import { Values } from "./types"
-import { useRouter } from "next/router"
 import {
   ENV,
   BunField,
   AnimatedRandomBG,
-  useTranslation
+  useTranslation,
+  useRouter
 } from "@bunred/bunadmin"
 
 function Copyright() {

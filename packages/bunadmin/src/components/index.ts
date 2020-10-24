@@ -1,9 +1,11 @@
+import { DrawerProps as IDrawerProps } from "./Drawer"
+import { LeftMenuProps } from "./LeftMenu"
+
 export { default as AnimatedRandomBG } from "./AnimationBackground"
 export { default as CubeSpinner } from "./CubeSpinner"
 export { default as ConfirmDialog } from "./Dialog/ConfirmDialog"
 export { default as UploadConfirmDialog } from "./Dialog/UploadCustomDialog"
 export { default as Drawer } from "./Drawer"
-import { DrawerProps as IDrawerProps } from "./Drawer"
 export type DrawerProps = IDrawerProps
 
 export { default as SchemaContainer } from "./SchemaContainer"
@@ -27,16 +29,14 @@ export * from "./FileExplorer"
 export { default as BunField } from "./Formik/BunField"
 export { default as Repeater } from "./Repeater"
 export { default as CoreContainer } from "./CoreContainer"
-export { default as DefaultHead } from "./DefaultHead"
 export { default as ProTip } from "./ProTip"
 
-export { default as LeftMenu } from "@/components/LeftMenu"
+export { default as LeftMenu } from "./LeftMenu"
 export { default as NestedList } from "./NestedMenu"
 export { default as TopBar } from "./TopBar"
 
 export { MDXProvider } from "@mdx-js/react"
 
-import { LeftMenuProps } from "@/components/LeftMenu"
 export interface DefaultLayoutProps {
   children?: any
   leftMenu?: LeftMenuProps

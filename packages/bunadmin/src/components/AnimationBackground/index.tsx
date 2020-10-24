@@ -1,5 +1,4 @@
-import React, { ReactElement } from "react"
-import Head from "next/head"
+import React from "react"
 
 function genSpan(len: number) {
   const indents = []
@@ -9,24 +8,13 @@ function genSpan(len: number) {
   return indents
 }
 
-interface BgsType {
-  css: string
-  html: ReactElement
-}
-
-const bg: BgsType = {
-  css: "/assets/css/blurBg.css",
-  html: <div className="blurBg">{genSpan(20)}</div>
-}
-
 export default function AnimatedRandomBG() {
+  React.useEffect(() => {
+    document.title = "Login"
+  }, [])
   return (
     <>
-      <Head>
-        <title>Login</title>
-        {<link rel="stylesheet" href={bg.css} />}
-      </Head>
-      {bg.html}
+      <div className="blurBg">{genSpan(20)}</div>
     </>
   )
 }

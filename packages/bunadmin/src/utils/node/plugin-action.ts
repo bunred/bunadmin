@@ -27,8 +27,8 @@ export function findPlugins(paths: string): string[] {
     const newArr: string[] = []
     activePlugins.map(item => {
       if (
-        (process.env.NEXT_PUBLIC_AUTH_PLUGIN &&
-          item.indexOf(process.env.NEXT_PUBLIC_AUTH_PLUGIN) > -1) ||
+        (process.env.REACT_APP_AUTH_PLUGIN &&
+          item.indexOf(process.env.REACT_APP_AUTH_PLUGIN) > -1) ||
         item.indexOf("bunadmin-auth-") < 0
       ) {
         newArr.push(item)
@@ -40,8 +40,8 @@ export function findPlugins(paths: string): string[] {
   /**
    * Handle ignored plugins
    */
-  const ignoredArr = process.env.NEXT_PUBLIC_IGNORED_PLUGINS
-    ? process.env.NEXT_PUBLIC_IGNORED_PLUGINS.split(/[ ,]+/)
+  const ignoredArr = process.env.REACT_APP_IGNORED_PLUGINS
+    ? process.env.REACT_APP_IGNORED_PLUGINS.split(/[ ,]+/)
     : []
   ignoredArr.map(item => {
     const ignoredRegx = new RegExp(item, "g")
@@ -60,8 +60,6 @@ export function findPlugins(paths: string): string[] {
  * @param paths
  */
 export function getPlugins(paths: string[]): PluginData[] {
-  const Log = require("next/dist/build/output/log")
-
   let pluginsData: PluginData[] = []
   paths.map(async pathItem => {
     if (pathItem.indexOf("node_modules") < 0) return
@@ -72,7 +70,7 @@ export function getPlugins(paths: string[]): PluginData[] {
       if (!plugin || !plugin.initData || !plugin.initData.data) return
       pluginsData = [...pluginsData, ...plugin.initData.data]
     } catch (e) {
-      Log.error(
+      console.error(
         "cannot find 'initData' in the plugin, please export or check: " +
           pathItem
       )

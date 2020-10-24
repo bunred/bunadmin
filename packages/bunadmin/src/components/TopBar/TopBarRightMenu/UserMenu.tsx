@@ -8,7 +8,7 @@ import { Collection } from "@/core/setting/collections"
 import rxDb from "@/utils/database/rxConnect"
 import Divider from "@material-ui/core/Divider"
 import { DynamicRoute, LocalDataRoute, UserRoute } from "@/utils/routes"
-import { useRouter } from "next/router"
+import { useRouter } from "@/router"
 import rxQuery from "@/utils/database/rxQuery"
 import { Primary } from "@/core/auth/schema"
 import { Trans, useTranslation } from "react-i18next"
@@ -50,7 +50,7 @@ export default function UserMenu() {
   const handleClose = ({ route }: { route?: string }) => {
     setAnchorEl(null)
     if (!route) return
-    router.push(DynamicRoute, route).then(_r => {})
+    router.push(DynamicRoute, route)
   }
 
   const handleLogout = async () => {

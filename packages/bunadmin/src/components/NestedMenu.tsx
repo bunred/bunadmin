@@ -7,7 +7,7 @@ import ListItemText from "@material-ui/core/ListItemText"
 import Collapse from "@material-ui/core/Collapse"
 import { Type } from "@/core/menu/types"
 import MenuIcon from "./MenuIcon"
-import { useRouter } from "next/router"
+import { useRouter } from "@/router"
 import { DynamicRoute, DynamicDocRoute } from "@/utils/routes"
 import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
@@ -104,12 +104,12 @@ export default function NestedList({ data }: Props): any {
 
       if (!isUrl) {
         if (router.route === DynamicDocRoute) {
-          return router.push(DynamicDocRoute, slug).then(_r => {})
+          return router.push(DynamicDocRoute, slug)
         }
 
-        router.push(DynamicRoute, slug).then(_r => {})
+        router.push(DynamicRoute, slug)
       } else {
-        router.push(slug).then(_r => {})
+        router.push(slug)
       }
     } else {
       handleOpen({ name })

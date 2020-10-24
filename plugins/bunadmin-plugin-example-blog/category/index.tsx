@@ -5,6 +5,7 @@ import {
   tableIcons,
   TableDefaultProps as DefaultProps
 } from "@bunred/bunadmin"
+import { Query } from "material-table"
 import { useTheme } from "@material-ui/core/styles"
 
 import { SchemaName, SchemaLabel, SchemaColumns } from "./plugin"
@@ -29,7 +30,7 @@ export default function() {
           ...DefaultProps.options,
           filtering: true
         }}
-        data={async tableQuery =>
+        data={async (tableQuery: Query<any>) =>
           await dataCtrl({ t, tableQuery, path: SchemaName })
         }
         editable={editableCtrl({ t, SchemaName })}

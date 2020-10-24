@@ -1,4 +1,5 @@
 ### Environment variables
+
 ```dotenv
-NEXT_PUBLIC_UPLOAD_STRAPI_ROLE=Admin
+REACT_APP_UPLOAD_STRAPI_ROLE=Admin
 ```

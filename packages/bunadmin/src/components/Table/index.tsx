@@ -1,6 +1,5 @@
 import React from "react"
 
-import Head from "next/head"
 import MaterialTable from "material-table"
 import { useTheme } from "@material-ui/core/styles"
 import tableIcons from "./models/tableIcons"
@@ -9,17 +8,14 @@ import { TableDefaultProps as DefaultProps } from "./models/defaultProps"
 import { useTranslation } from "react-i18next"
 import localization from "@/components/Table/localization"
 import { ENV, DynamicRoute } from "@/utils"
-import { useRouter } from "next/router"
+import { useRouter } from "@/router"
 
 export function TableHead({ title }: { title?: string }) {
-  return (
-    <Head>
-      <title>
-        {title || "List"} - {ENV.SITE_NAME}
-      </title>
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    </Head>
-  )
+  React.useEffect(() => {
+    document.title = `${title || "List"} - ${ENV.SITE_NAME}`
+  }, [])
+
+  return <></>
 }
 
 export default function Table(props: TableProps<any>) {

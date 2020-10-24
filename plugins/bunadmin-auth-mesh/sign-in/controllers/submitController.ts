@@ -8,16 +8,16 @@ import {
   Auth,
   AuthPrimary as Primary,
   DynamicRoute,
-  notice
+  notice,
+  Router
 } from "@bunred/bunadmin"
-import { NextRouter } from "next/router"
 import { TFunction } from "i18next"
 
 interface Props {
   t: TFunction
   values: Values
   setSubmitting: (isSubmitting: boolean) => void
-  router: NextRouter
+  router: Router
 }
 
 const submitController = async ({
@@ -64,9 +64,9 @@ const submitController = async ({
     const isMatch = matchStr.length === 2
 
     if (regex && isMatch) {
-      router.replace(DynamicRoute, redirect).then(_r => {})
+      router.replace(DynamicRoute, redirect)
     } else {
-      router.replace(redirect).then(_r => {})
+      router.replace(redirect)
     }
   } else {
     // show notice
