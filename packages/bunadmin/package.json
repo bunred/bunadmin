@@ -52,7 +52,6 @@
     "json-bigint": "^0.3.0",
     "material-table": "npm:@bunred/material-table@0.69.0-beta.1",
     "mockjs": "^1.1.0",
-    "next": "^9.5.3",
     "notistack": "^0.9.16",
     "pouchdb-adapter-http": "^7.2.1",
     "pouchdb-adapter-idb": "^7.2.1",
