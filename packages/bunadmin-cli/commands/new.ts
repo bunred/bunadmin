@@ -3,11 +3,17 @@ import replaceInFile from "../utils/replace-in-file"
 import { BUNADMIN_CLI_PATH } from "../utils/config"
 const path = require("path")
 
-const sourceFolder = path.resolve(BUNADMIN_CLI_PATH, "templates/typescript")
-
 export default async function newProject(
-  name = "my-dashboard"
+  name = "my-dashboard",
+  options = { nextjs: false }
 ): Promise<undefined | string> {
+  let sourceFolder = path.resolve(BUNADMIN_CLI_PATH, "templates/typescript-cra")
+  if (options.nextjs) {
+    sourceFolder = path.resolve(
+      BUNADMIN_CLI_PATH,
+      "templates/typescript-nextjs"
+    )
+  }
   let errors: undefined | string
   // copy template files to target folder
   const targetFolder = path.resolve(name)
