@@ -5,7 +5,7 @@ export type Router = {
   query: any
   route: string
   push: (url: string, url2?: string) => void
-  replace: (url: string) => void
+  replace: (url: string, url2?: string) => void
 }
 
 export function useRouter(): Router {
@@ -19,8 +19,9 @@ export function useRouter(): Router {
     if (url && !url2) history.push(url)
     if (url2) history.push(url2)
   }
-  const replace: any = async (url: string) => {
-    history.push(url)
+  const replace = async (url: string, url2?: string) => {
+    if (url && !url2) history.push(url)
+    if (url2) history.push(url2)
   }
 
   return {

@@ -8,7 +8,7 @@ const { findPlugins, getPlugins } = require("./lib/utils/node/plugin-action")
  * generate the data file (menu, schema) `dynamic/pluginsData.json` to `.bunadmin/`,
  * generate the index file (export from node_modules) `[name]/index.js` to
  * `dynamic/[plugin]/[name]/index.js`.
- * generate the data file (menu, schema) `pluginsData.ts` to `plugins/`,
+ * generate the data file (menu, schema) `pluginsData.ts` to `.bunadmin/dynamic/`,
  * @param modulesPath {string}
  * @param dynamicPath {string}
  * @param pluginsPath {string}
@@ -26,12 +26,15 @@ module.exports = ({ modulesPath, dynamicPath, pluginsPath }) => {
   console.info("preparing...")
 
   /**
-   * Recreate directory .bunadmin/dynamic
+   * Check, recreate directory .bunadmin/dynamic
    */
-  rimraf.sync(dynamicPath)
+  if (fs.existsSync(dynamicPath)) {
+    rimraf.sync(dynamicPath)
+  }
 
-  if (!fs.existsSync(".bunadmin")) {
-    fs.mkdirSync(".bunadmin")
+  const dotBunadminPath = dynamicPath.replace("/dynamic", "")
+  if (!fs.existsSync(dotBunadminPath)) {
+    fs.mkdirSync(dotBunadminPath)
   }
   if (!fs.existsSync(dynamicPath)) {
     fs.mkdirSync(dynamicPath)
@@ -41,16 +44,20 @@ module.exports = ({ modulesPath, dynamicPath, pluginsPath }) => {
   const pluginsData = getPlugins(pluginsPaths)
 
   /**
-   * Generate `pluginsData.ts` in `plugins/`
+   * Generate `pluginsData.ts` in `.bunadmin/dynamic/`
    */
   const customPluginsPaths = findPlugins(pluginsPath)
+  const relativePath = path.relative(
+    path.dirname(dynamicPath),
+    path.dirname(pluginsPath)
+  )
   let importLine = ""
   let arrayLine = ""
   customPluginsPaths.map((path, i) => {
     const name = path.replace(`${pluginsPath}/`, "")
     const varName = `data_${i + 1}`
     importLine += `
-import { initData as ${varName} } from "./${name}"`
+import { initData as ${varName} } from "../${relativePath}/plugins/${name}"`
     const spl = i + 1 === customPluginsPaths.length ? "" : ", "
     arrayLine += `...${varName}${spl}`
   })
@@ -63,7 +70,7 @@ ${importLine}
 
 export const data: IPluginData[] = [${arrayLine}]
 `
-  fs.writeFile(`${pluginsPath}/pluginsData.ts`, tsContent, e => {
+  fs.writeFile(`${dynamicPath}/pluginsData.ts`, tsContent, e => {
     if (e) console.error("cannot generating pluginsData.ts: " + e)
   })
 
