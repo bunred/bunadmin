@@ -14,7 +14,6 @@ import DocMenu from "./TopBarRightMenu/DocMenu"
 import { useRouter } from "@/router"
 import { DynamicDocRoute } from "@/utils/routes"
 import { NoticePlugin } from "@/utils"
-import { Link } from "react-router-dom"
 import { Button } from "@material-ui/core"
 
 const useStyles = topBarStyles
@@ -60,8 +59,9 @@ export default function TopBar(props: TopBarProps) {
             variant={"text"}
             size="large"
             color="primary"
-            component={Link}
-            to={!isDoc ? "/" : docsHome}
+            onClick={() => {
+              router.push(!isDoc ? "/" : docsHome)
+            }}
           >
             {!isDoc ? ENV.SITE_NAME : ENV.SITE_NAME + " DOCS"}
           </Button>
