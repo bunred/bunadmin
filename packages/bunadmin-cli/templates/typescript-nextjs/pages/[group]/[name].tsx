@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
-import { useRouter } from "next/router"
 import { ParsedUrlQuery } from "querystring"
 import {
+  useRouter,
   CoreContainer,
   SchemaContainer,
   withoutLayout,

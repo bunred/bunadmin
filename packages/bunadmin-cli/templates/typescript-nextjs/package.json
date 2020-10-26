@@ -9,9 +9,9 @@
     "yarn force": "rm -rf yarn.lock & yarn --force && yarn dev"
   },
   "dependencies": {
-    "@bunred/bunadmin": "^1.1.1-beta.0.5",
+    "@bunred/bunadmin": "^1.1.1-beta.0.6",
     "bunadmin-auth-strapi": "^1.1.1-beta.0.1",
-    "bunadmin-source-strapi": "^1.1.0-beta.10.1",
+    "bunadmin-source-strapi": "^1.1.1-beta.0",
     "next": "latest",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
