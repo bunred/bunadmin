@@ -1,5 +1,8 @@
 const path = require("path")
 const bunadminPlugin = require("@bunred/bunadmin/plugin")
+const {
+  useNextJsRouter
+} = require("@bunred/bunadmin/lib/utils/node/nextjs-handler")
 
 module.exports = () => {
   return {
@@ -20,6 +23,8 @@ module.exports = () => {
         const dynamicPath = path.resolve(__dirname, "./.bunadmin/dynamic")
         const pluginsPath = path.resolve(__dirname, "./plugins")
         bunadminPlugin({ modulesPath, dynamicPath, pluginsPath })
+
+        useNextJsRouter(modulesPath)
       }
       /**
        * ignore
