@@ -26,25 +26,67 @@ type EnvTypes = {
 }
 
 export const ENV: EnvTypes = {
-  SITE_NAME: process.env.REACT_APP_SITE_NAME || "BunAdmin",
-  AUTH_PLUGIN: process.env.REACT_APP_AUTH_PLUGIN || DEFAULT_AUTH_PLUGIN,
-  MAIN_URL: process.env.REACT_APP_MAIN_URL,
-  AUTH_URL: process.env.REACT_APP_AUTH_URL || process.env.REACT_APP_MAIN_URL,
+  SITE_NAME:
+    process.env.REACT_APP_SITE_NAME ||
+    process.env.NEXT_PUBLIC_SITE_NAME ||
+    "BunAdmin",
+  AUTH_PLUGIN:
+    process.env.REACT_APP_AUTH_PLUGIN ||
+    process.env.NEXT_PUBLIC_AUTH_PLUGIN ||
+    DEFAULT_AUTH_PLUGIN,
+  MAIN_URL: process.env.REACT_APP_MAIN_URL || process.env.NEXT_PUBLIC_MAIN_URL,
+  AUTH_URL:
+    process.env.REACT_APP_AUTH_URL ||
+    process.env.REACT_APP_MAIN_URL ||
+    process.env.NEXT_PUBLIC_AUTH_URL ||
+    process.env.NEXT_PUBLIC_MAIN_URL,
   UPLOAD_URL:
     process.env.REACT_APP_UPLOAD_URL ||
     process.env.REACT_APP_AUTH_URL ||
-    process.env.REACT_APP_MAIN_URL,
-  FILE_PREVIEW_URL: process.env.REACT_APP_FILE_PREVIEW_URL,
-  SITE_URLS: strToArr(process.env.REACT_APP_SITE_URLS),
-  ON_I18N: process.env.REACT_APP_ON_I18N === "true" || false,
-  ON_SETTING: process.env.REACT_APP_ON_SETTING === "true" || false,
-  ON_DOC: process.env.REACT_APP_ON_DOC === "true" || false,
-  I18N_CODE: process.env.REACT_APP_I18N_CODE || "en",
-  ON_MOCK: process.env.REACT_APP_ON_MOCK === "true" || false,
-  REACT_APP_IGNORED_PLUGINS: strToArr(process.env.REACT_APP_IGNORED_PLUGINS),
-  PATHS_WITHOUT_LAYOUT: strToArr(process.env.REACT_APP_PATHS_WITHOUT_LAYOUT),
-  PATHS_WITHOUT_AUTH: strToArr(process.env.REACT_APP_PATHS_WITHOUT_AUTH),
-  NOTIFICATION_PLUGIN: process.env.REACT_APP_NOTIFICATION_PLUGIN,
+    process.env.REACT_APP_MAIN_URL ||
+    process.env.NEXT_PUBLIC_UPLOAD_URL ||
+    process.env.NEXT_PUBLIC_AUTH_URL ||
+    process.env.NEXT_PUBLIC_MAIN_URL,
+  FILE_PREVIEW_URL:
+    process.env.REACT_APP_FILE_PREVIEW_URL ||
+    process.env.NEXT_PUBLIC_FILE_PREVIEW_URL,
+  SITE_URLS:
+    strToArr(process.env.REACT_APP_SITE_URLS) ||
+    strToArr(process.env.NEXT_PUBLIC_SITE_URLS),
+  ON_I18N:
+    process.env.REACT_APP_ON_I18N === "true" ||
+    process.env.NEXT_PUBLIC_ON_I18N === "true" ||
+    false,
+  ON_SETTING:
+    process.env.REACT_APP_ON_SETTING === "true" ||
+    process.env.NEXT_PUBLIC_ON_SETTING === "true" ||
+    false,
+  ON_DOC:
+    process.env.REACT_APP_ON_DOC === "true" ||
+    process.env.NEXT_PUBLIC_ON_DOC === "true" ||
+    false,
+  I18N_CODE:
+    process.env.REACT_APP_I18N_CODE ||
+    process.env.NEXT_PUBLIC_I18N_CODE ||
+    "en",
+  ON_MOCK:
+    process.env.REACT_APP_ON_MOCK === "true" ||
+    process.env.NEXT_PUBLIC_ON_MOCK === "true" ||
+    false,
+  REACT_APP_IGNORED_PLUGINS:
+    strToArr(process.env.REACT_APP_IGNORED_PLUGINS) ||
+    strToArr(process.env.NEXT_PUBLIC_IGNORED_PLUGINS),
+  PATHS_WITHOUT_LAYOUT:
+    strToArr(process.env.REACT_APP_PATHS_WITHOUT_LAYOUT) ||
+    strToArr(process.env.NEXT_PUBLIC_PATHS_WITHOUT_LAYOUT),
+  PATHS_WITHOUT_AUTH:
+    strToArr(process.env.REACT_APP_PATHS_WITHOUT_AUTH) ||
+    strToArr(process.env.NEXT_PUBLIC_PATHS_WITHOUT_AUTH),
+  NOTIFICATION_PLUGIN:
+    process.env.REACT_APP_NOTIFICATION_PLUGIN ||
+    process.env.NEXT_PUBLIC_NOTIFICATION_PLUGIN,
   ON_NOTIFICATION_INTERVAL_COUNT:
-    process.env.REACT_APP_OFF_NOTIFICATION_INTERVAL_COUNT === "true" || false
+    process.env.REACT_APP_OFF_NOTIFICATION_INTERVAL_COUNT === "true" ||
+    process.env.NEXT_PUBLIC_OFF_NOTIFICATION_INTERVAL_COUNT === "true" ||
+    false
 }

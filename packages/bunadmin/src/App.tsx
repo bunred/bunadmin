@@ -61,7 +61,7 @@ const App = () => {
       const authPlugin: IAuthPlugin = await import(
         `./.bunadmin/dynamic/${authPluginName}`
       )
-      let pluginsData: PluginData[] = require("./.bunadmin/dynamic/pluginsData")
+      let pluginsData: PluginData[] = require("./.bunadmin/dynamic/pluginsData.json")
       const plugins = require("./private/plugins/pluginsData")
       if (plugins && plugins.data)
         pluginsData = [...pluginsData, ...plugins.data]
