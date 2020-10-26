@@ -21,6 +21,7 @@ import {
   UserRoute
 } from "@bunred/bunadmin"
 import "@bunred/bunadmin/lib/utils/i18n"
+import "../public/index.css"
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { i18n } = useTranslation()
