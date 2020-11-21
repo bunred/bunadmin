@@ -8,6 +8,7 @@
     "lib"
   ],
   "scripts": {
+    "tsc": "rm -rf lib & tsc",
     "pack": "rm -rf lib & tsc && npm pack"
   },
   "devDependencies": {
