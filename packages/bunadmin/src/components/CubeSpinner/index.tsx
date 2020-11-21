@@ -7,7 +7,7 @@ export default function CubeSpinner() {
 
   return (
     <>
-      <div id="main">
+      <div id="main" data-testid="loading">
         <span className="spinner" />
       </div>
     </>
