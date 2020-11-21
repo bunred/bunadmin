@@ -32,7 +32,7 @@ interface Props {
   isAuthPath?: boolean
 }
 
-export default function SchemaContainer({
+export default function SchemaContainer<RowData extends object>({
   PluginTable,
   Error,
   isAuthPath
@@ -118,7 +118,7 @@ export default function SchemaContainer({
       <TableHead title={title} />
       <Table
         title={title}
-        columns={(schema.columns as unknown) as Column<any>[]}
+        columns={(schema.columns as unknown) as Column<RowData>[]}
         style={DefaultProps.style}
         icons={tableIcons({ theme })}
         options={{ ...DefaultProps.options, filtering: true }}

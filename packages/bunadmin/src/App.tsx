@@ -62,7 +62,7 @@ const App = () => {
         `./.bunadmin/dynamic/${authPluginName}`
       )
       let pluginsData: PluginData[] = require("./.bunadmin/dynamic/pluginsData.json")
-      const plugins = require("./private/plugins/pluginsData")
+      const plugins = require("./.bunadmin/dynamic/pluginsData")
       if (plugins && plugins.data)
         pluginsData = [...pluginsData, ...plugins.data]
 

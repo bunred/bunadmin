@@ -5,7 +5,9 @@ import { Query } from "material-table"
 import { notice } from "@bunred/bunadmin"
 import listSer from "../services/listSer"
 
-export default async function dataCtrl(query: Query<any>) {
+export default async function dataCtrl<RowData extends object>(
+  query: Query<RowData>
+) {
   const { data, errors, totalCount } = await listSer(query)
 
   if (errors) {

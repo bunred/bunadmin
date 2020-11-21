@@ -6,11 +6,11 @@ import { DataCtrl, ListService } from "../types"
 import { notice } from "@bunred/bunadmin"
 import { QueryResult } from "material-table"
 
-export default async function dataCtrl({
+export default async function dataCtrl<RowData extends object>({
   t,
   listService,
   ...sharedProps
-}: DataCtrl): Promise<QueryResult<any>> {
+}: DataCtrl<RowData>): Promise<QueryResult<RowData>> {
   const { path, tableQuery } = sharedProps
 
   let data: any,
@@ -53,7 +53,7 @@ export default async function dataCtrl({
   }
 
   if (path) {
-    const listSerProps: ListService = {
+    const listSerProps: ListService<RowData> = {
       path,
       ...sharedProps
     }

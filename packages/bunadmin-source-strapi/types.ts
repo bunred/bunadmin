@@ -2,20 +2,20 @@ import { TFunction } from "i18next"
 import { Query } from "material-table"
 import { ListServiceRes } from "@bunred/bunadmin"
 
-export type DataCtrl = {
+export type DataCtrl<RowData extends object> = {
   t?: TFunction
   listService?: () => Promise<ListServiceRes>
-  tableQuery: ListService["tableQuery"]
-  path?: ListService["path"]
-  prefix?: ListService["prefix"]
-  skipCount?: ListService["skipCount"]
-  fixCount?: ListService["skipCount"]
-  searchField?: ListService["searchField"]
-  searchSuffix?: ListService["searchSuffix"]
+  tableQuery: ListService<RowData>["tableQuery"]
+  path?: ListService<RowData>["path"]
+  prefix?: ListService<RowData>["prefix"]
+  skipCount?: ListService<RowData>["skipCount"]
+  fixCount?: ListService<RowData>["skipCount"]
+  searchField?: ListService<RowData>["searchField"]
+  searchSuffix?: ListService<RowData>["searchSuffix"]
 }
 
-export type ListService = {
-  tableQuery: Query<any>
+export type ListService<RowData extends object> = {
+  tableQuery: Query<RowData>
   path: string
   prefix?: string
   skipCount?: boolean

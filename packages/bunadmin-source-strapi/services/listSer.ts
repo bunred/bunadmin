@@ -6,7 +6,7 @@ import { ListService } from "../types"
 
 const operatorRex = new RegExp(/=|<=|>=|<|>|_.*=/)
 
-export default async function listSer({
+export default async function listSer<RowData extends object>({
   tableQuery,
   path,
   prefix,
@@ -14,7 +14,7 @@ export default async function listSer({
   fixCount,
   searchField = "name",
   searchSuffix = "_contains"
-}: ListService) {
+}: ListService<RowData>) {
   const {
     search: searchWords,
     filters = [],
