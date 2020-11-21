@@ -5,11 +5,13 @@ import {
   tableIcons,
   TableDefaultProps as DefaultProps
 } from "@bunred/bunadmin"
+import { Query } from "material-table"
 import { useTheme } from "@material-ui/core/styles"
 
-import { SchemaLabel, SchemaColumns, SchemaName } from "./plugin"
-import { useTranslation } from "@bunred/bunadmin"
+import { SchemaName, SchemaLabel, SchemaColumns } from "./plugin"
+import { useTranslation } from "react-i18next"
 import { bulkDeleteCtrl, dataCtrl, editableCtrl } from "bunadmin-source-strapi"
+import Type from "./types"
 
 export default function() {
   const { t } = useTranslation("table")
@@ -19,7 +21,7 @@ export default function() {
   return (
     <>
       <TableHead title={t(SchemaLabel)} />
-      <Table
+      <Table<Type>
         tableRef={tableRef}
         title={t(SchemaLabel)}
         columns={SchemaColumns({ t, tableRef })}
@@ -29,13 +31,8 @@ export default function() {
           ...DefaultProps.options,
           filtering: true
         }}
-        data={async (tableQuery: any) =>
-          await dataCtrl({
-            t,
-            tableQuery,
-            path: SchemaName,
-            searchField: "name"
-          })
+        data={async (tableQuery: Query<Type>) =>
+          await dataCtrl({ t, tableQuery, path: SchemaName })
         }
         editable={editableCtrl({ t, SchemaName })}
         actions={[bulkDeleteCtrl({ SchemaName, t, tableRef })]}
