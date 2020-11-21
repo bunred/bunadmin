@@ -13,6 +13,7 @@ import editableCtrl from "./controllers/editableCtrl"
 import { useTranslation } from "react-i18next"
 import { dataCtrl } from "bunadmin-source-strapi"
 import { SchemaName } from "./plugin"
+import Type from "./types"
 
 export default function media() {
   const { t } = useTranslation("table")
@@ -36,7 +37,7 @@ export default function media() {
           filtering: true
         }}
         // data
-        data={async (tableQuery: Query<any>) =>
+        data={async (tableQuery: Query<Type>) =>
           await dataCtrl({
             t,
             tableQuery,

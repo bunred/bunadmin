@@ -15,7 +15,7 @@ import { dataCtrl } from "bunadmin-source-strapi"
 import listSer from "../roles/services/listSer"
 import { IRole } from "../utils/types"
 
-export default function() {
+export default function<RowData extends object>() {
   const { t } = useTranslation("table")
   const theme = useTheme()
   const tableRef = createRef()
@@ -23,7 +23,7 @@ export default function() {
 
   useEffect(() => {
     ;(async () => {
-      const { data, errors } = await listSer()
+      const { data, errors } = await listSer<RowData>()
       if (errors) {
         await notice({
           title: t("Request Failed"),

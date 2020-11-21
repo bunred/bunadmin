@@ -10,6 +10,17 @@ npm install --global bunadmin-cli
 bunadmin new my-bunadmin
 ```
 
+Create a plugin
+  `$ bunadmin plugin [team]-[group]`
+  (Run in the plugins directory: plugins/)
+
+Create a schema
+  `$ bunadmin schema [name]`
+  (Run in the plugin directory: plugins/bunadmin-plugin-[team]-[group]/)
+
+Display help for command 
+  `$ bunadmin --help`
+
 [Read the Getting Started tutorial](http://blog.eg.bunadmin.com/docs/getting-started/introduction)
 
 ## Online demo
@@ -24,6 +35,18 @@ bunadmin new my-bunadmin
 ![Sign in](https://gblobscdn.gitbook.com/assets%2F-M1ZbjnBaWO_NJOdj8_A%2F-M6mhhE1-tUO_GCYLgQI%2F-M6miE4Tjmp-npJcYvYz%2Fsign-in.png)
 
 ![Blog Post](https://gblobscdn.gitbook.com/assets%2F-M1ZbjnBaWO_NJOdj8_A%2F-MHlKrSo5A7uYDJDV45k%2F-MHlKxF4-lohTzN3gsiA%2Fblog-post-strapi.png)
+
+## Development
+
+```shell script
+git clone git@github.com:bunred/bunadmin.git
+cd bunadmin && yarn && yarn run lerna-build
+cd packages/bunadmin && yarn run start
+```
+[http://localhost:3000](http://localhost:3000)
+
+- Username: `admin`
+- Password: `bunadmin`
 
 #### Thanks
 

@@ -5,7 +5,9 @@ import { Query } from "material-table"
 import { ENV, request, storedToken } from "@bunred/bunadmin"
 import { SchemaName } from "../plugin"
 
-export default async function listSer(query?: Query<any>) {
+export default async function listSer<RowData extends object>(
+  query?: Query<RowData>
+) {
   let page = 100,
     pageSize = 0
   if (query) {

@@ -18,7 +18,9 @@ export function TableHead({ title }: { title?: string }) {
   return <></>
 }
 
-export default function Table(props: TableProps<any>) {
+export default function Table<RowData extends object>(
+  props: TableProps<RowData>
+) {
   const { t } = useTranslation("table")
   const theme = useTheme()
   const router = useRouter()

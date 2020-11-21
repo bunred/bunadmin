@@ -5,7 +5,7 @@ import { SchemaName } from "./plugin"
 import { ListSelector, PluginColumns } from "@bunred/bunadmin"
 import { dataCtrl } from "bunadmin-source-strapi"
 
-export default ({ t }: PluginColumns): Column<Type>[] => [
+const columns = ({ t }: PluginColumns): Column<Type>[] => [
   {
     title: t("Id"),
     field: "id",
@@ -48,3 +48,5 @@ export default ({ t }: PluginColumns): Column<Type>[] => [
     filtering: false
   }
 ]
+
+export default columns

@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-type Props = {
-  columnDef: Column<any>
+type Props<RowData extends object> = {
+  columnDef: Column<RowData>
   // filterComponent
   filterProps?: {
     toLowerCase?: boolean
@@ -33,7 +33,9 @@ type Props = {
   editProps?: EditComponentProps<any>
 }
 
-export default function SingleSelector(props: Props) {
+export default function SingleSelector<RowData extends object>(
+  props: Props<RowData>
+) {
   const table = useSelector(selectTable)
   const classes = useStyles()
 
